@@ -1,0 +1,65 @@
+# F3-E06: Captura de tráfico con tcpdump (HTTP vs HTTPS)
+
+Fecha: 2026-09-14
+Archivo de captura: captura-trafico.pcap (30K, 77 paquetes)
+
+## Comando de captura
+
+$ sudo tcpdump -i any -w ~/jeroky/certs/captura-trafico.pcap 'port 80 or port 443' &
+  (en paralelo: curl a http://192.168.0.17/alumnos y https://192.168.0.17/alumnos)
+$ sudo kill $TCPDUMP_PID
+
+## Verificación del archivo
+
+$ ls -lh ~/jeroky/certs/captura-trafico.pcap
+-rw-r--r-- 1 tcpdump tcpdump 30K Sep 14 04:57 /home/arqweb/jeroky/certs/captura-trafico.pcap
+
+$ sudo tcpdump -r ~/jeroky/certs/captura-trafico.pcap -nn | wc -l
+77
+
+## Fragmento HTTP (puerto 80) — payload en texto plano
+
+$ grep -c "GET /alumnos" ~/jeroky/certs/captura-legible.txt
+2
+
+(la cadena "GET /alumnos" aparece 2 veces en la captura volcada a texto
+con `tcpdump -A`, confirmando que la petición HTTP viaja completamente
+legible en la red — método, ruta y cabeceras)
+
+Ejemplo adicional observado en el mismo volcado (tráfico HTTP de la
+app, no generado por el curl de prueba): un paquete de 21 bytes en el
+puerto 80 con payload legible `{"type":"building"}`, cuerpo JSON
+completamente en claro.
+
+## Fragmento HTTPS (puerto 443) — payload cifrado
+
+En los paquetes hacia/desde el puerto 443, el volcado en modo `-A`
+(ASCII) muestra:
+- Durante el handshake inicial (ClientHello), la única cadena
+  reconocible es la negociación de protocolo ALPN: `h2.http/1.1`. Esto
+  es una extensión pública del handshake TLS (indica qué protocolos de
+  aplicación soporta el cliente) y no expone datos de la aplicación.
+- El resto del payload (datos de aplicación una vez establecida la
+  sesión TLS) aparece como una secuencia de bytes no interpretable
+  (caracteres de control y símbolos sin patrón legible), consistente
+  con contenido cifrado.
+
+## Interpretación
+
+- La captura confirma en la práctica la diferencia entre HTTP y HTTPS
+  discutida en F3-E02/F3-E05: cualquier atacante con acceso al
+  segmento de red (o que intercepte el tráfico) puede leer íntegramente
+  el método, ruta, cabeceras y cuerpo de una petición HTTP (como se ve
+  con `GET /alumnos` y el JSON `{"type":"building"}` en texto plano),
+  mientras que en HTTPS solo se observan metadatos del handshake TLS
+  (negociación de protocolo) y bytes cifrados — el contenido real de la
+  petición/respuesta permanece confidencial.
+- Esto sirve como evidencia concreta del beneficio de seguridad de la
+  migración a HTTPS realizada en este Hito 3 (F3-E01/F3-E02): protege
+  la confidencialidad del tráfico entre cliente y proxy frente a un
+  observador pasivo de la red.
+- El archivo `.pcap` completo queda disponible para su inspección con
+  Wireshark si se requiere un análisis visual adicional para el
+  informe o la defensa oral.
+- Prueba relacionada: P07 (TLS) de la matriz de pruebas (evidencia
+  complementaria de la protección de confidencialidad que aporta TLS).

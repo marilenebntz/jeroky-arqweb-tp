@@ -1,0 +1,82 @@
+# F3-E02: Configuración de Nginx para HTTPS con redirección desde HTTP
+
+Fecha: 2026-09-14
+Archivo: /etc/nginx/sites-available/jeroky
+
+## Configuración aplicada
+
+server {
+    listen 80;
+    server_name jeroky.local 192.168.0.17;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name jeroky.local 192.168.0.17;
+
+    ssl_certificate     /home/<usuario>/jeroky/certs/jeroky.crt;
+    ssl_certificate_key /home/<usuario>/jeroky/certs/jeroky.key;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+## Aplicación
+
+$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+$ sudo systemctl reload nginx
+
+## Verificación de la redirección HTTP -> HTTPS
+
+$ curl -I http://192.168.0.17/alumnos
+
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.24.0 (Ubuntu)
+Location: https://192.168.0.17/alumnos
+
+## Verificación del handshake TLS
+
+$ curl -kv https://192.168.0.17/alumnos
+
+* Connected to 192.168.0.17 (192.168.0.17) port 443
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384
+* Server certificate:
+*  subject: C=PY; ST=Central; L=Asuncion; O=FP-UNA; OU=ArquitecturaWeb; CN=jeroky.local
+*  issuer: C=PY; ST=Central; L=Asuncion; O=FP-UNA; OU=ArquitecturaWeb; CN=jeroky.local
+> GET /alumnos HTTP/2
+< HTTP/2 307
+< location: /alumnos
+
+## Verificación desde el navegador
+
+- Acceso a https://192.168.0.17/alumnos y https://jeroky.local/alumnos:
+  advertencia esperada "La conexión no es privada" (certificado
+  autofirmado, sin CA reconocida); tras aceptar la excepción, la
+  aplicación carga con normalidad sobre HTTPS.
+
+## Interpretación
+
+- La redirección HTTP->HTTPS funciona mediante `return 301`, forzando
+  que todo tráfico en el puerto 80 sea reenviado al puerto 443.
+- El protocolo negociado es TLS 1.3 con cifrado `TLS_AES_256_GCM_SHA384`,
+  moderno y seguro.
+- Nginx sigue actuando como terminador TLS y proxy inverso hacia el
+  frontend (puerto 3000), igual que en Hito 2, ahora sobre un canal
+  cifrado.
+- La advertencia del navegador es esperada por tratarse de un
+  certificado autofirmado sin cadena de confianza pública; no indica un
+  error de configuración del servidor.
+- Pruebas relacionadas: P05 (HTTP, redirección) y P07 (TLS) de la
+  matriz de pruebas.

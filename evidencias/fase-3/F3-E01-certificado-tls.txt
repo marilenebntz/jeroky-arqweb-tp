@@ -1,0 +1,46 @@
+# F3-E01: Generación y verificación del certificado TLS autofirmado
+
+Fecha: 2026-09-14
+Host: VM jeroky (192.168.0.17), nombre local jeroky.local
+
+## Comando de generación
+
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout ~/jeroky/certs/jeroky.key \
+    -out ~/jeroky/certs/jeroky.crt \
+    -subj "/C=PY/ST=Central/L=Asuncion/O=FP-UNA/OU=ArquitecturaWeb/CN=jeroky.local" \
+    -addext "subjectAltName=DNS:jeroky.local,IP:192.168.0.17"
+
+## Verificación: sujeto, emisor, vigencia, SAN
+
+$ openssl x509 -in ~/jeroky/certs/jeroky.crt -noout -subject -issuer -dates -ext subjectAltName
+
+subject=C=PY, ST=Central, L=Asuncion, O=FP-UNA, OU=ArquitecturaWeb, CN=jeroky.local
+issuer=C=PY, ST=Central, L=Asuncion, O=FP-UNA, OU=ArquitecturaWeb, CN=jeroky.local
+notBefore=Sep 14 04:34:49 2026 GMT
+notAfter=Sep 14 04:34:49 2027 GMT
+X509v3 Subject Alternative Name:
+    DNS:jeroky.local, IP Address:192.168.0.17
+
+## Verificación: huella digital
+
+$ openssl x509 -in ~/jeroky/certs/jeroky.crt -noout -fingerprint -sha256
+
+SHA256 Fingerprint=C3:BB:52:D8:84:D1:06:60:9F:F4:C1:93:56:5E:79:4D:C5:2B:09:CA:ED:D1:0B:B6:E2:E8:0B:0A:B4:3F:AA:82
+
+## Interpretación
+
+- El certificado es autofirmado (sujeto = emisor), esperable en un entorno
+  de laboratorio sin autoridad certificadora real; el navegador advertirá
+  "conexión no privada" al no reconocer la CA, lo cual es correcto y se
+  documenta como limitación conocida (no un error de configuración).
+- El `subjectAltName` incluye tanto el nombre local (`DNS:jeroky.local`)
+  como la IP (`IP:192.168.0.17`), permitiendo que el mismo certificado
+  sea válido para ambas formas de acceso, evitando el warning adicional
+  de "nombre no coincide" en cualquiera de las dos rutas.
+- Vigencia de 365 días (2026-09-14 a 2027-09-14), suficiente para el
+  ciclo de vida del TP.
+- La huella SHA-256 permite verificar identidad del certificado de forma
+  independiente del canal (por ejemplo, comparándola manualmente al
+  aceptar la excepción de seguridad en el navegador).
+- Prueba relacionada: P07 (TLS) de la matriz de pruebas.

@@ -1,0 +1,61 @@
+# F3-E03: Mediciones de rendimiento (DNS, TCP, TLS, TTFB, total)
+
+Fecha: 2026-09-14
+Método: 10 repeticiones de curl con -w para extraer tiempos por etapa.
+Archivos de datos crudos: mediciones-https.csv, mediciones-http.csv
+(en ~/jeroky/certs/ dentro de la VM).
+
+## Comando (HTTPS, 10 repeticiones sobre /alumnos)
+
+$ for i in $(seq 1 10); do
+    curl -k -s -o /dev/null -w \
+      "%{time_namelookup},%{time_connect},%{time_appconnect},%{time_starttransfer},%{time_total}\n" \
+      https://192.168.0.17/alumnos
+  done | tee ~/jeroky/certs/mediciones-https.csv
+
+## Resultados HTTPS (segundos) — dns,connect,tls,ttfb,total
+
+  min: 0.0000,0.0001,0.0024,0.0300,0.0301
+  avg: 0.0000,0.0001,0.0032,0.0361,0.0362
+  max: 0.0002,0.0005,0.0064,0.0536,0.0538
+
+## Comando (HTTP, 10 repeticiones — mide la redirección 301 en el puerto 80)
+
+$ for i in $(seq 1 10); do
+    curl -s -o /dev/null -w \
+      "%{time_namelookup},%{time_connect},%{time_starttransfer},%{time_total}\n" \
+      http://192.168.0.17/alumnos
+  done | tee ~/jeroky/certs/mediciones-http.csv
+
+## Resultados HTTP/redirect (segundos) — dns,connect,ttfb,total
+
+  min: 0.0000,0.0001,0.0001,0.0002
+  avg: 0.0000,0.0001,0.0002,0.0003
+  max: 0.0000,0.0002,0.0004,0.0004
+
+## Interpretación
+
+- Las mediciones se hicieron en red local (anfitrión y VM en la misma
+  LAN, 192.168.0.0/24), por lo que `time_namelookup` y `time_connect`
+  son prácticamente nulos (sin latencia de DNS público ni de red externa
+  de por medio); esto es esperable y coherente con P02 (conectividad),
+  donde ya se había medido ~1 ms anfitrión-VM.
+- El handshake TLS (`time_appconnect - time_connect`) agrega entre
+  ~2.3 ms (mínimo) y ~6.3 ms (máximo) respecto a una conexión sin
+  cifrar, con un promedio de ~3.1 ms. Es el costo esperado de la
+  negociación TLS 1.3 (incluye intercambio de claves y verificación de
+  certificado) y resulta bajo comparado con el TTFB total.
+- El TTFB (`time_starttransfer`) domina el tiempo total en HTTPS
+  (promedio 36.1 ms de 36.2 ms totales), lo cual indica que el mayor
+  costo no es la red ni el TLS, sino el procesamiento del lado del
+  servidor: Next.js en modo desarrollo compila/renderiza la página bajo
+  demanda (Server-Side Rendering), a diferencia de un build de
+  producción con assets pre-generados.
+- La medición HTTP (puerto 80) solo captura el tiempo de la redirección
+  301 (~0.3 ms de total), no la carga completa de la página; por eso sus
+  valores son mucho menores que los de HTTPS — no es una comparación de
+  "HTTP vs HTTPS completo" sino de "redirect vs página servida". Se deja
+  como observación para el informe: para comparar el costo real de TLS
+  habría que medir HTTPS vs. un HTTP directo al frontend sin redirección
+  (ver F3-E04, acceso directo vs. proxy).
+- Prueba relacionada: P08 (Rendimiento) de la matriz de pruebas.

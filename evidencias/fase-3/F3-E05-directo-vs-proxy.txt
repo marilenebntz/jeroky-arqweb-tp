@@ -1,0 +1,64 @@
+# F3-E05: Comparación acceso directo (frontend:3000) vs. proxy (Nginx)
+
+Fecha: 2026-09-14
+Ruta probada: /alumnos
+
+## Acceso directo al frontend (HTTP, puerto 3000, sin proxy)
+
+$ curl -s -D - -o /dev/null -w "\ntime_total: %{time_total}s\n" \
+    http://192.168.0.17:3000/alumnos
+
+HTTP/1.1 200 OK
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+Cache-Control: no-cache, must-revalidate
+X-Powered-By: Next.js
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+time_total: 0.058531s
+
+## Acceso vía proxy Nginx (HTTPS, puerto 443)
+
+$ curl -ks -D - -o /dev/null -w "\ntime_total: %{time_total}s\n" \
+    https://192.168.0.17/alumnos
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+Cache-Control: no-cache, must-revalidate
+X-Powered-By: Next.js
+
+time_total: 0.068278s
+
+## Interpretación
+
+- La diferencia más evidente entre ambas respuestas es la cabecera
+  `Server`: presente como `nginx/1.24.0 (Ubuntu)` en el acceso vía
+  proxy, y ausente en el acceso directo (el frontend Next.js no la
+  agrega). Esto confirma que Nginx efectivamente intermedia la
+  petición y permite, en un escenario real, distinguir en logs/headers
+  cuál camino sirvió la respuesta.
+- El resto de las cabeceras propias de la aplicación (`Cache-Control`,
+  `X-Powered-By`, `Vary`, `link` de preload de fuentes) son idénticas
+  en ambos casos: Nginx hace `proxy_pass` transparente y no modifica el
+  cuerpo ni las cabeceras generadas por Next.js, solo agrega las
+  propias del proxy.
+- El tiempo total fue levemente mayor a través del proxy (0.0683s vs.
+  0.0585s directo), una diferencia de ~10 ms explicada por el salto de
+  red adicional (cliente -> Nginx -> frontend) sumado al handshake TLS
+  (el acceso directo fue por HTTP plano, sin cifrado). Es una diferencia
+  pequeña y esperable; no representa un cuello de botella relevante en
+  este entorno de laboratorio en red local.
+- El acceso directo al puerto 3000 expone el frontend sin TLS ni las
+  cabeceras de seguridad que se planea agregar en Nginx durante el
+  Hito 4; se registra como hallazgo para el análisis de seguridad: el
+  puerto 3000 (igual que el 5432 de PostgreSQL, ya observado en P03)
+  queda expuesto en la interfaz de red y debería restringirse a
+  `127.0.0.1` o filtrarse por firewall una vez que todo el tráfico
+  legítimo pase exclusivamente por Nginx.
+- Prueba relacionada: P06 (Proxy) de la matriz de pruebas.

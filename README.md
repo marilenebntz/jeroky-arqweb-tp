@@ -32,7 +32,7 @@ flowchart LR
 |---|---|---|
 | Hito 1 | Selección, arquitectura, VM y línea base | **Completo** |
 | Hito 2 | Instalación y publicación HTTP | **Completo** |
-| Hito 3 | DNS local, TLS y mediciones | Pendiente |
+| Hito 3 | DNS local, TLS y mediciones | **Completo** |
 | Hito 4 | Seguridad, resiliencia y defensa | Pendiente |
 
 Commit desplegado: backend `0b8a878` / frontend `3b41d84` en `release/1`

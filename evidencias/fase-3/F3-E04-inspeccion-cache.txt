@@ -1,0 +1,73 @@
+# F3-E04: Inspección de caché (Cache-Control, ETag, Last-Modified, 304)
+
+Fecha: 2026-09-14
+Host de prueba: 192.168.0.17, vía proxy Nginx HTTPS (443)
+
+## 1. Cabeceras de una página dinámica (/alumnos)
+
+$ curl -ks -D - -o /dev/null https://192.168.0.17/alumnos
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+Cache-Control: no-cache, must-revalidate
+X-Powered-By: Next.js
+
+(sin ETag ni Last-Modified)
+
+## 2. Cabeceras de un asset estático (_next/static/chunks/_0rqeker._.js), primera petición
+
+$ curl -ks -D - -o /dev/null https://192.168.0.17/_next/static/chunks/_0rqeker._.js
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Content-Type: application/javascript; charset=UTF-8
+Content-Length: 756
+Cache-Control: no-cache, must-revalidate
+Accept-Ranges: bytes
+Last-Modified: Mon, 14 Sep 2026 04:18:31 GMT
+ETag: W/"2f4-1a09e2358c5"
+Vary: Accept-Encoding
+
+## 3. Petición condicional con If-None-Match (usando el ETag capturado)
+
+$ curl -ks -D - -o /dev/null -H 'If-None-Match: W/"2f4-1a09e2358c5"' \
+    https://192.168.0.17/_next/static/chunks/_0rqeker._.js
+
+HTTP/1.1 304 Not Modified
+Server: nginx/1.24.0 (Ubuntu)
+Cache-Control: no-cache, must-revalidate
+Accept-Ranges: bytes
+Last-Modified: Mon, 14 Sep 2026 04:18:31 GMT
+ETag: W/"2f4-1a09e2358c5"
+
+## Interpretación
+
+- La página dinámica (`/alumnos`) no incluye `ETag` ni `Last-Modified`:
+  Next.js la sirve como HTML generado en cada petición (modo
+  desarrollo, sin caché de contenido), coherente con su
+  `Cache-Control: no-cache, must-revalidate` ya observado en F2-E04.
+- El asset estático sí incluye validadores de caché (`ETag` y
+  `Last-Modified`), aunque su `Cache-Control` también es
+  `no-cache, must-revalidate` — es decir, el navegador/cliente puede
+  guardar una copia local, pero debe revalidarla contra el servidor en
+  cada uso (no puede reutilizarla "a ciegas" durante un tiempo, como sí
+  ocurriría con `max-age`/`immutable`).
+- Al enviar el `ETag` obtenido en una petición condicional
+  (`If-None-Match`), el servidor respondió `304 Not Modified` sin
+  reenviar el cuerpo del archivo (nótese la ausencia de
+  `Content-Length` en la respuesta 304), confirmando que la
+  revalidación de caché funciona correctamente extremo a extremo
+  (Nginx como proxy no interfiere con los validadores generados por el
+  frontend).
+- Que los assets de Next.js en modo desarrollo usen `no-cache` en vez
+  de `max-age` de largo plazo (como ocurriría con `immutable` en un
+  build de producción con nombres de archivo hasheados) es esperable:
+  el servidor de desarrollo recompila assets en caliente y no puede
+  garantizar inmutabilidad. Se deja como observación para el informe:
+  un build de producción (`next build && next start`) típicamente
+  serviría estos mismos assets con `Cache-Control: public,
+  max-age=31536000, immutable`.
+- Prueba relacionada: P09 (Caché) de la matriz de pruebas.
