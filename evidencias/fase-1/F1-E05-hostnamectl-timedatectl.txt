@@ -1,0 +1,38 @@
+F1-E05 — hostnamectl y sincronización de fecha/hora
+Fecha: 2026-09-14
+Comando: hostnamectl && timedatectl
+Host: jeroky-arqweb-vm (arqweb@jeroky-arqweb-vm)
+
+$ hostnamectl
+ Static hostname: jeroky-arqweb-vm
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: 3cd0b03924c64393a4636c9c6f3f103b
+         Boot ID: 70e7dd0f2c0a49f5a0415385e4bc18ba
+  Virtualization: qemu
+Operating System: Ubuntu 24.04.5 LTS
+          Kernel: Linux 6.8.0-139-generic
+    Architecture: arm64
+ Hardware Vendor: QEMU
+  Hardware Model: QEMU Virtual Machine
+Firmware Version: 0.0.0
+   Firmware Date: Fri 2015-02-06
+    Firmware Age: 11y 7month 1w
+
+$ timedatectl
+               Local time: Mon 2026-09-14 02:33:53 UTC
+           Universal time: Mon 2026-09-14 02:33:53 UTC
+                 RTC time: Mon 2026-09-14 02:33:53
+                Time zone: Etc/UTC (UTC, +0000)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+
+Interpretación:
+- La VM corre Ubuntu Server 24.04.5 LTS (arm64) sobre QEMU/UTM, con hostname
+  "jeroky-arqweb-vm" configurado correctamente.
+- El reloj del sistema está sincronizado por NTP (System clock synchronized: yes,
+  NTP service: active), lo que garantiza timestamps confiables en logs y evidencias.
+- La zona horaria es UTC (no la hora local de Paraguay, UTC-3); se mantiene así por
+  convención de servidores, y las evidencias de este repositorio deben leerse
+  considerando ese desfase de -3h respecto a la hora de Asunción.

@@ -1,0 +1,24 @@
+F1-E07 — ip route y ruta por defecto
+Fecha: 2026-09-14
+Comando: ip route
+Host: jeroky-arqweb-vm (arqweb@jeroky-arqweb-vm)
+
+default via 192.168.0.1 dev enp0s1 proto dhcp src 192.168.0.17 metric 100
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
+172.18.0.0/16 dev br-28db1cb5596f proto kernel scope link src 172.18.0.1
+186.16.16.16 via 192.168.0.1 dev enp0s1 proto dhcp src 192.168.0.17 metric 100
+186.17.17.17 via 192.168.0.1 dev enp0s1 proto dhcp src 192.168.0.17 metric 100
+192.168.0.0/24 dev enp0s1 proto kernel scope link src 192.168.0.17 metric 100
+192.168.0.1 dev enp0s1 proto dhcp scope link src 192.168.0.17 metric 100
+
+Interpretación:
+- La ruta por defecto (default via 192.168.0.1) sale por enp0s1, hacia el gateway
+  del router de la red local. Es la ruta que usa la VM para alcanzar Internet.
+- La red 192.168.0.0/24 es alcanzable directamente (sin gateway) por enp0s1: en
+  esa misma red está tanto el anfitrión (Mac) como la VM (192.168.0.17), lo que
+  explica por qué el anfitrión llega a la VM sin necesidad de reglas adicionales.
+- Las rutas hacia 186.16.16.16 y 186.17.17.17 (los servidores DNS asignados por
+  DHCP, ver F1-E08) están explícitas via el mismo gateway, confirmando que la
+  resolución de nombres también sale por la interfaz enp0s1.
+- Las rutas a 172.17.0.0/16 y 172.18.0.0/16 corresponden a las redes internas de
+  Docker (docker0 y br-28db1cb5596f) y no involucran al gateway del anfitrión.

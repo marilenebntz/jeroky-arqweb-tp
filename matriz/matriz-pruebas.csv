@@ -1,10 +1,10 @@
 ID,Dimension,Prueba,Evidencia,Estado,Resultado,Observaciones
-P01,Direccionamiento,"IP mascara gateway e interfaces",,Pendiente,,
-P02,Conectividad,"Ping ARP y acceso TCP anfitrion-VM",,Pendiente,,
-P03,Puertos,"Puerto proceso y servicio asociado",,Pendiente,,
-P04,Nombre,"Resolucion de nombre local y comparacion con IP",,Pendiente,,
-P05,HTTP,"Metodo estado cabeceras y cuerpo",,Pendiente,,
-P06,Proxy,"Ruta cliente-proxy-backend y logs",,Pendiente,,
+P01,Direccionamiento,"IP mascara gateway e interfaces","F1-E06-ip-addr.txt, F1-E07-ip-route.txt",Listo,"enp0s1 192.168.0.17/24, gateway 192.168.0.1","Anfitrion y VM en la misma red 192.168.0.0/24"
+P02,Conectividad,"Ping ARP y acceso TCP anfitrion-VM","F1-E09a-conectividad-vm-internet.png, F1-E09b-conectividad-anfitrion-vm.png",Listo,"0% perdida; anfitrion-VM ~1ms, VM-Internet ~56ms","Confirmado en ambos sentidos"
+P03,Puertos,"Puerto proceso y servicio asociado","F1-E10-puertos-escucha.png",Listo,"22 sshd, 80 nginx, 3000 frontend, 3001 backend, 5432 postgres","5432 expuesto en 0.0.0.0, restringir en Hito 4"
+P04,Nombre,"Resolucion de nombre local y comparacion con IP",,Pendiente,,"Corresponde al Hito 3 (nombre local aun no configurado)"
+P05,HTTP,"Metodo estado cabeceras y cuerpo",,Pendiente,,"Falta inspeccion con curl -v / curl -I (F2-E04)"
+P06,Proxy,"Ruta cliente-proxy-backend y logs","F2-E01-jeroky-funcionando-proxy-puerto80.png, F2-E02-configuracion-nginx.png","En progreso","Nginx proxy_pass a frontend:3000 confirmado por puerto 80",Falta correlacionar logs y comparar acceso directo vs proxy (Hito 3)
 P07,TLS,"Handshake SAN emisor vigencia y protocolo",,Pendiente,,
 P08,Rendimiento,"10 mediciones DNS TCP TLS TTFB y total",,Pendiente,,
 P09,Cache,"Cache-Control ETag Last-Modified y 304",,Pendiente,,

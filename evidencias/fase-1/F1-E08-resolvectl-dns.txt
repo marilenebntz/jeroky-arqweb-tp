@@ -1,0 +1,28 @@
+F1-E08 — resolvectl status y DNS
+Fecha: 2026-09-14
+Comando: resolvectl status
+Host: jeroky-arqweb-vm (arqweb@jeroky-arqweb-vm)
+
+Global
+         Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+  resolv.conf mode: stub
+
+Link 2 (enp0s1)
+    Current Scopes: DNS
+         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported
+Current DNS Server: 186.17.17.17
+       DNS Servers: 186.17.17.17 186.16.16.16
+
+Link 3 (docker0): sin DNS configurado (Current Scopes: none)
+Link 101 (br-28db1cb5596f): sin DNS configurado (Current Scopes: none)
+Link 102-104 (veth*): sin DNS configurado (Current Scopes: none)
+
+Interpretación:
+- La resolución de nombres de la VM se realiza a través de systemd-resolved en
+  modo "stub" (127.0.0.53), que reenvía las consultas a los servidores DNS
+  recibidos por DHCP en la interfaz enp0s1: 186.17.17.17 (primario) y
+  186.16.16.16 (secundario) — coinciden con las rutas explícitas vistas en F1-E07.
+- Las interfaces de Docker no tienen DNS propio configurado a nivel de host; la
+  resolución de nombres dentro de los contenedores la maneja el propio motor de
+  Docker (por eso el backend puede resolver el hostname "db" del servicio
+  PostgreSQL sin depender de estos servidores DNS externos).

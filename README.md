@@ -30,10 +30,13 @@ flowchart LR
 
 | Fase | Alcance | Estado |
 |---|---|---|
-| Hito 1 | Selección, arquitectura, VM y línea base | En progreso |
-| Hito 2 | Instalación y publicación HTTP | Pendiente |
+| Hito 1 | Selección, arquitectura, VM y línea base | **Completo** |
+| Hito 2 | Instalación y publicación HTTP | Técnicamente completo (falta curl y persistencia, ver `evidencias/fase-2`) |
 | Hito 3 | DNS local, TLS y mediciones | Pendiente |
 | Hito 4 | Seguridad, resiliencia y defensa | Pendiente |
+
+Commit desplegado: backend `0b8a878` / frontend `3b41d84` en `release/1`
+(ver `docs/ficha-tecnica.md` para el hash completo).
 
 ## Organización
 
