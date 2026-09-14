@@ -1,0 +1,111 @@
+# F2-E04: Verificación HTTP con curl (métodos, códigos de estado, cabeceras)
+
+Fecha: 2026-09-14
+Host de prueba: jeroky.local (192.168.0.17), vía proxy Nginx puerto 80
+
+## Comando 1: HEAD a la raíz (comportamiento de redirect de Next.js)
+
+$ curl -I http://jeroky.local
+
+HTTP/1.1 307 Temporary Redirect
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 14 Sep 2026 03:57:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+location: /alumnos
+Cache-Control: no-cache, must-revalidate
+X-Powered-By: Next.js
+
+## Comando 2: HEAD al módulo Alumnos (200 esperado)
+
+$ curl -I http://jeroky.local/alumnos
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 14 Sep 2026 03:57:07 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+Cache-Control: no-cache, must-revalidate
+X-Powered-By: Next.js
+
+## Comando 3: Ruta inexistente (404 esperado)
+
+$ curl -I http://jeroky.local/no-existe-esta-ruta
+
+HTTP/1.1 404 Not Found
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 14 Sep 2026 03:57:12 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Cache-Control: no-cache, must-revalidate
+Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+X-Powered-By: Next.js
+
+## Comando 4: Método OPTIONS
+
+$ curl -X OPTIONS -I http://jeroky.local/alumnos
+
+HTTP/1.1 400 Bad Request
+Server: nginx/1.24.0 (Ubuntu)
+Date: Mon, 14 Sep 2026 03:57:17 GMT
+Transfer-Encoding: chunked
+Connection: keep-alive
+vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch
+
+## Comando 5: curl -v (handshake TCP + petición/respuesta completas)
+
+$ curl -v http://jeroky.local/alumnos
+
+* Host jeroky.local:80 was resolved.
+* IPv4: 192.168.0.17
+*   Trying 192.168.0.17:80...
+* Connected to jeroky.local (192.168.0.17) port 80
+> GET /alumnos HTTP/1.1
+> Host: jeroky.local
+> User-Agent: curl/8.7.1
+> Accept: */*
+>
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Server: nginx/1.24.0 (Ubuntu)
+< Date: Mon, 14 Sep 2026 03:57:22 GMT
+< Content-Type: text/html; charset=utf-8
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< Vary: rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch, Accept-Encoding
+< Cache-Control: no-cache, must-revalidate
+< X-Powered-By: Next.js
+<
+[... cuerpo HTML omitido: shell de Next.js App Router con scripts de
+     hidratación React/RSC (~18 KB) ...]
+* Connection #0 to host jeroky.local left intact
+
+## Interpretación
+
+- El proxy Nginx responde correctamente por el nombre `jeroky.local`
+  (además de por IP), confirmando el punto 5 del Hito 2 (nombre local).
+- Códigos de estado observados: 307 (redirect de `/` a `/alumnos`, propio
+  del enrutamiento de Next.js App Router en `release/1`, donde Alumnos es
+  el único módulo funcional), 200 (módulo Alumnos), 404 (ruta inexistente,
+  manejado por Next.js).
+- Cabeceras relevantes: `Server: nginx/1.24.0 (Ubuntu)` confirma que el
+  proxy inverso está en el camino de la petición; `X-Powered-By: Next.js`
+  confirma que la respuesta final proviene del frontend (Nginx hace
+  `proxy_pass` directo al puerto 3000, sin modificar el cuerpo);
+  `Cache-Control: no-cache, must-revalidate` indica que estas páginas
+  dinámicas no son cacheables (dato relevante para el análisis de caché
+  del Hito 3).
+- El método `OPTIONS` devuelve `400 Bad Request`: Next.js (modo
+  desarrollo) no implementa un manejador explícito de `OPTIONS` para
+  rutas de página (no es un endpoint de API con CORS configurado). Se
+  registra como observación a revisar en Hito 4 si corresponde definir
+  manejo de CORS en las rutas de API del backend (puerto 3001).
+- El cuerpo de la respuesta 200 incluye, dentro del payload de React
+  Server Components, un componente interno "notFound boundary" (parte
+  estándar del framework para manejar sub-rutas no encontradas dentro del
+  App Router). Esto no indica que la página falle: el código de estado
+  HTTP fue 200 y el módulo Alumnos se visualiza correctamente en el
+  navegador (ver F2-E01).
+- Prueba relacionada: P05 (HTTP) de la matriz de pruebas.

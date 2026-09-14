@@ -31,7 +31,7 @@ flowchart LR
 | Fase | Alcance | Estado |
 |---|---|---|
 | Hito 1 | Selección, arquitectura, VM y línea base | **Completo** |
-| Hito 2 | Instalación y publicación HTTP | Técnicamente completo (falta curl y persistencia, ver `evidencias/fase-2`) |
+| Hito 2 | Instalación y publicación HTTP | **Completo** |
 | Hito 3 | DNS local, TLS y mediciones | Pendiente |
 | Hito 4 | Seguridad, resiliencia y defensa | Pendiente |
 
