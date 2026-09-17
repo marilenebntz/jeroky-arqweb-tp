@@ -1,0 +1,23 @@
+HITO 4 - F4-E02: CABECERAS Y ENDURECIMIENTO DE NGINX
+Fecha: 2026-09-16
+
+Comando:
+curl -k -I --resolve jeroky.local:443:127.0.0.1 https://jeroky.local/alumnos
+
+Salida relevante:
+HTTP/1.1 200 OK
+Server: nginx
+Strict-Transport-Security: max-age=31536000
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Referrer-Policy: strict-origin-when-cross-origin
+
+No aparece X-Powered-By y la versión de Nginx queda oculta.
+
+Directivas aplicadas:
+server_tokens off;
+proxy_hide_header X-Powered-By;
+add_header Strict-Transport-Security "max-age=31536000" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;

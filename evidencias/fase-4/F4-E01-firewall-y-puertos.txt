@@ -1,0 +1,28 @@
+HITO 4 - F4-E01: FIREWALL, RED Y PUERTOS
+Fecha: 2026-09-16
+
+Red final de la VM:
+  IPv4 de enp0s1: 192.168.64.2
+  Gateway: 192.168.64.1
+  Modo UTM: red compartida (virtio-net-pci)
+
+UFW:
+  Status: active
+  Default: deny (incoming), allow (outgoing), deny (routed)
+  22/tcp (OpenSSH): ALLOW IN
+  80,443/tcp (Nginx Full): ALLOW IN
+
+Publicación de contenedores:
+  frontend: 127.0.0.1:3000 -> 3000/tcp
+  backend:  127.0.0.1:3001 -> 3000/tcp
+  db:       5432/tcp solamente en la red interna de Docker
+
+Comprobación desde el Mac:
+  443/tcp: conexión exitosa
+  3000/tcp: timeout
+  3001/tcp: timeout
+  5432/tcp: timeout
+
+Interpretación:
+Solo SSH y Nginx son accesibles desde el anfitrión. El frontend, la API y
+PostgreSQL no quedan expuestos directamente a la red local.
