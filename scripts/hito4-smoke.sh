@@ -10,8 +10,8 @@ check_status() {
   local expected="$3"
   local actual
 
-  actual="$(curl "${CURL_OPTS[@]}" --request "$method" +    --write-out '%{http_code}' "${BASE_URL}${path}")"
-  printf '%-6s %-24s HTTP %s (esperado %s)\n' +    "$method" "$path" "$actual" "$expected"
+  actual="$(curl "${CURL_OPTS[@]}" --request "$method" --write-out '%{http_code}' "${BASE_URL}${path}")"
+  printf '%-6s %-24s HTTP %s (esperado %s)\n' "$method" "$path" "$actual" "$expected"
 
   if [[ "$actual" != "$expected" ]]; then
     return 1

@@ -20,7 +20,7 @@ trap restore_backend EXIT INT TERM
 
 docker compose stop backend
 
-down_code="$(curl --insecure --silent --output /dev/null +  --write-out '%{http_code}' "$BASE_URL/api/")"
+down_code="$(curl --insecure --silent --output /dev/null --write-out '%{http_code}' "$BASE_URL/api/")"
 echo "Backend detenido -> HTTP $down_code"
 [[ "$down_code" == "502" ]]
 
@@ -29,7 +29,7 @@ docker compose start backend >/dev/null
 backend_started=yes
 
 for ((second = 1; second <= MAX_WAIT; second++)); do
-  code="$(curl --insecure --silent --output /dev/null +    --write-out '%{http_code}' "$BASE_URL/api/")"
+  code="$(curl --insecure --silent --output /dev/null --write-out '%{http_code}' "$BASE_URL/api/")"
   elapsed="$(( $(date +%s) - start_epoch ))"
   echo "Segundo $elapsed -> HTTP $code"
   if [[ "$code" == "200" ]]; then
