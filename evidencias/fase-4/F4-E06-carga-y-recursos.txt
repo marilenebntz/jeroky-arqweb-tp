@@ -1,0 +1,35 @@
+HITO 4 - F4-E06: PRUEBA DE CARGA Y RECURSOS
+Fecha: 2026-09-16
+
+Comando ejecutado desde el Mac:
+ab -t 30 -c 10 -k https://jeroky.local/alumnos
+
+Resultados:
+Concurrency Level: 10
+Time taken for tests: 30.054 seconds
+Complete requests: 1128
+Failed requests: 0
+Requests per second: 37.53
+Time per request: 266.436 ms
+Mediana: 238 ms
+Percentil 95: 356 ms
+Máximo: 1093 ms
+
+Recursos observados con docker stats:
+Antes:
+  frontend: 840.8 MiB
+  backend: 402.8 MiB
+  db: 49.53 MiB
+
+Después:
+  frontend: 2.13 GiB
+  backend: 403.3 MiB
+  db: 49.63 MiB
+
+Verificación final:
+Frontend después de carga -> HTTP 200
+Backend después de carga -> HTTP 200
+
+Interpretación:
+No hubo solicitudes fallidas y el sistema siguió operativo. El crecimiento de
+memoria se concentró en el frontend Next.js ejecutado en modo de desarrollo.

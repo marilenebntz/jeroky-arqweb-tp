@@ -1,0 +1,10 @@
+HITO 4 - F4-E04: RESPUESTAS ANTE ERRORES
+Fecha: 2026-09-16
+
+GET /ruta-inexistente -> HTTP 404
+TRACE / -> HTTP 405
+Backend operativo, GET /api/ -> HTTP 200
+
+Interpretación:
+Una ruta inexistente no revela contenido inesperado y el método TRACE no está
+habilitado. La ruta de salud de la API respondió correctamente.

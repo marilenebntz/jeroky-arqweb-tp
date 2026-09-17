@@ -1,0 +1,28 @@
+HITO 4 - F4-E05: CAÍDA Y RECUPERACIÓN DEL BACKEND
+Fecha: 2026-09-16
+
+1. Se detuvo únicamente el servicio backend:
+   docker compose stop backend
+
+2. Respuesta observada a través de Nginx:
+   Backend detenido -> HTTP 502
+
+3. Registro de Nginx:
+   connect() failed (111: Connection refused) while connecting to upstream
+   upstream: http://127.0.0.1:3001/api/
+
+4. Se inició nuevamente el servicio:
+   docker compose start backend
+
+5. Recuperación:
+   Segundo 1 -> HTTP 502
+   Segundo 2 -> HTTP 502
+   Segundo 3 -> HTTP 502
+   Segundo 4 -> HTTP 502
+   Segundo 5 -> HTTP 502
+   Segundo 6 -> HTTP 502
+   Segundo 7 -> HTTP 200
+
+Resultado:
+Nginx informó correctamente la indisponibilidad y la API se recuperó de forma
+automática en aproximadamente siete segundos.
