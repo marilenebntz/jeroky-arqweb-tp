@@ -1,8 +1,5 @@
 # ADR-003: Confirmación de rama de despliegue y seed de base de datos
 
-- Fecha: 2026-09-14
-- Estado: Aceptada
-
 ## Contexto
 
 Durante la verificación de Hito 2 se instaló inicialmente la rama `master` de
