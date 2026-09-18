@@ -1,8 +1,5 @@
 # ADR-001: Selección de la aplicación
 
-- Fecha: 2026-09-13
-- Estado: Aceptada
-
 ## Contexto
 
 El TP exige evaluar al menos dos aplicaciones web y seleccionar una que pueda comprenderse, desplegarse y verificarse dentro de cuatro a cinco clases.
