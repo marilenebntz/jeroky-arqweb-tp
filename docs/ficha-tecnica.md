@@ -22,9 +22,6 @@
 - Backend: TypeORM, driver `pg` (PostgreSQL), JWT + Passport, bcrypt, Swagger,
   class-validator/class-transformer, AWS SDK para Rekognition (biometría facial).
 - Frontend: React, React Hook Form, Zod, TanStack Table, MediaPipe, Recharts.
-- Servicios externos previstos: Amazon Rekognition y Brevo (email transaccional).
-  Sus credenciales son placeholders de ejemplo en el repositorio (no reales) y se
-  usarán con secretos locales no versionados cuando corresponda.
 
 ## Repositorios y versión desplegada
 
