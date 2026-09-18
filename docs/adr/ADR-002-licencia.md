@@ -1,8 +1,5 @@
 # ADR-002: Licencia de Jeroky Soft
 
-- Fecha: 2026-09-13
-- Estado: Aceptada
-
 ## Contexto
 
 La aplicación seleccionada debía contar con una licencia de código abierto identificable. Los repositorios inicialmente no incluían un archivo de licencia y el backend declaraba `UNLICENSED`.
