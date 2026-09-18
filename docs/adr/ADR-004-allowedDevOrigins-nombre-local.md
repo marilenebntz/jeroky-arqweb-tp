@@ -1,8 +1,5 @@
 # ADR-004: Habilitar `jeroky.local` en `allowedDevOrigins` del frontend
 
-- Fecha: 2026-09-14
-- Estado: Aceptada
-
 ## Contexto
 
 Al configurar el nombre local `jeroky.local` y actualizar `server_name` en Nginx y `/etc/hosts` del anfitrión, la aplicación quedaba indefinidamente en "Cargando panel institucional..." al acceder mediante el nombre local, mientras que el acceso directo por IP funcionaba.
