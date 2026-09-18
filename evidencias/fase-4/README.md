@@ -1,6 +1,6 @@
 # Evidencias - Fase 4 (Hito 4: seguridad, resiliencia y defensa)
 
-Estado: **completo** (2026-09-16).
+Estado: **completo** .
 
 | Evidencia | Descripción | Archivo(s) | Estado |
 |---|---|---|---|
