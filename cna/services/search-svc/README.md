@@ -91,10 +91,28 @@ Compose conserva el volumen de datos al ejecutar este comando.
 
 ## Pendientes
 
-Faltan los contratos de búsqueda, el health check de Compose,
-la autenticación, la integración con el gateway y las pruebas
-de recuperación y despliegue en un entorno nuevo.
+Faltan los contratos de búsqueda, la autenticación,
+la integración con el gateway y las pruebas de recuperación
+y despliegue en un entorno nuevo.
 
 Por ahora, los eventos se aplican en el orden en que llegan.
 También falta mejorar las búsquedas con mayúsculas y minúsculas
 fuera del alfabeto ASCII. SQLite usa la API experimental de Node.js 22.
+
+## Salud del servicio
+
+Podemos consultar el estado con:
+
+```bash
+curl -i http://127.0.0.1:3003/health
+```
+
+La respuesta fue HTTP 200 con `{"status":"ok","database":"ok"}`.
+También agregamos esta consulta al health check de Compose y
+comprobamos que el contenedor aparece como `Healthy`.
+
+Esta prueba comprueba que la API responde y SQLite ejecuta `SELECT 1`.
+Todavía falta comprobar RabbitMQ, las tablas y la capacidad de escritura
+dentro del estado de salud.
+
+[Captura de la prueba](../../evidencias/search-health-200.png).
