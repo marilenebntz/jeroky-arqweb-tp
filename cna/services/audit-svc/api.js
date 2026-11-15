@@ -13,6 +13,12 @@ function startApi(db) {
     try {
       const url = new URL(request.url, "http://localhost");
 
+      if (url.pathname === "/health" && request.method === "GET") {
+        db.prepare("SELECT 1").get();
+        send(200, { status: "ok", database: "ok" });
+        return;
+      }
+
       if (url.pathname !== "/v2/audit") {
         send(404, { error: "Ruta inexistente" });
         return;
