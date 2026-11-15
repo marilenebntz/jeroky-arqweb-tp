@@ -91,9 +91,8 @@ Compose conserva el volumen de datos al ejecutar este comando.
 
 ## Pendientes
 
-Faltan los contratos de búsqueda, la autenticación,
-la integración con el gateway y las pruebas de recuperación
-y despliegue en un entorno nuevo.
+Faltan la autenticación, la integración con el gateway
+y las pruebas de recuperación y despliegue en un entorno nuevo.
 
 Por ahora, los eventos se aplican en el orden en que llegan.
 También falta mejorar las búsquedas con mayúsculas y minúsculas
@@ -116,3 +115,12 @@ Todavía falta comprobar RabbitMQ, las tablas y la capacidad de escritura
 dentro del estado de salud.
 
 [Captura de la prueba](../../evidencias/search-health-200.png).
+
+## Contratos
+
+Guardamos los contratos en la carpeta `cna/contracts`:
+
+- [OpenAPI](../../contracts/search.openapi.json) describe las consultas de búsqueda y la ruta `/health`.
+- [AsyncAPI](../../contracts/search.asyncapi.json) describe los eventos que recibe el servicio, los reintentos y el envío a la DLQ.
+
+Validamos los dos con Redocly y pasaron sin errores.
