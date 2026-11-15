@@ -1,0 +1,23 @@
+services:
+  audit:
+    build: .
+    restart: unless-stopped
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:?Falta usuario de RabbitMQ}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?Falta contraseña de RabbitMQ}
+    volumes:
+      - ../../contracts:/contracts:ro
+      - audit_data:/data
+    networks:
+      - broker
+
+volumes:
+  audit_data:
+    external: true
+    name: jeroky_audit_data
+
+networks:
+  broker:
+    external: true
+    name: rabbitmq_default
