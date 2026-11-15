@@ -1,0 +1,163 @@
+{
+  "exchanges": [
+    {
+      "name": "jeroky.events",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "jeroky.retry",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "jeroky.dlx",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "jeroky.search",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "jeroky.dlx",
+        "x-dead-letter-routing-key": "jeroky.search"
+      }
+    },
+    {
+      "name": "jeroky.search.retry",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-message-ttl": 10000,
+        "x-dead-letter-exchange": "",
+        "x-dead-letter-routing-key": "jeroky.search"
+      }
+    },
+    {
+      "name": "jeroky.search.dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "jeroky.audit",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "jeroky.dlx",
+        "x-dead-letter-routing-key": "jeroky.audit"
+      }
+    },
+    {
+      "name": "jeroky.audit.retry",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-message-ttl": 10000,
+        "x-dead-letter-exchange": "",
+        "x-dead-letter-routing-key": "jeroky.audit"
+      }
+    },
+    {
+      "name": "jeroky.audit.dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "jeroky.events",
+      "vhost": "/",
+      "destination": "jeroky.search",
+      "destination_type": "queue",
+      "routing_key": "jeroky.entity.updated",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.events",
+      "vhost": "/",
+      "destination": "jeroky.search",
+      "destination_type": "queue",
+      "routing_key": "jeroky.entity.deleted",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.retry",
+      "vhost": "/",
+      "destination": "jeroky.search.retry",
+      "destination_type": "queue",
+      "routing_key": "jeroky.search",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.dlx",
+      "vhost": "/",
+      "destination": "jeroky.search.dlq",
+      "destination_type": "queue",
+      "routing_key": "jeroky.search",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.events",
+      "vhost": "/",
+      "destination": "jeroky.audit",
+      "destination_type": "queue",
+      "routing_key": "jeroky.entity.created",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.events",
+      "vhost": "/",
+      "destination": "jeroky.audit",
+      "destination_type": "queue",
+      "routing_key": "jeroky.entity.updated",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.events",
+      "vhost": "/",
+      "destination": "jeroky.audit",
+      "destination_type": "queue",
+      "routing_key": "jeroky.entity.deleted",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.retry",
+      "vhost": "/",
+      "destination": "jeroky.audit.retry",
+      "destination_type": "queue",
+      "routing_key": "jeroky.audit",
+      "arguments": {}
+    },
+    {
+      "source": "jeroky.dlx",
+      "vhost": "/",
+      "destination": "jeroky.audit.dlq",
+      "destination_type": "queue",
+      "routing_key": "jeroky.audit",
+      "arguments": {}
+    }
+  ]
+}
