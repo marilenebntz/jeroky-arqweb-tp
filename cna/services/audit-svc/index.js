@@ -45,6 +45,23 @@ async function main() {
   });
   connection.on("close", () => process.exit(1));
 
+  const publisher = await connection.createConfirmChannel();
+
+  publisher.on("error", () => {
+    console.error("Error al publicar: mensaje original sin confirmar");
+    process.exit(1);
+  });
+  publisher.on("close", () => process.exit(1));
+  publisher.on("return", () => {
+    console.error("Mensaje sin ruta: original sin confirmar");
+    process.exit(1);
+  });
+
+  await publisher.checkExchange("jeroky.retry");
+  await publisher.checkExchange("jeroky.dlx");
+  await publisher.checkQueue("jeroky.audit.retry");
+  await publisher.checkQueue("jeroky.audit.dlq");
+
   const channel = await connection.createChannel();
   channel.on("error", () => {
     console.error("Error en el canal AMQP");
@@ -84,8 +101,43 @@ async function main() {
         request_id: event.request_id,
       }));
     } catch {
-      console.error("Fallo de almacenamiento: mensaje sin confirmar");
-      process.exit(1);
+      const previous = message.properties.headers?.["x-audit-retries"] ?? 0;
+      const retries = Number.isSafeInteger(previous) && previous >= 0
+        ? previous
+        : 3;
+      const exhausted = retries >= 3;
+      const nextRetries = exhausted ? retries : retries + 1;
+      const exchange = exhausted ? "jeroky.dlx" : "jeroky.retry";
+
+      try {
+        publisher.publish(exchange, "jeroky.audit", message.content, {
+          persistent: true,
+          mandatory: true,
+          contentType: "application/json",
+          messageId: event.event_id,
+          correlationId: event.request_id,
+          headers: {
+            ...message.properties.headers,
+            "x-audit-retries": nextRetries,
+          },
+        }, (error) => {
+          if (error) {
+            console.error("Publicacion fallida: original sin confirmar");
+            process.exit(1);
+          }
+
+          console.log(JSON.stringify({
+            action: exhausted ? "retry_exhausted_dlq" : "retry_scheduled",
+            event_id: event.event_id,
+            retry: nextRetries,
+          }));
+          channel.ack(message);
+        });
+      } catch {
+        console.error("Publicacion fallida: original sin confirmar");
+        process.exit(1);
+      }
+      return;
     }
 
     channel.ack(message);
