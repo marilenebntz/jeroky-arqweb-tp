@@ -143,6 +143,7 @@ async function main() {
     channel.ack(message);
   }, { noAck: false });
 
+  require("./api").startApi(db);
   console.log("audit-svc esperando eventos en jeroky.audit");
 }
 
