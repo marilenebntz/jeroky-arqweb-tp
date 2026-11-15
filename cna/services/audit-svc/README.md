@@ -82,7 +82,33 @@ y eliminó el contenedor de bloqueo.
 
 Evidencia: `../../evidencias/audit-reintentos-agotados-dlq.png`.
 
-Quedan pendientes la API de consulta, los health checks y la prueba
-completa en un entorno nuevo.
+Quedan pendientes los health checks, la autenticación e integración
+con el gateway y la prueba completa en un entorno nuevo.
 
 SQLite utiliza la API experimental de Node.js 22.
+
+## API de consulta
+
+Disponible localmente en `http://127.0.0.1:3002/v2/audit`.
+
+Permite filtrar por `entity_type` y `entity_id`.
+La paginación utiliza `page` (por defecto 1) y `limit`
+(por defecto 20, máximo 100).
+
+```bash
+curl -i 'http://127.0.0.1:3002/v2/audit?entity_type=student&entity_id=demo-001&page=1&limit=10'
+```
+
+La respuesta incluye `page`, `limit`, `total` e `items`.
+
+Pruebas realizadas con el evento de demostración:
+
+- Filtros coincidentes: HTTP 200 y un evento.
+- Identificador inexistente: HTTP 200 y lista vacía.
+- `page=0`: HTTP 400.
+- Consulta general: HTTP 200 y el evento almacenado.
+
+La consulta HTTP 200 está documentada en
+[la captura de evidencia](../../evidencias/audit-api-consulta-200.png).
+
+La API todavía requiere autenticación e integración con el gateway.
