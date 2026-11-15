@@ -11,7 +11,7 @@ const schema = JSON.parse(
 );
 const validate = ajv.compile(schema);
 
-const { applyEvent } = require("./storage");
+const { db, applyEvent } = require("./storage");
 
 async function main() {
   const connection = await amqp.connect({
@@ -129,6 +129,7 @@ async function main() {
     channel.ack(message);
   }, { noAck: false });
 
+  require("./api").startApi(db);
   console.log("search-svc esperando eventos en jeroky.search");
 }
 
