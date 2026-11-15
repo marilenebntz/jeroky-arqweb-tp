@@ -1,0 +1,239 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Jeroky - Eventos de busqueda",
+    "version": "0.1.0"
+  },
+  "defaultContentType": "application/json",
+  "servers": {
+    "local": {
+      "host": "127.0.0.1:5672",
+      "protocol": "amqp",
+      "protocolVersion": "0.9.1",
+      "description": "Acceso local. Los contenedores usan rabbitmq:5672."
+    }
+  },
+  "channels": {
+    "retry": {
+      "address": "jeroky.search",
+      "description": "Si falla al guardar, publica el mensaje en jeroky.retry con la clave jeroky.search. La cola jeroky.search.retry espera 10 segundos y lo devuelve a jeroky.search. Hace hasta tres reintentos.",
+      "servers": [
+        {
+          "$ref": "#/servers/local"
+        }
+      ],
+      "messages": {
+        "event": {
+          "$ref": "#/components/messages/searchEvent"
+        }
+      },
+      "bindings": {
+        "amqp": {
+          "is": "routingKey",
+          "exchange": {
+            "name": "jeroky.retry",
+            "type": "direct",
+            "durable": true,
+            "autoDelete": false,
+            "vhost": "/"
+          },
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "deadLetter": {
+      "address": "jeroky.search",
+      "description": "Si se agotan los reintentos, publica el mensaje en jeroky.dlx con la clave jeroky.search para enviarlo a jeroky.search.dlq. Espera la confirmacion de RabbitMQ antes de confirmar el original.",
+      "servers": [
+        {
+          "$ref": "#/servers/local"
+        }
+      ],
+      "messages": {
+        "event": {
+          "$ref": "#/components/messages/searchEvent"
+        }
+      },
+      "bindings": {
+        "amqp": {
+          "is": "routingKey",
+          "exchange": {
+            "name": "jeroky.dlx",
+            "type": "topic",
+            "durable": true,
+            "autoDelete": false,
+            "vhost": "/"
+          },
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "search": {
+      "address": "jeroky.search",
+      "description": "Recibe los eventos de actualizacion y eliminacion desde jeroky.events. Con esos eventos actualiza o elimina los datos de busqueda. Guarda el event_id para evitar procesar dos veces el mismo evento. Confirma el mensaje despues de guardar los cambios. Los eventos invalidos van a jeroky.search.dlq. Por ahora procesa los cambios en el orden en que llegan.",
+      "servers": [
+        {
+          "$ref": "#/servers/local"
+        }
+      ],
+      "messages": {
+        "event": {
+          "$ref": "#/components/messages/searchEvent"
+        }
+      },
+      "bindings": {
+        "amqp": {
+          "is": "queue",
+          "queue": {
+            "name": "jeroky.search",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false,
+            "vhost": "/"
+          },
+          "bindingVersion": "0.3.0"
+        }
+      }
+    }
+  },
+  "operations": {
+    "retry": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/retry"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/retry/messages/event"
+        }
+      ],
+      "bindings": {
+        "amqp": {
+          "deliveryMode": 2,
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "deadLetter": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/deadLetter"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/deadLetter/messages/event"
+        }
+      ],
+      "bindings": {
+        "amqp": {
+          "deliveryMode": 2,
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "search": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/search"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/search/messages/event"
+        }
+      ],
+      "bindings": {
+        "amqp": {
+          "ack": true,
+          "bindingVersion": "0.3.0"
+        }
+      }
+    }
+  },
+  "components": {
+    "messages": {
+      "searchEvent": {
+        "name": "SearchEvent",
+        "correlationId": {
+          "location": "$message.payload#/request_id"
+        },
+        "headers": {
+          "type": "object",
+          "properties": {
+            "x-search-retries": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Cantidad de reintentos. Si no aparece, se toma como cero."
+            }
+          }
+        },
+        "payload": {
+          "title": "Jeroky Cloud Native Event Envelope",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "type",
+            "version",
+            "occurred_at",
+            "producer",
+            "request_id",
+            "payload"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Identificador único e inmutable del evento."
+            },
+            "type": {
+              "type": "string",
+              "pattern": "^jeroky\\.[a-z0-9_.-]+$",
+              "description": "Tipo de evento versionado por el productor.",
+              "enum": [
+                "jeroky.entity.updated",
+                "jeroky.entity.deleted"
+              ]
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "occurred_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "producer": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Servicio que originó el evento."
+            },
+            "request_id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Identificador propagado desde el gateway."
+            },
+            "payload": {
+              "type": "object",
+              "required": [
+                "entity_type",
+                "entity_id"
+              ],
+              "properties": {
+                "entity_type": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "entity_id": {
+                  "type": "string",
+                  "pattern": "\\S"
+                }
+              },
+              "additionalProperties": true,
+              "description": "Datos de la entidad. entity_type indica el tipo y entity_id su identificador. Ambos deben tener texto y no quedar vacios."
+            }
+          }
+        }
+      }
+    }
+  }
+}
