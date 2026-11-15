@@ -82,8 +82,9 @@ y eliminó el contenedor de bloqueo.
 
 Evidencia: `../../evidencias/audit-reintentos-agotados-dlq.png`.
 
-Quedan pendientes los health checks, la autenticación e integración
-con el gateway y la prueba completa en un entorno nuevo.
+Quedan pendientes la autenticación e integración con el gateway,
+la comprobación de RabbitMQ en el estado de salud y la prueba completa
+en un entorno nuevo.
 
 SQLite utiliza la API experimental de Node.js 22.
 
@@ -112,3 +113,28 @@ La consulta HTTP 200 está documentada en
 [la captura de evidencia](../../evidencias/audit-api-consulta-200.png).
 
 La API todavía requiere autenticación e integración con el gateway.
+
+## Salud del servicio
+
+```bash
+curl -i http://127.0.0.1:3002/health
+```
+
+Devuelve HTTP 200 con `{"status":"ok","database":"ok"}` cuando
+la API responde y SQLite puede ejecutar `SELECT 1`.
+Docker utiliza esta ruta para comprobar la salud del contenedor.
+
+Esta consulta verifica la conexión con SQLite. La disponibilidad
+de las tablas, la capacidad de escritura y la conexión con RabbitMQ
+requieren comprobaciones adicionales.
+
+[Evidencia de la consulta de salud](../../evidencias/audit-health-200.png).
+
+## Persistencia tras reinicio
+
+Se reinició el servicio de auditoría mediante Docker Compose.
+Después del reinicio, `/health` y `/v2/audit` respondieron HTTP 200.
+La consulta conservó el mismo evento y devolvió `total: 1`.
+
+- [Primera captura](../../evidencias/audit-persistencia-reinicio_1.png).
+- [Segunda captura](../../evidencias/audit-persistencia-reinicio_2.png).
