@@ -1,0 +1,201 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Jeroky - API de busqueda",
+    "version": "0.1.0",
+    "description": "API local de laboratorio. La autenticacion y la integracion con el gateway estan pendientes."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3003"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "getSearchHealth",
+        "summary": "Comprobar HTTP y conexion con SQLite",
+        "description": "Ejecuta SELECT 1. La comprobacion de RabbitMQ, las tablas y la capacidad de escritura esta pendiente.",
+        "responses": {
+          "200": {
+            "description": "Comprobacion exitosa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "const": "ok"
+                    },
+                    "database": {
+                      "type": "string",
+                      "const": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Fallo de la comprobacion.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/search": {
+      "get": {
+        "operationId": "searchDocuments",
+        "summary": "Buscar documentos",
+        "description": "Busca coincidencias parciales en los valores de texto del documento. q se recorta en sus extremos. Si falta o queda vacio, lista documentos. type filtra por igualdad con entity_type. Los filtros se combinan con AND. Ordena por entity_type y entity_id ascendentes. La comparacion de mayusculas y minusculas usa lower de SQLite, con soporte limitado fuera de ASCII. Los desplazamientos de paginacion deben ser enteros seguros de JavaScript.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Texto buscado. Despues de recortar espacios admite hasta 500 unidades UTF-16 de JavaScript.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Tipo de entidad, por ejemplo student.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 20,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina de documentos encontrados.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "page",
+                    "limit",
+                    "total",
+                    "items"
+                  ],
+                  "properties": {
+                    "page": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "total": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "entity_type",
+                          "entity_id",
+                          "payload"
+                        ],
+                        "properties": {
+                          "entity_type": {
+                            "type": "string"
+                          },
+                          "entity_id": {
+                            "type": "string"
+                          },
+                          "payload": {
+                            "type": "object"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Paginacion invalida o texto de busqueda demasiado largo.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "No se pudo consultar el indice de busqueda.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
