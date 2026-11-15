@@ -1,0 +1,21 @@
+services:
+  search:
+    build: .
+    restart: unless-stopped
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:?Falta usuario de RabbitMQ}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?Falta contraseña de RabbitMQ}
+    volumes:
+      - ../../contracts:/contracts:ro
+      - search_data:/data
+    networks:
+      - broker
+
+volumes:
+  search_data:
+
+networks:
+  broker:
+    external: true
+    name: rabbitmq_default
