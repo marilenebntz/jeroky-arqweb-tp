@@ -1,0 +1,220 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Jeroky - Eventos de auditoria",
+    "version": "0.1.0"
+  },
+  "defaultContentType": "application/json",
+  "servers": {
+    "local": {
+      "host": "127.0.0.1:5672",
+      "protocol": "amqp",
+      "protocolVersion": "0.9.1",
+      "description": "Acceso local. Los contenedores usan rabbitmq:5672."
+    }
+  },
+  "channels": {
+    "audit": {
+      "address": "jeroky.audit",
+      "description": "Cola durable. Recibe jeroky.entity.created, updated y deleted desde jeroky.events. Confirma despues de guardar o detectar un duplicado. Los eventos invalidos se rechazan hacia la DLQ.",
+      "servers": [
+        {
+          "$ref": "#/servers/local"
+        }
+      ],
+      "messages": {
+        "event": {
+          "$ref": "#/components/messages/auditEvent"
+        }
+      },
+      "bindings": {
+        "amqp": {
+          "is": "queue",
+          "queue": {
+            "name": "jeroky.audit",
+            "durable": true,
+            "exclusive": false,
+            "autoDelete": false,
+            "vhost": "/"
+          },
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "retry": {
+      "address": "jeroky.audit",
+      "description": "Publica en el exchange jeroky.retry con routing key jeroky.audit. La cola jeroky.audit.retry espera 10000 ms y devuelve el mensaje a jeroky.audit. Hasta tres reintentos.",
+      "servers": [
+        {
+          "$ref": "#/servers/local"
+        }
+      ],
+      "messages": {
+        "event": {
+          "$ref": "#/components/messages/auditEvent"
+        }
+      },
+      "bindings": {
+        "amqp": {
+          "is": "routingKey",
+          "exchange": {
+            "name": "jeroky.retry",
+            "type": "direct",
+            "durable": true,
+            "autoDelete": false,
+            "vhost": "/"
+          },
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "deadLetter": {
+      "address": "jeroky.audit",
+      "description": "Al agotar reintentos publica en el exchange jeroky.dlx con routing key jeroky.audit, hacia jeroky.audit.dlq. Espera confirmacion del broker antes de confirmar el original.",
+      "servers": [
+        {
+          "$ref": "#/servers/local"
+        }
+      ],
+      "messages": {
+        "event": {
+          "$ref": "#/components/messages/auditEvent"
+        }
+      },
+      "bindings": {
+        "amqp": {
+          "is": "routingKey",
+          "exchange": {
+            "name": "jeroky.dlx",
+            "type": "topic",
+            "durable": true,
+            "autoDelete": false,
+            "vhost": "/"
+          },
+          "bindingVersion": "0.3.0"
+        }
+      }
+    }
+  },
+  "operations": {
+    "audit": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/audit"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/audit/messages/event"
+        }
+      ],
+      "bindings": {
+        "amqp": {
+          "ack": true,
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "retry": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/retry"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/retry/messages/event"
+        }
+      ],
+      "bindings": {
+        "amqp": {
+          "deliveryMode": 2,
+          "bindingVersion": "0.3.0"
+        }
+      }
+    },
+    "deadLetter": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/deadLetter"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/deadLetter/messages/event"
+        }
+      ],
+      "bindings": {
+        "amqp": {
+          "deliveryMode": 2,
+          "bindingVersion": "0.3.0"
+        }
+      }
+    }
+  },
+  "components": {
+    "messages": {
+      "auditEvent": {
+        "name": "AuditEvent",
+        "correlationId": {
+          "location": "$message.payload#/request_id"
+        },
+        "headers": {
+          "type": "object",
+          "properties": {
+            "x-audit-retries": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Ausente equivale a cero."
+            }
+          }
+        },
+        "payload": {
+          "title": "Jeroky Cloud Native Event Envelope",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "event_id",
+            "type",
+            "version",
+            "occurred_at",
+            "producer",
+            "request_id",
+            "payload"
+          ],
+          "properties": {
+            "event_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "Identificador único e inmutable del evento."
+            },
+            "type": {
+              "type": "string",
+              "pattern": "^jeroky\\.[a-z0-9_.-]+$",
+              "description": "Tipo de evento versionado por el productor."
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "occurred_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "producer": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Servicio que originó el evento."
+            },
+            "request_id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Identificador propagado desde el gateway."
+            },
+            "payload": {
+              "type": "object",
+              "description": "Datos específicos del evento."
+            }
+          }
+        }
+      }
+    }
+  }
+}
