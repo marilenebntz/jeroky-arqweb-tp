@@ -1,0 +1,198 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Jeroky - API de auditoria",
+    "version": "0.1.0",
+    "description": "API local de laboratorio. La autenticacion y la integracion con el gateway estan pendientes."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3002"
+    }
+  ],
+  "paths": {
+    "/v2/audit": {
+      "get": {
+        "operationId": "listAuditEvents",
+        "summary": "Consultar eventos de auditoria",
+        "description": "Combina los filtros por igualdad mediante AND. Ordena por stored_at descendente y event_id descendente. Un filtro sin coincidencias devuelve HTTP 200 con total 0 e items vacio. Los desplazamientos de paginacion deben ser enteros seguros de JavaScript.",
+        "parameters": [
+          {
+            "name": "entity_type",
+            "in": "query",
+            "description": "Tipo de entidad en el payload del evento.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "entity_id",
+            "in": "query",
+            "description": "Identificador de entidad en el payload del evento.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 20,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pagina de eventos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "page",
+                    "limit",
+                    "total",
+                    "items"
+                  ],
+                  "properties": {
+                    "page": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "total": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "event",
+                          "stored_at"
+                        ],
+                        "properties": {
+                          "event": {
+                            "$ref": "./event-envelope.schema.json"
+                          },
+                          "stored_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Paginacion invalida.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Fallo al consultar auditoria.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "getAuditHealth",
+        "summary": "Comprobar HTTP y conexion con SQLite",
+        "description": "Ejecuta SELECT 1. La comprobacion de RabbitMQ, las tablas y la capacidad de escritura esta pendiente.",
+        "responses": {
+          "200": {
+            "description": "Comprobacion exitosa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "const": "ok"
+                    },
+                    "database": {
+                      "type": "string",
+                      "const": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Fallo de la comprobacion.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
