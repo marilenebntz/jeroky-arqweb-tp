@@ -92,7 +92,7 @@ Compose conserva el volumen de datos al ejecutar este comando.
 ## Pendientes
 
 Faltan la autenticación, la integración con el gateway
-y las pruebas de recuperación y despliegue en un entorno nuevo.
+y la prueba de despliegue en un entorno nuevo.
 
 Por ahora, los eventos se aplican en el orden en que llegan.
 También falta mejorar las búsquedas con mayúsculas y minúsculas
@@ -124,3 +124,19 @@ Guardamos los contratos en la carpeta `cna/contracts`:
 - [AsyncAPI](../../contracts/search.asyncapi.json) describe los eventos que recibe el servicio, los reintentos y el envío a la DLQ.
 
 Validamos los dos con Redocly y pasaron sin errores.
+
+## Recuperación del servicio
+
+Detuvimos búsqueda y publicamos un evento de actualización.
+RabbitMQ dejó el mensaje pendiente mientras el servicio tenía
+cero consumidores.
+
+Después levantamos búsqueda otra vez. El servicio procesó el mensaje
+y pudimos encontrar el documento desde la API. La cola quedó con
+cero mensajes pendientes, cero sin confirmar y un consumidor.
+
+Esta prueba comprueba la recuperación después de detener el consumidor.
+La recuperación ante una caída del broker queda pendiente.
+
+- [Evento pendiente](../../evidencias/search-detenido-evento-pendiente.png).
+- [Evento procesado al volver](../../evidencias/search-recuperacion-evento-procesad.png).
