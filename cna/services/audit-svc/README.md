@@ -68,7 +68,21 @@ Se verificaron el almacenamiento, la detección de duplicados,
 el envío de eventos inválidos a DLQ y la conservación del registro
 al pasar el consumidor a Compose.
 
-Quedan pendientes los reintentos automáticos, la API de consulta,
-los health checks y la prueba completa en un entorno nuevo.
+Ante un fallo de almacenamiento, el servicio programa hasta tres
+reintentos, separados por 10 segundos mediante la cola
+`jeroky.audit.retry`. Si el fallo continúa, publica el evento en
+`jeroky.audit.dlq`.
+
+El mensaje original se confirma después de recibir la confirmación
+de RabbitMQ para la publicación del reintento o del envío a DLQ.
+
+La prueba con una transacción SQLite bloqueada mostró tres registros
+`retry_scheduled` y uno `retry_exhausted_dlq`. Al terminar, se detuvo
+y eliminó el contenedor de bloqueo.
+
+Evidencia: `../../evidencias/audit-reintentos-agotados-dlq.png`.
+
+Quedan pendientes la API de consulta, los health checks y la prueba
+completa en un entorno nuevo.
 
 SQLite utiliza la API experimental de Node.js 22.
