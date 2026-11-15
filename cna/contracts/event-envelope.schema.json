@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jeroky.local/contracts/event-envelope.schema.json",
+  "title": "Jeroky Cloud Native Event Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "type",
+    "version",
+    "occurred_at",
+    "producer",
+    "request_id",
+    "payload"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Identificador único e inmutable del evento."
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^jeroky\\.[a-z0-9_.-]+$",
+      "description": "Tipo de evento versionado por el productor."
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "producer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Servicio que originó el evento."
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identificador propagado desde el gateway."
+    },
+    "payload": {
+      "type": "object",
+      "description": "Datos específicos del evento."
+    }
+  }
+}
