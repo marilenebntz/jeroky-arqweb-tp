@@ -63,3 +63,24 @@ Las evidencias anteriores corresponden al entorno anterior. Las nuevas
 evidencias deben mostrar los puertos 3100–3104 y datos ficticios.
 
 La autenticación de las APIs de microservicios y el gateway siguen pendientes.
+
+## Prueba de cambios y exportación
+
+Cambiamos los nombres de los dos alumnos de prueba desde el Jeroky
+de Arquitectura, disponible en http://localhost:3100.
+
+Después comprobamos lo siguiente:
+
+- Búsqueda encontró a Juana Lopez desde el puerto 3103.
+- Auditoría registró los cambios de Juana Lopez y Luciana Velazquez.
+- Los eventos llegaron mediante event-bridge.
+- Exportación recibió el pedido con HTTP 202.
+- El worker terminó el trabajo y quedó en estado completed.
+- La descarga respondió HTTP 200 en formato Markdown.
+- El reporte incluyó los dos alumnos con sus nombres actualizados.
+
+Estas pruebas se hicieron en el entorno separado de Arquitectura.
+
+Guardamos la evidencia de la consulta y descarga del trabajo:
+
+- [Exportación completada y descarga](../../evidencias/aislado-export-completado-descarga-200.png).
