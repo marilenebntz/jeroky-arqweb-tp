@@ -1,0 +1,14 @@
+Pruebas de separacion de Arquitectura
+OK - Bases y volumenes separados del proyecto
+OK - Todos los servicios nuevos usan solo la red cna-arqui_default
+OK - Los tres contenedores del proyecto siguen funcionando
+OK - API de Arquitectura 3102 responde correctamente
+OK - API de Arquitectura 3103 responde correctamente
+OK - API de Arquitectura 3104 responde correctamente
+OK - Jeroky de Arquitectura contiene solo los dos alumnos ficticios
+OK - Cambio ficticio de Arquitectura llego al indice mediante el bridge
+OK - Auditoria registro el cambio del entorno aislado
+OK - Worker genero reporte desde el Jeroky aislado
+OK - Descarga del reporte contiene datos ficticios del laboratorio
+OK - La tabla de alumnos del proyecto conserva exactamente su contenido durante la prueba
+OK - Frontend aislado disponible en localhost:3100

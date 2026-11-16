@@ -1,0 +1,175 @@
+name: cna-arqui
+
+x-jeroky: &jeroky-access
+  JEROKY_BASE_URL: http://backend:3001
+  JEROKY_EMAIL: ${LAB_EMAIL:?}
+  JEROKY_PASSWORD: ${LAB_PASSWORD:?}
+
+x-broker: &broker-access
+  RABBITMQ_HOST: rabbitmq
+  RABBITMQ_DEFAULT_USER: arqui_local
+  RABBITMQ_DEFAULT_PASS: ${BROKER_PASSWORD:?}
+
+x-http-health: &http-health
+  test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/health',{signal:AbortSignal.timeout(3000)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+  interval: 10s
+  timeout: 5s
+  retries: 3
+  start_period: 15s
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: jeroky_arqui
+      POSTGRES_USER: arqui
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U arqui -d jeroky_arqui']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: .runtime/backend
+      dockerfile: ../../backend.Dockerfile
+    environment:
+      NODE_ENV: development
+      PORT: '3001'
+      DATABASE_HOST: db
+      DATABASE_PORT: '5432'
+      DATABASE_USERNAME: arqui
+      DATABASE_PASSWORD: ${DB_PASSWORD:?}
+      DATABASE_NAME: jeroky_arqui
+      DATABASE_SYNCHRONIZE: 'true'
+      DATABASE_MIGRATIONS_RUN: 'false'
+      JWT_SECRET: ${JWT_SECRET:?}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?}
+      LAB_EMAIL: ${LAB_EMAIL:?}
+      LAB_PASSWORD: ${LAB_PASSWORD:?}
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: laboratorio-sin-acceso
+      AWS_SECRET_ACCESS_KEY: laboratorio-sin-acceso
+      AWS_EC2_METADATA_DISABLED: 'true'
+      MOCK_EMAIL: 'true'
+      CORS_ORIGINS: http://localhost:3100,http://127.0.0.1:3100
+    volumes:
+      - ./seed.cjs:/app/cna-seed.cjs:ro
+    ports:
+      - '127.0.0.1:3101:3001'
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3001/api',{signal:AbortSignal.timeout(3000)}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+  frontend:
+    build:
+      context: .runtime/frontend
+      dockerfile: ../../frontend.Dockerfile
+    environment:
+      NEXT_PUBLIC_API_URL: /api
+      HOSTNAME: 0.0.0.0
+      PORT: '3000'
+    ports:
+      - '127.0.0.1:3100:3000'
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    hostname: cna-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: arqui_local
+      RABBITMQ_DEFAULT_PASS: ${BROKER_PASSWORD:?}
+    ports:
+      - '127.0.0.1:5682:5672'
+      - '127.0.0.1:15682:15672'
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ../rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, check_running]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  audit:
+    build: ../../services/audit-svc
+    healthcheck: *http-health
+    restart: unless-stopped
+    environment: *broker-access
+    volumes:
+      - ../../contracts:/contracts:ro
+      - audit_data:/data
+    ports:
+      - '127.0.0.1:3102:3000'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  search:
+    build: ../../services/search-svc
+    healthcheck: *http-health
+    restart: unless-stopped
+    environment: *broker-access
+    volumes:
+      - ../../contracts:/contracts:ro
+      - search_data:/data
+    ports:
+      - '127.0.0.1:3103:3000'
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  export:
+    build: ../../services/export-svc
+    healthcheck: *http-health
+    restart: unless-stopped
+    volumes:
+      - export_data:/data
+    ports:
+      - '127.0.0.1:3104:3000'
+
+  worker:
+    build: ../../services/export-svc
+    command: [node, worker.js]
+    restart: unless-stopped
+    environment: *jeroky-access
+    volumes:
+      - export_data:/data
+    depends_on:
+      backend:
+        condition: service_healthy
+      export:
+        condition: service_started
+
+  bridge:
+    build: ../../services/event-bridge
+    restart: unless-stopped
+    environment:
+      <<: [*jeroky-access, *broker-access]
+    volumes:
+      - ../../contracts:/contracts:ro
+      - bridge_data:/data
+    depends_on:
+      backend:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
+  audit_data:
+  search_data:
+  export_data:
+  bridge_data:

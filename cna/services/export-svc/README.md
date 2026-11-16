@@ -1,3 +1,5 @@
+> Para continuar el TP usamos el entorno separado de `cna/infra/aislado`. Arranque desde la raíz del repositorio: `bash cna/infra/aislado/levantar.sh`. Jeroky de Arquitectura está en http://localhost:3100. Los pasos anteriores de esta página describen el montaje previo.
+
 # Servicio de exportación
 
 Este servicio recibe pedidos para generar reportes de alumnos en Markdown.
