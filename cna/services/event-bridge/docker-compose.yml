@@ -1,0 +1,26 @@
+services:
+  bridge:
+    build: .
+    restart: unless-stopped
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    env_file:
+      - ../../infra/rabbitmq/.env.local
+      - ../export-svc/.env.local
+    volumes:
+      - ../../contracts:/contracts:ro
+      - bridge_data:/data
+    networks:
+      - broker
+      - jeroky
+
+volumes:
+  bridge_data:
+
+networks:
+  broker:
+    external: true
+    name: rabbitmq_default
+  jeroky:
+    external: true
+    name: jeroky1_default
