@@ -10,7 +10,7 @@
 
 ## Estado actual
 
-Actualizado el 16 de noviembre de 2026.
+Actualizado el 16 de noviembre de 2026
 
 Ya funcionan auditoría, búsqueda, exportación, RabbitMQ y el puente de eventos.
 También tenemos un entorno separado de Jeroky y un gateway con HTTPS, TLS 1.3
