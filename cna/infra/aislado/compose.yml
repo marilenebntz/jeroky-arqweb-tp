@@ -172,8 +172,10 @@ services:
     restart: unless-stopped
     ports:
       - '127.0.0.1:3180:8080'
+      - '127.0.0.1:3443:8443'
     volumes:
       - ../../deploy/gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../../deploy/gateway/certs:/etc/nginx/certs:ro
     depends_on:
       frontend:
         condition: service_started
