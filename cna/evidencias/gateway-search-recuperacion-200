@@ -1,0 +1,31 @@
+docker compose \
+  --env-file cna/infra/aislado/.env.local \
+  -f cna/infra/aislado/compose.yml \
+  up -d --wait --wait-timeout 90 search
+[+] up 2/2
+ ✔ Container cna-arqui-rabbitmq-1 Healthy                                                                               1.2s
+ ✔ Container cna-arqui-search-1   Healthy                                                                               5.6s
+docker run --rm \
+  --network cna-arqui_default \
+  -v "$PWD/cna/deploy/gateway/certs/localhost.crt:/certs/localhost.crt:ro" \
+  curlimages/curl:latest \
+  --connect-to localhost:3443:gateway:8443 \
+  --cacert /certs/localhost.crt \
+  --connect-timeout 3 --max-time 15 \
+  -i \
+  -H 'X-Request-ID: prueba-recuperacion-search-001' \
+  'https://localhost:3443/v2/search?q=Juana&type=student'
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0HTTP/1.1 200 OK
+100    268   0    268   0      0  22249      0                              0
+Server: nginx
+Date: Mon, 16 Nov 2026 19:30:01 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Cache-Control: no-store
+X-Request-ID: prueba-recuperacion-search-001
+X-Content-Type-Options: nosniff
+
+{"page":1,"limit":20,"total":1,"items":[{"entity_type":"student","entity_id":"c3596af9-a05f-4119-a71a-f9f792ca7bb8","payload":{"entity_type":"student","entity_id":"c3596af9-a05f-4119-a71a-f9f792ca7bb8","name":"Juana Lopez","status":"active","observation":"polling"}}]}%                                        
