@@ -74,6 +74,46 @@ const server = http.createServer(async (request, response) => {
       return;
     }
 
+    const download = url.pathname.match(
+      /^\/v2\/exports\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\/download$/
+    );
+
+    if (download) {
+      if (request.method !== "GET") {
+        send(405, { error: "Usar GET" }, { Allow: "GET" });
+        return;
+      }
+
+      const job = db.prepare(
+        "SELECT status, result FROM jobs WHERE job_id = ?"
+      ).get(download[1]);
+
+      if (!job) {
+        send(404, { error: "No encontramos ese trabajo" });
+        return;
+      }
+
+      if (job.status !== "completed") {
+        send(409, { error: "El reporte todavia no esta disponible" });
+        return;
+      }
+
+      if (typeof job.result !== "string") {
+        send(500, { error: "No se encontro el archivo del reporte" });
+        return;
+      }
+
+      response.writeHead(200, {
+        "Content-Type": "text/markdown; charset=utf-8",
+        "Content-Disposition":
+          `attachment; filename="alumnos-${download[1]}.md"`,
+        "Cache-Control": "no-store",
+        "X-Content-Type-Options": "nosniff",
+      });
+      response.end(job.result);
+      return;
+    }
+
     const match = url.pathname.match(
       /^\/v2\/exports\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$/
     );
