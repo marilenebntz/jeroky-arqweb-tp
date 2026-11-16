@@ -1,0 +1,90 @@
+docker run --rm \
+  --network cna-arqui_default \
+  -v "$PWD/cna/deploy/gateway/certs/localhost.crt:/certs/localhost.crt:ro" \
+  curlimages/curl:latest \
+  --connect-to localhost:3443:gateway:8443 \
+  --cacert /certs/localhost.crt \
+  --tlsv1.3 --tls-max 1.3 \
+  --verbose \
+  -i \
+  -H 'X-Request-ID: prueba-https-001' \
+  'https://localhost:3443/v2/search?q=Juana&type=student'
+* Host gateway:8443 was resolved.
+* IPv6: (none)
+* IPv4: 172.21.0.11
+*   Trying 172.21.0.11:8443...
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [1482 bytes data]
+* SSL Trust Anchors:
+*   CAfile: /certs/localhost.crt
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [1210 bytes data]
+* TLSv1.3 (IN), TLS change cipher, Change cipher spec (1):
+{ [1 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [25 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [901 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [264 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519MLKEM768 / RSASSA-PSS
+* ALPN: server accepted http/1.1
+* Server certificate:
+*   subject: CN=localhost; O=Arquitectura Web Laboratorio
+*   start date: Nov 16 04:15:48 2026 GMT
+*   expire date: Feb 14 04:15:48 2027 GMT
+*   issuer: CN=localhost; O=Arquitectura Web Laboratorio
+*   Certificate level 0: Public key type RSA (2048/112 Bits/secBits), signed using sha256WithRSAEncryption
+*   subjectAltName: "localhost" matches cert's "localhost"
+* OpenSSL verify result: 0
+* SSL certificate verified via OpenSSL.
+* Established connection to gateway (172.21.0.11 port 8443) from 172.21.0.12 port 42310 
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0* using HTTP/1.x
+} [5 bytes data]
+> GET /v2/search?q=Juana&type=student HTTP/1.1
+> Host: localhost:3443
+> User-Agent: curl/8.23.0
+> Accept: */*
+> X-Request-ID: prueba-https-001
+> 
+* Request completely sent off
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [57 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [57 bytes data]
+< HTTP/1.1 200 OK
+< Server: nginx
+< Date: Mon, 16 Nov 2026 04:18:56 GMT
+< Content-Type: application/json; charset=utf-8
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< Cache-Control: no-store
+< X-Request-ID: prueba-https-001
+< X-Content-Type-Options: nosniff
+< 
+{ [280 bytes data]
+100    268   0    268   0      0   5009      0                              0
+* Connection #0 to host localhost:3443 left intact
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 16 Nov 2026 04:18:56 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Cache-Control: no-store
+X-Request-ID: prueba-https-001
+X-Content-Type-Options: nosniff
+
+{"page":1,"limit":20,"total":1,"items":[{"entity_type":"student","entity_id":"c3596af9-a05f-4119-a71a-f9f792ca7bb8","payload":{"entity_type":"student","entity_id":"c3596af9-a05f-4119-a71a-f9f792ca7bb8","name":"Juana Lopez","status":"active","observation":"polling"}}]}%                              
