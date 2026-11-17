@@ -1,0 +1,734 @@
+{
+  "marker": "Ensayo EDGGBODC",
+  "samples": [
+    {
+      "time": "2026-11-17T14:03:00.251758+00:00",
+      "action": "20 alumnos ficticios creados mediante API de Jeroky",
+      "details": [
+        {
+          "id": "57d912d6-e183-4d89-91d6-eaa4abd93015",
+          "firstName": "Ensayo EDGGBODC A",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "16f3485e-5825-4d1c-86e5-d136ba7f343c",
+          "firstName": "Ensayo EDGGBODC B",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "4bfd926c-5fed-4328-add5-34defb21c310",
+          "firstName": "Ensayo EDGGBODC C",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "183ee78f-831a-4f14-b022-ad2f4c868994",
+          "firstName": "Ensayo EDGGBODC D",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "2e5a2cc7-aff0-43a8-aca9-6bbfc229e851",
+          "firstName": "Ensayo EDGGBODC E",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "6733573e-5e5c-4fd8-ade5-972f987e196a",
+          "firstName": "Ensayo EDGGBODC F",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "2e978557-b194-4074-b5dd-7fa0c298bbfa",
+          "firstName": "Ensayo EDGGBODC G",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "6adf9be9-b823-4231-89d7-2f158ffa32b0",
+          "firstName": "Ensayo EDGGBODC H",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "cac32cb9-bd5c-4ea6-bf68-e069c312f979",
+          "firstName": "Ensayo EDGGBODC I",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "1a52d099-f92c-43b5-923b-50d3d1ec0fbe",
+          "firstName": "Ensayo EDGGBODC J",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "2e1d6b19-a112-4987-ab49-e579075ee304",
+          "firstName": "Ensayo EDGGBODC K",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "fce98c75-b43c-456f-b56c-edec90aa0b59",
+          "firstName": "Ensayo EDGGBODC L",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "e46aa10d-bb92-4859-ae77-255b084250ce",
+          "firstName": "Ensayo EDGGBODC M",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "51d51fa2-2960-4586-a8e6-4b20fb757d47",
+          "firstName": "Ensayo EDGGBODC N",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "f467f84f-3e17-42c4-bdcb-c5cbbbb8065b",
+          "firstName": "Ensayo EDGGBODC O",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "55c5f545-1dda-419e-abf3-371758606075",
+          "firstName": "Ensayo EDGGBODC P",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "2c0cb3bd-aa28-448c-bbef-e7779dcbe8d5",
+          "firstName": "Ensayo EDGGBODC Q",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "3abcb702-7a73-4139-94c5-8abe2e0f6483",
+          "firstName": "Ensayo EDGGBODC R",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "213742bf-acde-4985-b431-7578250846a6",
+          "firstName": "Ensayo EDGGBODC S",
+          "lastName": "Inicial"
+        },
+        {
+          "id": "018aab3c-5647-4a10-a647-6d264f14f169",
+          "firstName": "Ensayo EDGGBODC T",
+          "lastName": "Inicial"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T14:03:02.469111+00:00",
+      "action": "Bridge observó el estado inicial de los 20 alumnos",
+      "details": {
+        "count": 20
+      }
+    },
+    {
+      "time": "2026-11-17T14:03:06.329637+00:00",
+      "action": "Auditoría detenida antes de editar",
+      "details": {
+        "queue": {
+          "queue": "jeroky.audit",
+          "messageCount": 0,
+          "consumerCount": 0
+        }
+      }
+    },
+    {
+      "time": "2026-11-17T14:03:07.241110+00:00",
+      "action": "20 ediciones PATCH aceptadas por Jeroky",
+      "details": [
+        {
+          "id": "57d912d6-e183-4d89-91d6-eaa4abd93015",
+          "firstName": "Ensayo EDGGBODC A",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "16f3485e-5825-4d1c-86e5-d136ba7f343c",
+          "firstName": "Ensayo EDGGBODC B",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "4bfd926c-5fed-4328-add5-34defb21c310",
+          "firstName": "Ensayo EDGGBODC C",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "183ee78f-831a-4f14-b022-ad2f4c868994",
+          "firstName": "Ensayo EDGGBODC D",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "2e5a2cc7-aff0-43a8-aca9-6bbfc229e851",
+          "firstName": "Ensayo EDGGBODC E",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "6733573e-5e5c-4fd8-ade5-972f987e196a",
+          "firstName": "Ensayo EDGGBODC F",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "2e978557-b194-4074-b5dd-7fa0c298bbfa",
+          "firstName": "Ensayo EDGGBODC G",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "6adf9be9-b823-4231-89d7-2f158ffa32b0",
+          "firstName": "Ensayo EDGGBODC H",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "cac32cb9-bd5c-4ea6-bf68-e069c312f979",
+          "firstName": "Ensayo EDGGBODC I",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "1a52d099-f92c-43b5-923b-50d3d1ec0fbe",
+          "firstName": "Ensayo EDGGBODC J",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "2e1d6b19-a112-4987-ab49-e579075ee304",
+          "firstName": "Ensayo EDGGBODC K",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "fce98c75-b43c-456f-b56c-edec90aa0b59",
+          "firstName": "Ensayo EDGGBODC L",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "e46aa10d-bb92-4859-ae77-255b084250ce",
+          "firstName": "Ensayo EDGGBODC M",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "51d51fa2-2960-4586-a8e6-4b20fb757d47",
+          "firstName": "Ensayo EDGGBODC N",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "f467f84f-3e17-42c4-bdcb-c5cbbbb8065b",
+          "firstName": "Ensayo EDGGBODC O",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "55c5f545-1dda-419e-abf3-371758606075",
+          "firstName": "Ensayo EDGGBODC P",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "2c0cb3bd-aa28-448c-bbef-e7779dcbe8d5",
+          "firstName": "Ensayo EDGGBODC Q",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "3abcb702-7a73-4139-94c5-8abe2e0f6483",
+          "firstName": "Ensayo EDGGBODC R",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "213742bf-acde-4985-b431-7578250846a6",
+          "firstName": "Ensayo EDGGBODC S",
+          "lastName": "Actualizado"
+        },
+        {
+          "id": "018aab3c-5647-4a10-a647-6d264f14f169",
+          "firstName": "Ensayo EDGGBODC T",
+          "lastName": "Actualizado"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T14:03:12.119241+00:00",
+      "action": "Bridge observó los 20 nombres editados",
+      "details": {
+        "queue": {
+          "queue": "jeroky.audit",
+          "messageCount": 20,
+          "consumerCount": 0
+        }
+      }
+    },
+    {
+      "time": "2026-11-17T14:05:05.916282+00:00",
+      "action": "Cola tras 120 segundos sin auditoría",
+      "details": {
+        "queue": "jeroky.audit",
+        "messageCount": 20,
+        "consumerCount": 0
+      }
+    },
+    {
+      "time": "2026-11-17T14:05:05.947041+00:00",
+      "action": "Eventos publicados por el bridge durante la detención",
+      "details": []
+    },
+    {
+      "time": "2026-11-17T14:05:06.128665+00:00",
+      "action": "Auditoría reiniciada",
+      "details": {
+        "stopped_seconds": 120.42399412500163
+      }
+    },
+    {
+      "time": "2026-11-17T14:05:08.299743+00:00",
+      "action": "Auditoría restaurada",
+      "details": {
+        "running": "true"
+      }
+    },
+    {
+      "time": "2026-11-17T14:07:37.878401+00:00",
+      "action": "Correlación recuperada mediante timestamps explícitos de Docker",
+      "details": {
+        "published": [
+          {
+            "action": "event_published",
+            "event_id": "93d62ee5-8ab1-4b4e-8dab-7bb360602f1e",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.790168930Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "6016fa15-603b-4564-972f-cca315918a2d",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.794000055Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "3e5ca66f-e192-4c22-9e83-d46c5e111e3f",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.798335930Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "728038a9-0f28-4148-ad60-e42695ed4772",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.801437096Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "b167b989-7ee6-4dcb-814d-fe26f0bc23be",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.805686555Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "28578bac-ac48-428c-a564-8fd41fd8e1f1",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.807978388Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "09fb1667-2620-4bc4-bcbf-a43248b24c46",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.812764763Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "c842e33e-f619-4bdb-bf11-16d990484f71",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.817422596Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "b9072660-6304-4437-aeb2-04eb93093996",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.821148596Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "04ebc2f1-36f4-4988-abcc-21ff6580a752",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.823958888Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "6af0a4cf-7c4c-4b25-96c3-723bfbe60cda",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.826238055Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "e2e6072b-ece2-4fd7-abb0-dbe9189af837",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.828705513Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "5cf18908-47cc-4f54-a48e-db553d976b01",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.830723555Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "03576879-76df-4a32-bd21-b79256af7b35",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.832363805Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "53741962-c356-4ef3-b6ed-7e5e0d332fe4",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.834424471Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "e451529c-565f-483d-9cd0-975c90cf1215",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.836415555Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "29478c43-767c-4132-a67b-020d46302c0f",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.838502221Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "3a7853af-eafe-4591-bd47-fa63ad5882eb",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.841867305Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "7bbbb8a2-38fe-426f-b90b-f0d8c74e3956",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.844623388Z"
+          },
+          {
+            "action": "event_published",
+            "event_id": "c11ab06c-5ac4-4763-98bf-060826f7d6a8",
+            "type": "jeroky.entity.updated",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "docker_timestamp": "2026-11-17T14:03:11.849201055Z"
+          }
+        ],
+        "stored": [
+          {
+            "event_id": "c11ab06c-5ac4-4763-98bf-060826f7d6a8",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "57d912d6-e183-4d89-91d6-eaa4abd93015",
+              "name": "Ensayo EDGGBODC A Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "7bbbb8a2-38fe-426f-b90b-f0d8c74e3956",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "16f3485e-5825-4d1c-86e5-d136ba7f343c",
+              "name": "Ensayo EDGGBODC B Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "3a7853af-eafe-4591-bd47-fa63ad5882eb",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "4bfd926c-5fed-4328-add5-34defb21c310",
+              "name": "Ensayo EDGGBODC C Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "29478c43-767c-4132-a67b-020d46302c0f",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "183ee78f-831a-4f14-b022-ad2f4c868994",
+              "name": "Ensayo EDGGBODC D Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "e451529c-565f-483d-9cd0-975c90cf1215",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "2e5a2cc7-aff0-43a8-aca9-6bbfc229e851",
+              "name": "Ensayo EDGGBODC E Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "53741962-c356-4ef3-b6ed-7e5e0d332fe4",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "6733573e-5e5c-4fd8-ade5-972f987e196a",
+              "name": "Ensayo EDGGBODC F Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "03576879-76df-4a32-bd21-b79256af7b35",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "2e978557-b194-4074-b5dd-7fa0c298bbfa",
+              "name": "Ensayo EDGGBODC G Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "5cf18908-47cc-4f54-a48e-db553d976b01",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "6adf9be9-b823-4231-89d7-2f158ffa32b0",
+              "name": "Ensayo EDGGBODC H Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "e2e6072b-ece2-4fd7-abb0-dbe9189af837",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "cac32cb9-bd5c-4ea6-bf68-e069c312f979",
+              "name": "Ensayo EDGGBODC I Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "6af0a4cf-7c4c-4b25-96c3-723bfbe60cda",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "1a52d099-f92c-43b5-923b-50d3d1ec0fbe",
+              "name": "Ensayo EDGGBODC J Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "04ebc2f1-36f4-4988-abcc-21ff6580a752",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "2e1d6b19-a112-4987-ab49-e579075ee304",
+              "name": "Ensayo EDGGBODC K Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "b9072660-6304-4437-aeb2-04eb93093996",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "fce98c75-b43c-456f-b56c-edec90aa0b59",
+              "name": "Ensayo EDGGBODC L Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "c842e33e-f619-4bdb-bf11-16d990484f71",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "e46aa10d-bb92-4859-ae77-255b084250ce",
+              "name": "Ensayo EDGGBODC M Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "09fb1667-2620-4bc4-bcbf-a43248b24c46",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "51d51fa2-2960-4586-a8e6-4b20fb757d47",
+              "name": "Ensayo EDGGBODC N Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "28578bac-ac48-428c-a564-8fd41fd8e1f1",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "f467f84f-3e17-42c4-bdcb-c5cbbbb8065b",
+              "name": "Ensayo EDGGBODC O Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "b167b989-7ee6-4dcb-814d-fe26f0bc23be",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "55c5f545-1dda-419e-abf3-371758606075",
+              "name": "Ensayo EDGGBODC P Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "728038a9-0f28-4148-ad60-e42695ed4772",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "2c0cb3bd-aa28-448c-bbef-e7779dcbe8d5",
+              "name": "Ensayo EDGGBODC Q Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "3e5ca66f-e192-4c22-9e83-d46c5e111e3f",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "3abcb702-7a73-4139-94c5-8abe2e0f6483",
+              "name": "Ensayo EDGGBODC R Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "6016fa15-603b-4564-972f-cca315918a2d",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "213742bf-acde-4985-b431-7578250846a6",
+              "name": "Ensayo EDGGBODC S Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          },
+          {
+            "event_id": "93d62ee5-8ab1-4b4e-8dab-7bb360602f1e",
+            "type": "jeroky.entity.updated",
+            "version": 1,
+            "occurred_at": "2026-11-17T14:03:11.776Z",
+            "producer": "event-bridge",
+            "request_id": "20823f26-27ee-4acc-a0fb-19e3db42deaa",
+            "payload": {
+              "entity_type": "student",
+              "entity_id": "018aab3c-5647-4a10-a647-6d264f14f169",
+              "name": "Ensayo EDGGBODC T Actualizado",
+              "status": "active",
+              "observation": "polling"
+            }
+          }
+        ],
+        "exact_event_ids_match": true,
+        "unique_entities": 20
+      }
+    }
+  ],
+  "scope": "20 PATCH reales a alumnos ficticios distintos; bridge por polling, no webhook. Los registros de prueba se conservan.",
+  "verification_note": "El filtro Docker --since con fecha ISO devolvió vacío. Se verificó la misma ejecución leyendo logs con timestamps y comparando explícitamente cada fecha con la ventana de detención; no se repitieron las ediciones.",
+  "readiness_after": {
+    "status": "ready",
+    "database": "ok",
+    "rabbitmq": "connected"
+  },
+  "result": "passed"
+}

@@ -209,3 +209,36 @@ Solo es una prueba aprobada si contiene `result: passed`. Demuestra el recorrido
 publicador de prueba → RabbitMQ → auditoría; **no equivale a las 20 ediciones del
 monolito solicitadas por la guía**, ni prueba la supervivencia a una caída del
 broker. La integración desde Jeroky debe documentarse por separado.
+
+## Veinte ediciones desde Jeroky con auditoría detenida
+
+```bash
+python3 cna/pruebas/ediciones-monolito.py
+```
+
+Esta prueba crea 20 alumnos ficticios distintos mediante la API REST del backend
+**aislado** de Arquitectura. Sus nombres comienzan con un marcador `Ensayo` único.
+Espera que el bridge observe sus estados iniciales; detiene auditoría durante
+al menos 120 segundos y cambia el apellido de cada alumno mediante 20 PATCH
+aceptados por Jeroky. No modifica alumnos existentes ni usa la base de datos
+del monolito directamente. Los registros ficticios se conservan en el laboratorio.
+
+Verifica que el bridge observe las 20 modificaciones y que los mensajes queden
+en RabbitMQ sin consumidores de auditoría. Después reinicia auditoría, consulta
+los eventos por su API, compara los 20 entity_id y exige event_id únicos. También
+correlaciona cada evento almacenado con un event_id publicado en los logs del
+bridge durante la detención. La evidencia solo se aprueba con `result: passed`:
+[F7-E2-ediciones-jeroky.json](../../evidencias/F7-E2-ediciones-jeroky.json).
+
+Las ediciones se hacen sobre **20 entidades distintas** para que el polling pueda
+observar cada estado final. Esto no demuestra que capture 20 cambios rápidos de
+una misma entidad: puede perder estados intermedios entre consultas de 10 segundos.
+Tampoco equivale a un webhook ni demuestra propagación menor a cinco segundos.
+La conexión entre evento y edición se establece por entidad y nombre final; el
+request_id del bridge no es el de la solicitud PATCH original.
+
+Requiere Python 3, Docker, backend, bridge, RabbitMQ y auditoría disponibles. El
+helper `editar-alumnos.cjs` usa las credenciales del laboratorio dentro del backend
+sin imprimir credenciales, token o CI de los alumnos. El bloque de limpieza vuelve
+a arrancar auditoría incluso si falla una comprobación. No interrumpir forzadamente
+el script durante la prueba.
