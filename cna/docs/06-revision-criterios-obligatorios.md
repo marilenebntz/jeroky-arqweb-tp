@@ -17,7 +17,7 @@ la aprobación ni estimar una nota contando capturas o commits.
 | --- | --- | --- |
 | CA-1: al menos tres servicios con contenedor y datos propios | Comprobado en laboratorio, sujeto a equivalencia funcional | Search, audit y export tienen contenedores, volúmenes SQLite separados y pruebas funcionales. Export API y worker comparten su almacén de trabajos, no el de los otros servicios. Esto no acredita todos los requisitos específicos de B2. |
 | CA-2: login, creación y edición del monolito siguen funcionando | Parcial | La prueba de 20 alumnos usa login y POST/PATCH reales del backend aislado; hay capturas anteriores de la interfaz. Falta una prueba consolidada actual por el gateway que muestre login y creación/edición en la interfaz y su correspondencia con el TP I. No confundir respuesta 307 del frontend con página final 200. |
-| CA-3: editar actualiza búsqueda en menos de cinco segundos | No garantizado con la configuración actual | El bridge espera 10 segundos entre consultas, además del tiempo HTTP y publicación. No hay medición edit-to-search inferior a cinco segundos. Veinte estados finales recibidos no demuestran latencia ni conservación de cambios intermedios. |
+| CA-3: editar actualiza búsqueda en menos de cinco segundos | Umbral observado en diez muestras locales | Bridge con pausa configurable de 1000 ms. Diez PATCH secuenciales por gateway HTTPS, cada uno seguido hasta observar el nombre nuevo del mismo alumno en búsqueda. Máximo 1250,05 ms desde antes del PATCH. [Medición real](../evidencias/CA3-latencia-edicion-busqueda.json). No garantiza latencia bajo carga ni captura de estados intermedios; polling sigue siendo integración parcial B4. |
 | CA-4: entrada externa única por 443, TLS 1.3 | Parcial | TLS 1.3 y verificación del certificado comprobados. El gateway se publica en 127.0.0.1:3443 y HTTP en 3180; servicios y observabilidad tienen puertos locales. Loopback evita acceso remoto directo, pero no demuestra entrada 443 desde la red del laboratorio, firewall de VM ni accesibilidad docente. Cambiar solo el número de puerto no completa el criterio. |
 | CA-5: monolito devuelve 200 con cualquier microservicio caído | Parcial | Se observó search 503 controlado, auditoría 200 y frontend 307 durante una caída de búsqueda. Falta seguir la redirección y verificar 200 del monolito; repetir por separado con audit y export caídos, incluyendo recuperación. |
 | CA-6: reiniciar consumidor sin perder eventos de la caída | Comprobado en el alcance ensayado | Auditoría detenida 120 s; 20 PATCH en 20 alumnos ficticios; 20 event_id del bridge correlacionados con 20 eventos almacenados una vez. Otra prueba confirma idempotencia ante un duplicado. No acredita caída del broker ni cambios intermedios rápidos de una misma entidad. |
@@ -40,11 +40,11 @@ Evidencias principales: [20 ediciones reales](../evidencias/F7-E2-ediciones-jero
    sin importar datos del laboratorio. Después de publicar, repetir desde ese
    commit en otra computadora/VM con puertos normales y registrar el resultado.
    No borrar el laboratorio existente ni versionar los secretos generados.
-2. **Latencia CA-3.** Resolver la brecha del polling de 10 s. Si se mantiene polling,
-   documentarlo como integración parcial B4 y medir la latencia de edición a
-   búsqueda; un intervalo menor por sí solo no prueba el umbral. Un mecanismo de
-   eventos debe respetar la restricción de no modificar el monolito que impone la
-   guía; no agregar un webhook ficticio ni asegurar que no se pierden estados.
+2. **Latencia CA-3 (umbral observado).** Se cambió la pausa del bridge de 10 s
+   a 1 s y se midieron diez ediciones reales por gateway HTTPS: máximo 1250,05 ms.
+   Repetir en el entorno final y bajo carga. Mantener documentado que polling no
+   equivale a webhook, no conserva necesariamente estados intermedios y no propaga
+   el request_id original de la edición al evento.
 3. **Despliegue CA-4.** Preparar la entrada HTTPS 443 y la red/firewall del entorno
    real de demostración; servicios solo internos o accesos locales de diagnóstico
    claramente separados. Verificar desde un cliente de la red del laboratorio.

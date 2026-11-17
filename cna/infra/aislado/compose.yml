@@ -163,6 +163,7 @@ services:
     restart: unless-stopped
     environment:
       <<: [*jeroky-access, *broker-access]
+      POLL_INTERVAL_MS: '1000'
     volumes:
       - ../../contracts:/contracts:ro
       - bridge_data:/data

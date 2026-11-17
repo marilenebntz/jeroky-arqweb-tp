@@ -1,0 +1,143 @@
+{
+  "scope": "Diez PATCH reales por gateway HTTPS y consulta de búsqueda por el mismo gateway; un alumno ficticio nuevo. No es garantía universal de latencia ni prueba de carga.",
+  "samples": [
+    {
+      "iteration": 1,
+      "started_at": "2026-11-17T19:34:08.723Z",
+      "request_id": "ca3-606700ec-9fa0-41f8-ab2e-fae2d3dac7b3",
+      "expected_name": "Latencia AEJEHEBA Cambio A",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 5,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 1250.05,
+      "from_patch_response_ms": 1231.81
+    },
+    {
+      "iteration": 2,
+      "started_at": "2026-11-17T19:34:10.350Z",
+      "request_id": "ca3-dda6bfd8-6fde-4258-a330-41a08479b65e",
+      "expected_name": "Latencia AEJEHEBA Cambio B",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 4,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 934.02,
+      "from_patch_response_ms": 920.31
+    },
+    {
+      "iteration": 3,
+      "started_at": "2026-11-17T19:34:11.832Z",
+      "request_id": "ca3-b7a03909-d937-4235-ac8d-7c41c95f6cdc",
+      "expected_name": "Latencia AEJEHEBA Cambio C",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 3,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 623.73,
+      "from_patch_response_ms": 610.53
+    },
+    {
+      "iteration": 4,
+      "started_at": "2026-11-17T19:34:13.179Z",
+      "request_id": "ca3-d0552aa0-957f-4e06-bcee-eb227b5df8f4",
+      "expected_name": "Latencia AEJEHEBA Cambio D",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 3,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 621.3,
+      "from_patch_response_ms": 610.33
+    },
+    {
+      "iteration": 5,
+      "started_at": "2026-11-17T19:34:14.693Z",
+      "request_id": "ca3-57c5752d-6fb3-4cab-bf0c-2544f69f76b7",
+      "expected_name": "Latencia AEJEHEBA Cambio E",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 2,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 311.44,
+      "from_patch_response_ms": 304.61
+    },
+    {
+      "iteration": 6,
+      "started_at": "2026-11-17T19:34:15.220Z",
+      "request_id": "ca3-ecbfbded-4137-475f-b422-2305bd19c037",
+      "expected_name": "Latencia AEJEHEBA Cambio F",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 5,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 1232.54,
+      "from_patch_response_ms": 1224.19
+    },
+    {
+      "iteration": 7,
+      "started_at": "2026-11-17T19:34:16.841Z",
+      "request_id": "ca3-0c17b5f9-eef4-4478-b969-6b1613d6f5a6",
+      "expected_name": "Latencia AEJEHEBA Cambio G",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 4,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 923.8,
+      "from_patch_response_ms": 914.84
+    },
+    {
+      "iteration": 8,
+      "started_at": "2026-11-17T19:34:18.333Z",
+      "request_id": "ca3-d99cc5d5-aa30-45ba-9aa2-f2f459c0b0e3",
+      "expected_name": "Latencia AEJEHEBA Cambio H",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 3,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 623.96,
+      "from_patch_response_ms": 608.51
+    },
+    {
+      "iteration": 9,
+      "started_at": "2026-11-17T19:34:19.694Z",
+      "request_id": "ca3-229354a4-c5c7-4783-8195-ad38f2ae084c",
+      "expected_name": "Latencia AEJEHEBA Cambio I",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 3,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 622.83,
+      "from_patch_response_ms": 608.72
+    },
+    {
+      "iteration": 10,
+      "started_at": "2026-11-17T19:34:21.230Z",
+      "request_id": "ca3-c0d1668a-a8ed-4e30-9393-40e489e36926",
+      "expected_name": "Latencia AEJEHEBA Cambio J",
+      "patch_http": 200,
+      "found": true,
+      "search_http": 200,
+      "polls": 2,
+      "rate_limited_polls": 0,
+      "from_patch_start_ms": 320.22,
+      "from_patch_response_ms": 309.9
+    }
+  ],
+  "entity": {
+    "entity_id": "28c05e27-5974-4c73-b76b-d1af936a9eb1",
+    "firstName": "Latencia AEJEHEBA"
+  },
+  "maximum_ms": 1250.05,
+  "all_under_5000_ms": true,
+  "result": "passed",
+  "measured_at": "2026-11-17T19:34:21.573438+00:00"
+}

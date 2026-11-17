@@ -135,3 +135,11 @@ final 200. Después se retiraron los contenedores de prueba conservando sus vol�
 Es una comprobación del candidato local, no de una VM nueva ni de acceso externo
 443. Tras publicar el commit corresponde repetir el mismo comando desde ese
 commit en otra computadora con los puertos normales.
+
+## Actualización de la frecuencia del bridge
+
+El Compose fija `POLL_INTERVAL_MS=1000`. Se midieron diez ediciones secuenciales
+por gateway HTTPS y todas aparecieron en búsqueda en menos de cinco segundos
+(máximo 1250,05 ms). [Resultados](../../evidencias/CA3-latencia-edicion-busqueda.json)
+y [alcance de la medición](../../services/event-bridge/README.md). Es un resultado
+local, no una garantía bajo carga; el mecanismo sigue siendo polling.

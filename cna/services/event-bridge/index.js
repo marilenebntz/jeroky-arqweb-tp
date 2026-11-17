@@ -10,6 +10,10 @@ const removeEvent = db.prepare(
 );
 
 async function main() {
+  const pollInterval = Number(process.env.POLL_INTERVAL_MS || 1000);
+  if (!Number.isSafeInteger(pollInterval) || pollInterval < 250 || pollInterval > 60000) {
+    throw new Error("POLL_INTERVAL_MS debe ser entero entre 250 y 60000");
+  }
   const connection = await amqp.connect({
     hostname: process.env.RABBITMQ_HOST || "rabbitmq",
     username: process.env.RABBITMQ_DEFAULT_USER,
@@ -84,7 +88,7 @@ async function main() {
     }
   }
 
-  console.log("Bridge conectado. Consultando alumnos cada 10 segundos");
+  console.log(JSON.stringify({ action: "bridge_started", poll_interval_ms: pollInterval }));
 
   while (true) {
     await publishPending();
@@ -102,7 +106,7 @@ async function main() {
     }
 
     await publishPending();
-    await new Promise(resolve => setTimeout(resolve, 10000));
+    await new Promise(resolve => setTimeout(resolve, pollInterval));
   }
 }
 
