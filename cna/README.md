@@ -1,4 +1,4 @@
-> Para continuar el TP usamos el entorno separado de `cna/infra/aislado`. Arranque desde la raíz del repositorio: `bash cna/infra/aislado/levantar.sh`. Jeroky de Arquitectura está en http://localhost:3100. Los pasos anteriores de esta página describen el montaje previo.
+> Arranque desde un clon limpio con Git, Python 3, OpenSSL, Docker Compose v2 e Internet: `bash cna/infra/aislado/levantar.sh`. Descarga versiones fijadas de Jeroky y prepara secretos/certificados locales. Ver [instrucciones del entorno aislado](infra/aislado/README.md). Gateway HTTPS: https://localhost:3443. Los pasos históricos de esta página describen el montaje anterior.
 
 # TP2 Cloud Native - Jeroky Soft
 

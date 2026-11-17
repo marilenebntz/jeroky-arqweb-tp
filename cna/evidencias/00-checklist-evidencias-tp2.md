@@ -52,7 +52,7 @@ y límite de solicitudes. El TP todavía no está completo.
 - [ ] F6-E13 — Mensaje enviado a la DLQ. **Parcial**. [Evento inválido a DLQ](audit-evento-invalido-dlq.png) y [tres reintentos agotados](audit-reintentos-agotados-dlq.png), del montaje anterior. Falta repetir en el aislado.
 - [ ] F6-E14 — Configuración Nginx validada con `nginx -t`. **Parcial**. nginx -t terminó correctamente antes de aplicar HTTPS y el límite. Falta guardar su salida como evidencia identificada de la configuración final.
 - [x] F6-E15 — Rate limiting demostrando HTTP 429. Comprobado por HTTPS en el entorno aislado. [20 solicitudes con 6 respuestas 200 y 14 respuestas 429](gateway-rate-limit-429.txt). Falta captura si la guía la exige.
-- [ ] F6-E16 — Despliegue desde repositorio limpio y servicios saludables.
+- [x] F6-E16 — Candidato de arranque completo verificado en clon limpio local con los cuatro archivos nuevos del bootstrap aplicados. Descargó fuentes fijados desde GitHub y generó secretos/certificado; 12 componentes en proyecto/red/volúmenes separados, sin puertos publicados para evitar colisiones. Login, seed, búsqueda HTTPS y frontend final 200. [Evidencia](F6-E16-arranque-limpio.json). Cachés Docker del host compartidas; repetir desde el commit publicado en otra computadora/VM. No demuestra despliegue externo 443.
 
 ## Fase 7 — Resiliencia y operación
 

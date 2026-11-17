@@ -21,7 +21,7 @@ la aprobación ni estimar una nota contando capturas o commits.
 | CA-4: entrada externa única por 443, TLS 1.3 | Parcial | TLS 1.3 y verificación del certificado comprobados. El gateway se publica en 127.0.0.1:3443 y HTTP en 3180; servicios y observabilidad tienen puertos locales. Loopback evita acceso remoto directo, pero no demuestra entrada 443 desde la red del laboratorio, firewall de VM ni accesibilidad docente. Cambiar solo el número de puerto no completa el criterio. |
 | CA-5: monolito devuelve 200 con cualquier microservicio caído | Parcial | Se observó search 503 controlado, auditoría 200 y frontend 307 durante una caída de búsqueda. Falta seguir la redirección y verificar 200 del monolito; repetir por separado con audit y export caídos, incluyendo recuperación. |
 | CA-6: reiniciar consumidor sin perder eventos de la caída | Comprobado en el alcance ensayado | Auditoría detenida 120 s; 20 PATCH en 20 alumnos ficticios; 20 event_id del bridge correlacionados con 20 eventos almacenados una vez. Otra prueba confirma idempotencia ante un duplicado. No acredita caída del broker ni cambios intermedios rápidos de una misma entidad. |
-| CA-7: repositorio limpio y arranque completo en un comando | Pendiente | Los builds dependen de `.runtime/backend` y `.runtime/frontend`, ignorados por Git y preparados desde carpetas locales. La preparación no fija/reproduce por sí sola esos árboles. `.env.local` y certificados requieren preparación; `levantar.sh` todavía no levanta gateway. No hay ejecución comprobada desde clon limpio. |
+| CA-7: repositorio limpio y arranque completo en un comando | Candidato verificado en clon local limpio | `levantar.sh` obtiene commits fijados de GitHub, genera secretos/certificado, prepara colas y arranca gateway y observabilidad. [Prueba de 12 componentes](../evidencias/F6-E16-arranque-limpio.json): clon sin fuentes/secretos previos con los cuatro archivos candidatos del bootstrap, proyecto/red/volúmenes nuevos y override sin puertos para no colisionar. Login, seed, búsqueda HTTPS y frontend final 200 comprobados. Cachés Docker compartidas; falta repetir desde el commit publicado en otra computadora/VM con los puertos normales. |
 
 Evidencias principales: [20 ediciones reales](../evidencias/F7-E2-ediciones-jeroky.json),
 [entrega y duplicado](../evidencias/F7-E2-consumidor-detenido.json),
@@ -34,13 +34,12 @@ Evidencias principales: [20 ediciones reales](../evidencias/F7-E2-ediciones-jero
 
 ## Orden propuesto para el trabajo restante
 
-1. **Reproducibilidad CA-7.** Identificar versiones exactas de los fuentes del
-   backend/frontend y cualquier adaptación local; obtenerlos de forma verificable
-   sin modificar repositorios originales. Automatizar credenciales, certificado,
-   preparación, broker y gateway. Ensayar un clon limpio con proyecto/volúmenes
-   de prueba independientes, sin borrar el laboratorio existente. Registrar el
-   comando, versiones y salud final. No versionar secretos ni confiar en carpetas
-   que solo existen en esta computadora.
+1. **Reproducibilidad CA-7 (candidato verificado).** Fuentes fijados, secretos,
+   certificado, colas, gateway y observabilidad ya se preparan en un comando.
+   Se probó en un clon limpio local con los archivos candidatos del bootstrap,
+   sin importar datos del laboratorio. Después de publicar, repetir desde ese
+   commit en otra computadora/VM con puertos normales y registrar el resultado.
+   No borrar el laboratorio existente ni versionar los secretos generados.
 2. **Latencia CA-3.** Resolver la brecha del polling de 10 s. Si se mantiene polling,
    documentarlo como integración parcial B4 y medir la latencia de edición a
    búsqueda; un intervalo menor por sí solo no prueba el umbral. Un mecanismo de

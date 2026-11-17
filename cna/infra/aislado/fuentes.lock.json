@@ -1,0 +1,10 @@
+{
+  "backend": {
+    "url": "https://github.com/marilenebntz/jerokybackend.git",
+    "commit": "c2d2ce3de21c964552d0d825a821ccdf57ca175f"
+  },
+  "frontend": {
+    "url": "https://github.com/marilenebntz/jerokyfrontend.git",
+    "commit": "c07ac369ca0d23842ff268f658cbbfcc6821dc26"
+  }
+}
