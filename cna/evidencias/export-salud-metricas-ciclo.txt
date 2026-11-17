@@ -200,4 +200,3 @@ Logs worker
 {"action":"export_completed","job_id":"647e16e9-fd98-4bde-9ca2-6112af06e371","bytes":292,"timestamp":"2026-11-17T01:59:03.190Z","level":"info","service":"export-svc","request_id":null,"message":"export_completed"}
 (node:1) ExperimentalWarning: SQLite is an experimental feature and might change at any time
 (Use `node --trace-warnings ...` to show where the warning was created)
-

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")"
+python3 ../../observability/preparar.py
 compose=(docker compose --env-file .env.local -f compose.yml)
 "${compose[@]}" up -d --build --wait db backend frontend rabbitmq
 "${compose[@]}" exec -T backend node /app/cna-seed.cjs
@@ -19,5 +20,7 @@ if [[ "$ready" != true ]]; then
   exit 1
 fi
 "${compose[@]}" up -d --build audit search export worker bridge
+"${compose[@]}" up -d --wait prometheus grafana
 "${compose[@]}" ps
 echo 'Jeroky de Arquitectura disponible en http://localhost:3100'
+echo 'Panel RED disponible en http://localhost:3150/d/cna-red'

@@ -1,0 +1,177 @@
+{
+  "uid": "cna-red",
+  "title": "Jeroky Arquitectura - RED",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": false,
+  "refresh": "10s",
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "tags": [
+    "TP2",
+    "RED"
+  ],
+  "panels": [
+    {
+      "id": 1,
+      "title": "Estado de recolección",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cna-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "up{job=\"services\"}",
+          "legendFormat": "{{service}} {{status}}"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Solicitudes por segundo",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cna-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\"}[1m]))",
+          "legendFormat": "{{service}} {{status}}"
+        }
+      ],
+      "options": {}
+    },
+    {
+      "id": 3,
+      "title": "Errores HTTP 5xx por segundo",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cna-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (service) (rate({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\",status=~\"5..\"}[1m])) or on(service) (0 * sum by(service)(rate({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\"}[1m])))",
+          "legendFormat": "{{service}} {{status}}"
+        }
+      ],
+      "options": {}
+    },
+    {
+      "id": 4,
+      "title": "Latencia p95",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cna-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.95, sum by(service,le)(rate({__name__=~\"(search|audit|export)_http_request_duration_seconds_bucket\",route=~\"/v2/.*\"}[1m])))",
+          "legendFormat": "{{service}} {{status}}"
+        }
+      ],
+      "options": {}
+    },
+    {
+      "id": 5,
+      "title": "Respuestas por código (últimos 5 minutos)",
+      "type": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "cna-prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by(service,status)(increase({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\"}[5m]))",
+          "legendFormat": "{{service}} {{status}}"
+        }
+      ],
+      "options": {}
+    }
+  ],
+  "timezone": "browser"
+}

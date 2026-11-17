@@ -1,0 +1,252 @@
+{
+  "checked_at": "2026-11-17T02:12:04.948282+00:00",
+  "purpose": "Demostración RED; no es prueba de carga ni de alerta.",
+  "targets": [
+    {
+      "url": "http://search:3000/metrics",
+      "health": "up",
+      "lastError": "",
+      "labels": {
+        "instance": "search:3000",
+        "job": "services",
+        "service": "search-svc"
+      }
+    },
+    {
+      "url": "http://audit:3000/metrics",
+      "health": "up",
+      "lastError": "",
+      "labels": {
+        "instance": "audit:3000",
+        "job": "services",
+        "service": "audit-svc"
+      }
+    },
+    {
+      "url": "http://export:3000/metrics",
+      "health": "up",
+      "lastError": "",
+      "labels": {
+        "instance": "export:3000",
+        "job": "services",
+        "service": "export-svc"
+      }
+    }
+  ],
+  "panels": [
+    {
+      "title": "Estado de recolección",
+      "query": "up{job=\"services\"}",
+      "result": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "__name__": "up",
+              "instance": "search:3000",
+              "job": "services",
+              "service": "search-svc"
+            },
+            "value": [
+              1794881524.983,
+              "1"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "up",
+              "instance": "audit:3000",
+              "job": "services",
+              "service": "audit-svc"
+            },
+            "value": [
+              1794881524.983,
+              "1"
+            ]
+          },
+          {
+            "metric": {
+              "__name__": "up",
+              "instance": "export:3000",
+              "job": "services",
+              "service": "export-svc"
+            },
+            "value": [
+              1794881524.983,
+              "1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Solicitudes por segundo",
+      "query": "sum by (service) (rate({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\"}[1m]))",
+      "result": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "service": "search-svc"
+            },
+            "value": [
+              1794881524.985,
+              "0.1"
+            ]
+          },
+          {
+            "metric": {
+              "service": "audit-svc"
+            },
+            "value": [
+              1794881524.985,
+              "0.20001200072004321"
+            ]
+          },
+          {
+            "metric": {
+              "service": "export-svc"
+            },
+            "value": [
+              1794881524.985,
+              "0.1800072002880115"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Errores HTTP 5xx por segundo",
+      "query": "sum by (service) (rate({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\",status=~\"5..\"}[1m])) or on(service) (0 * sum by(service)(rate({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\"}[1m])))",
+      "result": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "service": "search-svc"
+            },
+            "value": [
+              1794881524.987,
+              "0"
+            ]
+          },
+          {
+            "metric": {
+              "service": "audit-svc"
+            },
+            "value": [
+              1794881524.987,
+              "0"
+            ]
+          },
+          {
+            "metric": {
+              "service": "export-svc"
+            },
+            "value": [
+              1794881524.987,
+              "0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Latencia p95",
+      "query": "histogram_quantile(0.95, sum by(service,le)(rate({__name__=~\"(search|audit|export)_http_request_duration_seconds_bucket\",route=~\"/v2/.*\"}[1m])))",
+      "result": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "service": "export-svc"
+            },
+            "value": [
+              1794881524.989,
+              "0.00475"
+            ]
+          },
+          {
+            "metric": {
+              "service": "search-svc"
+            },
+            "value": [
+              1794881524.989,
+              "0.00475"
+            ]
+          },
+          {
+            "metric": {
+              "service": "audit-svc"
+            },
+            "value": [
+              1794881524.989,
+              "0.00475"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Respuestas por código (últimos 5 minutos)",
+      "query": "sum by(service,status)(increase({__name__=~\"(search|audit|export)_http_requests_total\",route=~\"/v2/.*\"}[5m]))",
+      "result": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {
+              "service": "search-svc",
+              "status": "200"
+            },
+            "value": [
+              1794881524.991,
+              "41.37345454545454"
+            ]
+          },
+          {
+            "metric": {
+              "service": "audit-svc",
+              "status": "200"
+            },
+            "value": [
+              1794881524.991,
+              "43.334399999999995"
+            ]
+          },
+          {
+            "metric": {
+              "service": "export-svc",
+              "status": "202"
+            },
+            "value": [
+              1794881524.991,
+              "2.2000830024900746"
+            ]
+          },
+          {
+            "metric": {
+              "service": "export-svc",
+              "status": "200"
+            },
+            "value": [
+              1794881524.991,
+              "41.95161854855646"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "grafana_health": {
+    "database": "ok",
+    "version": "12.1.1",
+    "commit": "df5de8219b41d1e639e003bf5f3a85913761d167"
+  },
+  "dashboard": {
+    "title": "Jeroky Arquitectura - RED",
+    "uid": "cna-red",
+    "provisioned": true,
+    "canEdit": false
+  },
+  "config_validation": "Checking /etc/prometheus/prometheus.yml\n SUCCESS: /etc/prometheus/prometheus.yml is valid prometheus config file syntax\n\n"
+}
