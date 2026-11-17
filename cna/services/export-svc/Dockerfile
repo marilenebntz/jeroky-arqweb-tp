@@ -3,7 +3,7 @@ FROM node:22-alpine
 WORKDIR /app
 
 COPY package.json ./
-COPY index.js storage.js jeroky.js worker.js ./
+COPY index.js storage.js jeroky.js worker.js operational.js ./
 
 RUN mkdir -p /data && chown node:node /data
 

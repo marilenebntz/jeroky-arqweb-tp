@@ -131,3 +131,38 @@ La conexión con Jeroky y el avance del worker necesitan comprobaciones
 adicionales.
 
 SQLite usa la API experimental de Node.js 22.
+
+## Salud, métricas y pruebas actuales
+
+`GET /healthz` confirma que el proceso HTTP está vivo. `GET /readyz` verifica
+lectura y escritura de la tabla de trabajos con una inserción que se revierte.
+Devuelve 503 si SQLite no permite aceptar trabajos. Esta preparación no comprueba
+Jeroky ni la disponibilidad o el avance del worker: la API puede aceptar y
+conservar trabajos mientras el worker está detenido. `/health` sigue disponible.
+Compose consulta `/readyz` para la API.
+
+`GET /metrics` expone `export_http_requests_total` y el histograma
+`export_http_request_duration_seconds`, etiquetados por método, ruta y código.
+Los identificadores de trabajos se reemplazan por `:id` en las etiquetas para
+limitar la cantidad de series. Los contadores se reinician con la API.
+Estas rutas operativas están en el puerto local 3104 y la red interna; el gateway
+solo publica las rutas funcionales de exportación. Falta conectar Prometheus y Grafana.
+
+Los logs de aplicación son JSON con timestamp, level, service, request_id y
+message. La API conserva o genera el request_id de cada consulta HTTP. Los logs
+del worker incluyen job_id; su request_id queda null porque todavía no se guarda
+el identificador HTTP original en el trabajo. Las advertencias de Node pueden
+seguir saliendo como texto. No se registran cuerpos ni credenciales.
+
+Para ejecutar las pruebas desde la raíz, sin modificar los datos existentes:
+
+```bash
+docker run --rm -v "$PWD/cna/services/export-svc:/app:ro" -w /app node:22-alpine npm test
+```
+
+Las 7 pruebas usan SQLite en memoria, HTTP local real y un generador de reportes
+simulado. Comprueban aceptación 202, descarga pendiente 409, finalización y
+Markdown, validaciones, salud y preparación, métricas y logs, fallo del generador,
+recuperación tras vencer el lease y rechazo de un resultado de un worker que
+perdió su lease. No sustituyen matar un contenedor durante un trabajo real ni
+medir la recuperación en el despliegue. El lease continúa siendo de 120 segundos.

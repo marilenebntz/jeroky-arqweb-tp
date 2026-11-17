@@ -1,7 +1,9 @@
 const { randomUUID } = require("node:crypto");
-const { db } = require("./storage");
+const { log } = require("./operational");
 const { generateReport } = require("./jeroky");
 
+function createProcessor(db, generate = generateReport, options = {}) {
+const nowMs = options.now || Date.now;
 const columns = db.prepare("PRAGMA table_info(jobs)").all();
 if (!columns.some(column => column.name === "lease_token")) {
   db.exec("ALTER TABLE jobs ADD COLUMN lease_token TEXT");
@@ -42,7 +44,7 @@ const fail = db.prepare(`
 
 async function processNext() {
   const token = randomUUID();
-  const now = Date.now();
+  const now = nowMs();
   const job = claim.get(
     token,
     now + 120000,
@@ -57,7 +59,7 @@ async function processNext() {
       throw new Error("Tipo de reporte no soportado");
     }
 
-    const result = await generateReport();
+    const result = await generate();
     const saved = complete.run(
       result,
       new Date().toISOString(),
@@ -66,11 +68,11 @@ async function processNext() {
     );
 
     if (saved.changes) {
-      console.log(JSON.stringify({
+      log("info", "export_completed", {
         action: "export_completed",
         job_id: job.job_id,
         bytes: Buffer.byteLength(result, "utf8"),
-      }));
+      }, options.output);
     }
   } catch {
     fail.run(
@@ -79,23 +81,25 @@ async function processNext() {
       job.job_id,
       token
     );
-    console.error(JSON.stringify({
+    log("error", "export_failed", {
       action: "export_failed",
       job_id: job.job_id,
-    }));
+    }, options.output);
   }
 }
 
+return { processNext };
+}
 async function run() {
-  console.log("Worker de exportacion esperando trabajos");
-
+  const { db } = require("./storage").createStore();
+  const { processNext } = createProcessor(db);
+  log("info", "worker_started");
   while (true) {
     await processNext();
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
 }
-
-run().catch(() => {
-  console.error("El worker de exportacion se detuvo por un error");
-  process.exit(1);
+if (require.main === module) run().catch(() => {
+  log("error", "worker_stopped"); process.exit(1);
 });
+module.exports = { createProcessor };

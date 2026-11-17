@@ -2,9 +2,9 @@ const fs = require("node:fs");
 const { randomUUID } = require("node:crypto");
 const { DatabaseSync } = require("node:sqlite");
 
-fs.mkdirSync("/data", { recursive: true });
-
-const db = new DatabaseSync("/data/exports.sqlite");
+function createStore(filename = "/data/exports.sqlite") {
+if (filename !== ":memory:") fs.mkdirSync(require("node:path").dirname(filename), { recursive: true });
+const db = new DatabaseSync(filename);
 db.exec(`
   PRAGMA journal_mode = WAL;
   PRAGMA synchronous = FULL;
@@ -41,4 +41,6 @@ function createJob(report, format) {
   return findJob.get(jobId);
 }
 
-module.exports = { db, createJob, findJob };
+return { db, createJob, findJob };
+}
+module.exports = { createStore };

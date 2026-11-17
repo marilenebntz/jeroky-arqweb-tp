@@ -1,0 +1,203 @@
+Prueba real de exportación 2026-11-17T01:59:02.720245+00:00
+/healthz
+HTTP 200
+X-Request-ID: prueba-export-operacion-001
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-store
+Date: Tue, 17 Nov 2026 01:59:02 GMT
+Connection: close
+Transfer-Encoding: chunked
+
+
+{"status":"alive","service":"export-svc"}
+/readyz
+HTTP 200
+X-Request-ID: prueba-export-operacion-001
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-store
+Date: Tue, 17 Nov 2026 01:59:02 GMT
+Connection: close
+Transfer-Encoding: chunked
+
+
+{"status":"ready","database":"ok"}
+/v2/exports
+HTTP 202
+X-Request-ID: prueba-export-operacion-001
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-store
+Location: /v2/exports/647e16e9-fd98-4bde-9ca2-6112af06e371
+Date: Tue, 17 Nov 2026 01:59:02 GMT
+Connection: close
+Transfer-Encoding: chunked
+
+
+{"job_id":"647e16e9-fd98-4bde-9ca2-6112af06e371","report":"students","format":"markdown","status":"queued","created_at":"2026-11-17T01:59:02.767Z","updated_at":"2026-11-17T01:59:02.767Z","error":null}
+/v2/exports/647e16e9-fd98-4bde-9ca2-6112af06e371
+HTTP 200
+X-Request-ID: prueba-export-operacion-001
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-store
+Date: Tue, 17 Nov 2026 01:59:03 GMT
+Connection: close
+Transfer-Encoding: chunked
+
+
+{"job_id":"647e16e9-fd98-4bde-9ca2-6112af06e371","report":"students","format":"markdown","status":"completed","created_at":"2026-11-17T01:59:02.767Z","updated_at":"2026-11-17T01:59:03.188Z","error":null}
+/v2/exports/647e16e9-fd98-4bde-9ca2-6112af06e371/download
+HTTP 200
+X-Request-ID: prueba-export-operacion-001
+Content-Type: text/markdown; charset=utf-8
+Content-Disposition: attachment; filename="alumnos-647e16e9-fd98-4bde-9ca2-6112af06e371.md"
+Cache-Control: no-store
+X-Content-Type-Options: nosniff
+Date: Tue, 17 Nov 2026 01:59:03 GMT
+Connection: close
+Transfer-Encoding: chunked
+
+
+# Reporte de alumnos
+
+Fecha de generacion: 2026-11-17T01:59:03.188Z
+Cantidad de alumnos: 2
+
+| ID | Nombre | Apellido | Estado |
+| --- | --- | --- | --- |
+| c3596af9-a05f-4119-a71a-f9f792ca7bb8 | Juana | Lopez | active |
+| 6284f063-e327-41e6-8e2f-2e093623f928 | Luciana | Velazquez | active |
+
+/metrics
+HTTP 200
+X-Request-ID: prueba-export-operacion-001
+Content-Type: text/plain; version=0.0.4; charset=utf-8
+Cache-Control: no-store
+Date: Tue, 17 Nov 2026 01:59:03 GMT
+Connection: close
+Transfer-Encoding: chunked
+
+
+# HELP export_http_requests_total Completed HTTP requests.
+# TYPE export_http_requests_total counter
+# HELP export_http_request_duration_seconds HTTP response duration in seconds.
+# TYPE export_http_request_duration_seconds histogram
+export_http_requests_total{method="GET",route="/readyz",status="200"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.005"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.01"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.025"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.05"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.1"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.25"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.5"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="1"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="2.5"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="5"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="10"} 4
+export_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="+Inf"} 4
+export_http_request_duration_seconds_sum{method="GET",route="/readyz",status="200"} 0.011518833000000086
+export_http_request_duration_seconds_count{method="GET",route="/readyz",status="200"} 4
+export_http_requests_total{method="GET",route="/healthz",status="200"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.005"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.01"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.025"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.05"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.1"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.25"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="1"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="2.5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="10"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="+Inf"} 1
+export_http_request_duration_seconds_sum{method="GET",route="/healthz",status="200"} 0.001210584000000381
+export_http_request_duration_seconds_count{method="GET",route="/healthz",status="200"} 1
+export_http_requests_total{method="POST",route="/v2/exports",status="202"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="0.005"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="0.01"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="0.025"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="0.05"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="0.1"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="0.25"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="0.5"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="1"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="2.5"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="5"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="10"} 1
+export_http_request_duration_seconds_bucket{method="POST",route="/v2/exports",status="202",le="+Inf"} 1
+export_http_request_duration_seconds_sum{method="POST",route="/v2/exports",status="202"} 0.0033504590000011376
+export_http_request_duration_seconds_count{method="POST",route="/v2/exports",status="202"} 1
+export_http_requests_total{method="GET",route="/v2/exports/:id",status="200"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="0.005"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="0.01"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="0.025"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="0.05"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="0.1"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="0.25"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="0.5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="1"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="2.5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="10"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id",status="200",le="+Inf"} 1
+export_http_request_duration_seconds_sum{method="GET",route="/v2/exports/:id",status="200"} 0.001552958000000217
+export_http_request_duration_seconds_count{method="GET",route="/v2/exports/:id",status="200"} 1
+export_http_requests_total{method="GET",route="/v2/exports/:id/download",status="200"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="0.005"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="0.01"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="0.025"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="0.05"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="0.1"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="0.25"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="0.5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="1"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="2.5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="5"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="10"} 1
+export_http_request_duration_seconds_bucket{method="GET",route="/v2/exports/:id/download",status="200",le="+Inf"} 1
+export_http_request_duration_seconds_sum{method="GET",route="/v2/exports/:id/download",status="200"} 0.000636624999999185
+export_http_request_duration_seconds_count{method="GET",route="/v2/exports/:id/download",status="200"} 1
+
+Descarga HTTPS por gateway
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 17 Nov 2026 01:59:03 GMT
+Content-Type: text/markdown; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Request-ID: prueba-export-gateway-001
+Content-Disposition: attachment; filename="alumnos-647e16e9-fd98-4bde-9ca2-6112af06e371.md"
+Cache-Control: no-store
+X-Request-ID: prueba-export-gateway-001
+X-Content-Type-Options: nosniff
+
+# Reporte de alumnos
+
+Fecha de generacion: 2026-11-17T01:59:03.188Z
+Cantidad de alumnos: 2
+
+| ID | Nombre | Apellido | Estado |
+| --- | --- | --- | --- |
+| c3596af9-a05f-4119-a71a-f9f792ca7bb8 | Juana | Lopez | active |
+| 6284f063-e327-41e6-8e2f-2e093623f928 | Luciana | Velazquez | active |
+
+
+Logs export
+{"timestamp":"2026-11-17T01:58:35.608Z","level":"info","service":"export-svc","request_id":null,"message":"http_server_listening"}
+{"request_id":"6f7d9fd8-d6cb-42cd-adf1-dc3468a97fff","method":"GET","route":"/readyz","status":200,"duration_ms":3.696,"timestamp":"2026-11-17T01:58:40.657Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"0d4c8dfd-a817-4cd4-a420-229ca5e69f17","method":"GET","route":"/readyz","status":200,"duration_ms":3.575,"timestamp":"2026-11-17T01:58:50.749Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"f35e6e0d-1f82-4d0a-a37c-0c4e8d3e16fd","method":"GET","route":"/readyz","status":200,"duration_ms":2.029,"timestamp":"2026-11-17T01:59:00.844Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"prueba-export-operacion-001","method":"GET","route":"/healthz","status":200,"duration_ms":1.211,"timestamp":"2026-11-17T01:59:02.758Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"prueba-export-operacion-001","method":"GET","route":"/readyz","status":200,"duration_ms":2.219,"timestamp":"2026-11-17T01:59:02.764Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"prueba-export-operacion-001","method":"POST","route":"/v2/exports","status":202,"duration_ms":3.35,"timestamp":"2026-11-17T01:59:02.769Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"prueba-export-operacion-001","method":"GET","route":"/v2/exports/:id","status":200,"duration_ms":1.553,"timestamp":"2026-11-17T01:59:03.776Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"prueba-export-operacion-001","method":"GET","route":"/v2/exports/:id/download","status":200,"duration_ms":0.637,"timestamp":"2026-11-17T01:59:03.778Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"prueba-export-operacion-001","method":"GET","route":"/metrics","status":200,"duration_ms":0.99,"timestamp":"2026-11-17T01:59:03.781Z","level":"info","service":"export-svc","message":"http_request"}
+{"request_id":"prueba-export-gateway-001","method":"GET","route":"/v2/exports/:id/download","status":200,"duration_ms":0.95,"timestamp":"2026-11-17T01:59:03.990Z","level":"info","service":"export-svc","message":"http_request"}
+(node:1) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Logs worker
+{"timestamp":"2026-11-17T01:58:35.713Z","level":"info","service":"export-svc","request_id":null,"message":"worker_started"}
+{"action":"export_completed","job_id":"647e16e9-fd98-4bde-9ca2-6112af06e371","bytes":292,"timestamp":"2026-11-17T01:59:03.190Z","level":"info","service":"export-svc","request_id":null,"message":"export_completed"}
+(node:1) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+

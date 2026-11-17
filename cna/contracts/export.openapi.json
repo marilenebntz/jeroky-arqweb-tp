@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Jeroky - API de exportacion",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Genera reportes de alumnos en Markdown usando la API de Jeroky. La autenticacion de esta API y el gateway estan pendientes."
   },
   "servers": [
@@ -429,6 +429,122 @@
                   "properties": {
                     "error": {
                       "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "getExportLiveness",
+        "summary": "Comprobar que el proceso HTTP está vivo",
+        "responses": {
+          "200": {
+            "description": "Vivo, sin consultar dependencias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "service"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "alive"
+                    },
+                    "service": {
+                      "const": "export-svc"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "operationId": "getExportMetrics",
+        "summary": "Contador HTTP e histograma de latencia en formato Prometheus",
+        "responses": {
+          "200": {
+            "description": "Métricas del proceso desde su último arranque",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "operationId": "getExportReadiness",
+        "summary": "Comprobar lectura y escritura de trabajos; no verifica worker ni Jeroky",
+        "responses": {
+          "200": {
+            "description": "SQLite permite aceptar trabajos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ready",
+                        "not_ready"
+                      ]
+                    },
+                    "database": {
+                      "type": "string",
+                      "enum": [
+                        "ok",
+                        "unavailable"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "SQLite no permite aceptar trabajos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "ready",
+                        "not_ready"
+                      ]
+                    },
+                    "database": {
+                      "type": "string",
+                      "enum": [
+                        "ok",
+                        "unavailable"
+                      ]
                     }
                   }
                 }

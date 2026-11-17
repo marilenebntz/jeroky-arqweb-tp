@@ -1,7 +1,13 @@
 const http = require("node:http");
-const { db, createJob, findJob } = require("./storage");
+const { createObservability, probeDatabase, log } = require("./operational");
+function startApi(store, options = {}) {
+const { db, createJob, findJob } = store;
+const observability = createObservability(options.output);
 
 const server = http.createServer(async (request, response) => {
+  let pathname;
+  try { pathname = new URL(request.url, "http://localhost").pathname; } catch { pathname = "unmatched"; }
+  const requestId = observability.observe(request, response, pathname);
   const send = (status, body, headers = {}) => {
     response.writeHead(status, {
       "Content-Type": "application/json; charset=utf-8",
@@ -13,6 +19,19 @@ const server = http.createServer(async (request, response) => {
 
   try {
     const url = new URL(request.url, "http://localhost");
+
+    if (url.pathname === "/healthz" && request.method === "GET") {
+      send(200, { status: "alive", service: "export-svc" }); return;
+    }
+    if (url.pathname === "/readyz" && request.method === "GET") {
+      let ready = false;
+      try { probeDatabase(db); ready = true; } catch {}
+      send(ready ? 200 : 503, { status: ready ? "ready" : "not_ready", database: ready ? "ok" : "unavailable" }); return;
+    }
+    if (url.pathname === "/metrics" && request.method === "GET") {
+      response.writeHead(200, { "Content-Type": "text/plain; version=0.0.4; charset=utf-8", "Cache-Control": "no-store" });
+      response.end(observability.render()); return;
+    }
 
     if (url.pathname === "/health" && request.method === "GET") {
       db.prepare("SELECT 1").get();
@@ -136,7 +155,7 @@ const server = http.createServer(async (request, response) => {
 
     send(404, { error: "Ruta inexistente" });
   } catch {
-    console.error("Error en la API de exportacion");
+    log("error", "export_request_failed", { request_id: requestId }, options.output);
     if (!response.headersSent && !response.destroyed) {
       send(500, { error: "No se pudo completar el pedido" });
     }
@@ -144,11 +163,12 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.requestTimeout = 15000;
-server.on("error", () => {
-  console.error("No se pudo iniciar la API de exportacion");
-  process.exit(1);
-});
-
-server.listen(3000, "0.0.0.0", () => {
-  console.log("API de exportacion escuchando en puerto 3000");
-});
+server.on("error", () => log("error", "http_server_error", {}, options.output));
+server.listen(options.port ?? 3000, options.host || "0.0.0.0", () => log("info", "http_server_listening", {}, options.output));
+return server;
+}
+if (require.main === module) {
+  const server = startApi(require("./storage").createStore());
+  server.on("error", () => process.exit(1));
+}
+module.exports = { startApi };
