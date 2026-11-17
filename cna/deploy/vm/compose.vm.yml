@@ -1,0 +1,42 @@
+# Se combina con cna/infra/aislado/compose.yml; todas las rutas se resuelven allí.
+services:
+  db:
+    mem_limit: 192m
+    cpus: 0.5
+  backend:
+    mem_limit: 640m
+    cpus: 1.0
+    environment:
+      NODE_OPTIONS: --max-old-space-size=448
+      CORS_ORIGINS: http://localhost:3100,http://127.0.0.1:3100,https://arqui.local
+  frontend:
+    mem_limit: 768m
+    cpus: 1.0
+    environment:
+      NODE_OPTIONS: --max-old-space-size=512
+  rabbitmq:
+    mem_limit: 256m
+    cpus: 0.5
+  audit:
+    mem_limit: 96m
+    cpus: 0.25
+  search:
+    mem_limit: 96m
+    cpus: 0.25
+  export:
+    mem_limit: 96m
+    cpus: 0.25
+  worker:
+    mem_limit: 96m
+    cpus: 0.25
+  bridge:
+    mem_limit: 96m
+    cpus: 0.25
+  gateway:
+    profiles: [gateway-contenedor]
+  prometheus:
+    mem_limit: 192m
+    cpus: 0.25
+  grafana:
+    mem_limit: 256m
+    cpus: 0.5

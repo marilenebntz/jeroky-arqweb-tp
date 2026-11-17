@@ -1,0 +1,14 @@
+[req]
+prompt = no
+distinguished_name = subject
+x509_extensions = extensions
+[subject]
+CN = arqui.local
+O = Arquitectura Web Laboratorio
+[extensions]
+subjectAltName = @names
+basicConstraints = critical,CA:FALSE
+keyUsage = critical,digitalSignature,keyEncipherment
+extendedKeyUsage = serverAuth
+[names]
+DNS.1 = arqui.local
