@@ -1,3 +1,5 @@
+const { log } = require("./operational");
+const readiness = { broker: false };
 const fs = require("node:fs");
 const { DatabaseSync } = require("node:sqlite");
 const amqp = require("amqplib");
@@ -31,6 +33,8 @@ const insertEvent = db.prepare(`
 `);
 
 async function main() {
+  const server = require("./api").startApi(db, { isBrokerReady: () => readiness.broker });
+  server.on("error", () => { readiness.broker = false; process.exit(1); });
   const connection = await amqp.connect({
     hostname: process.env.RABBITMQ_HOST || "rabbitmq",
     username: process.env.RABBITMQ_DEFAULT_USER,
@@ -40,20 +44,20 @@ async function main() {
   });
 
   connection.on("error", () => {
-    console.error("Error de conexion con RabbitMQ");
+    log("error", "Error de conexion con RabbitMQ");
     process.exit(1);
   });
-  connection.on("close", () => process.exit(1));
+  connection.on("close", () => { readiness.broker = false; process.exit(1); });
 
   const publisher = await connection.createConfirmChannel();
 
   publisher.on("error", () => {
-    console.error("Error al publicar: mensaje original sin confirmar");
+    log("error", "Error al publicar: mensaje original sin confirmar");
     process.exit(1);
   });
-  publisher.on("close", () => process.exit(1));
+  publisher.on("close", () => { readiness.broker = false; process.exit(1); });
   publisher.on("return", () => {
-    console.error("Mensaje sin ruta: original sin confirmar");
+    log("error", "Mensaje sin ruta: original sin confirmar");
     process.exit(1);
   });
 
@@ -64,16 +68,18 @@ async function main() {
 
   const channel = await connection.createChannel();
   channel.on("error", () => {
-    console.error("Error en el canal AMQP");
+    log("error", "Error en el canal AMQP");
     process.exit(1);
   });
+
+  channel.on("close", () => { readiness.broker = false; process.exit(1); });
 
   await channel.checkQueue("jeroky.audit");
   await channel.prefetch(1);
 
   await channel.consume("jeroky.audit", (message) => {
     if (!message) {
-      console.error("Consumo cancelado por RabbitMQ");
+      log("error", "Consumo cancelado por RabbitMQ");
       process.exit(1);
     }
 
@@ -84,7 +90,7 @@ async function main() {
         throw new Error("Evento fuera de contrato");
       }
     } catch {
-      console.error("Evento invalido: enviado a DLQ");
+      log("error", "Evento invalido: enviado a DLQ");
       channel.nack(message, false, false);
       return;
     }
@@ -95,11 +101,11 @@ async function main() {
         JSON.stringify(event),
         new Date().toISOString()
       );
-      console.log(JSON.stringify({
+      log("info", "event_processed", {
         action: result.changes ? "stored" : "duplicate",
         event_id: event.event_id,
         request_id: event.request_id,
-      }));
+      });
     } catch {
       const previous = message.properties.headers?.["x-audit-retries"] ?? 0;
       const retries = Number.isSafeInteger(previous) && previous >= 0
@@ -122,19 +128,20 @@ async function main() {
           },
         }, (error) => {
           if (error) {
-            console.error("Publicacion fallida: original sin confirmar");
+            log("error", "Publicacion fallida: original sin confirmar");
             process.exit(1);
           }
 
-          console.log(JSON.stringify({
+          log("warn", "event_retry", {
             action: exhausted ? "retry_exhausted_dlq" : "retry_scheduled",
             event_id: event.event_id,
+            request_id: event.request_id,
             retry: nextRetries,
-          }));
+          });
           channel.ack(message);
         });
       } catch {
-        console.error("Publicacion fallida: original sin confirmar");
+        log("error", "Publicacion fallida: original sin confirmar");
         process.exit(1);
       }
       return;
@@ -143,11 +150,11 @@ async function main() {
     channel.ack(message);
   }, { noAck: false });
 
-  require("./api").startApi(db);
-  console.log("audit-svc esperando eventos en jeroky.audit");
+  readiness.broker = true;
+  log("info", "consumer_ready");
 }
 
 main().catch(() => {
-  console.error("No se pudo iniciar audit-svc");
+  log("error", "No se pudo iniciar audit-svc");
   process.exit(1);
 });

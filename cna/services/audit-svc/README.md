@@ -140,3 +140,39 @@ La consulta conservó el mismo evento y devolvió `total: 1`.
 
 - [Primera captura](../../evidencias/audit-persistencia-reinicio_1.png).
 - [Segunda captura](../../evidencias/audit-persistencia-reinicio_2.png).
+
+## Salud, métricas y pruebas automatizadas
+
+- `GET /healthz`: proceso HTTP vivo, sin depender de SQLite o RabbitMQ.
+- `GET /readyz`: verifica lectura y escritura en la tabla de eventos mediante
+  una transacción de prueba que se revierte; también consulta el estado local
+  del consumidor AMQP. Devuelve 503 si alguna comprobación falla.
+- `GET /metrics`: contador `audit_http_requests_total` e histograma
+  `audit_http_request_duration_seconds`, con método, ruta y código HTTP.
+- `/health` conserva la comprobación anterior para compatibilidad.
+
+El estado AMQP representa la conexión y el consumidor conocidos por el proceso;
+no hace un ping independiente por solicitud. La detección de cortes de red puede
+esperar al heartbeat. Compose usa `/readyz` para este servicio.
+
+Los logs de aplicación son JSON con timestamp, level, service, request_id y
+message. Los mensajes de eventos conservan su identificador y el request_id.
+Las consultas y los cuerpos no se incluyen en los logs HTTP ni en etiquetas de
+métricas. Las advertencias propias de Node pueden seguir apareciendo como texto.
+Los contadores se reinician con el proceso. Prometheus y Grafana todavía deben
+configurarse para recolectar y mostrar estas métricas.
+
+Estas rutas operativas se consultan en el puerto local 3102 o dentro de la red
+Docker. El gateway publica la API `/v2/audit`, no estas rutas operativas.
+
+Desde la raíz del repositorio, ejecutar las pruebas sin tocar los datos reales:
+
+```bash
+docker run --rm -v "$PWD/cna/services/audit-svc:/app:ro" -w /app node:22-alpine npm test
+```
+
+Las 11 pruebas usan SQLite en memoria y HTTP real local. Cubren filtros,
+paginación, consultas parametrizadas, salud sin dependencias, preparación,
+base sin escritura, propagación de request_id y métricas. El estado del broker
+se simula en estas pruebas; no sustituyen las pruebas de entrega y reintento
+con RabbitMQ real.

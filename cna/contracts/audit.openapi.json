@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Jeroky - API de auditoria",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "API local de laboratorio. La autenticacion y la integracion con el gateway estan pendientes."
   },
   "servers": [
@@ -187,6 +187,133 @@
                       "type": "string"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "getAuditLiveness",
+        "summary": "Comprobar que el proceso HTTP está vivo",
+        "responses": {
+          "200": {
+            "description": "Vivo, sin consultar dependencias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "service"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "alive"
+                    },
+                    "service": {
+                      "const": "audit-svc"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "operationId": "getAuditReadiness",
+        "summary": "Comprobar tablas, escritura reversible y consumidor conectado",
+        "description": "Estado local AMQP confirmado al iniciar consumidor, invalidado al detectar error o cierre. No es un ping independiente al broker en cada petición ni garantiza detección instantánea de una partición de red.",
+        "responses": {
+          "200": {
+            "description": "Preparado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database",
+                    "rabbitmq"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "ready",
+                        "not_ready"
+                      ]
+                    },
+                    "database": {
+                      "enum": [
+                        "ok",
+                        "unavailable"
+                      ]
+                    },
+                    "rabbitmq": {
+                      "enum": [
+                        "connected",
+                        "unavailable"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Dependencia no preparada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database",
+                    "rabbitmq"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "ready",
+                        "not_ready"
+                      ]
+                    },
+                    "database": {
+                      "enum": [
+                        "ok",
+                        "unavailable"
+                      ]
+                    },
+                    "rabbitmq": {
+                      "enum": [
+                        "connected",
+                        "unavailable"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "operationId": "getAuditMetrics",
+        "summary": "Contador HTTP e histograma de latencia en formato Prometheus",
+        "responses": {
+          "200": {
+            "description": "Métricas del proceso desde su último arranque",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }

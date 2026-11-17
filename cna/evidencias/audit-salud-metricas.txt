@@ -1,0 +1,92 @@
+Verificación real de auditoría: 2026-11-17T01:53:59.638873+00:00
+
+Comando: curl --max-time 10 -sS http://127.0.0.1:3102/healthz
+{"status":"alive","service":"audit-svc"}
+Salida: 0
+
+Comando: curl --max-time 10 -sS http://127.0.0.1:3102/readyz
+{"status":"ready","database":"ok","rabbitmq":"connected"}
+Salida: 0
+
+Comando: docker run --rm --network cna-arqui_default -v /Users/hildaalmeida/dev/jeroky-arqweb-tp/cna/deploy/gateway/certs/localhost.crt:/certs/localhost.crt:ro curlimages/curl:latest --silent --show-error --connect-to localhost:3443:gateway:8443 --cacert /certs/localhost.crt --max-time 15 -i -H X-Request-ID: prueba-audit-operacion-001 https://localhost:3443/v2/audit?page=1&limit=1
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 17 Nov 2026 01:53:59 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Request-ID: prueba-audit-operacion-001
+Cache-Control: no-store
+X-Request-ID: prueba-audit-operacion-001
+X-Content-Type-Options: nosniff
+
+{"page":1,"limit":1,"total":6,"items":[{"event":{"event_id":"65deb82b-cbda-49e9-9c0b-943ebc2f23ba","type":"jeroky.entity.updated","version":1,"occurred_at":"2026-11-16T03:45:23.148Z","producer":"event-bridge","request_id":"0cdf16ac-c12d-4be0-a1d2-8e1a881ef9c5","payload":{"entity_type":"student","entity_id":"6284f063-e327-41e6-8e2f-2e093623f928","name":"Luciana Velazquez","status":"active","observation":"polling"}},"stored_at":"2026-11-16T03:45:23.154Z"}]}
+Salida: 0
+
+Comando: curl --max-time 10 -sS http://127.0.0.1:3102/metrics
+# HELP audit_http_requests_total Completed HTTP requests.
+# TYPE audit_http_requests_total counter
+# HELP audit_http_request_duration_seconds HTTP response duration in seconds.
+# TYPE audit_http_request_duration_seconds histogram
+audit_http_requests_total{method="GET",route="/readyz",status="200"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.005"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.01"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.025"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.05"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.1"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.25"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.5"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="1"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="2.5"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="5"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="10"} 4
+audit_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="+Inf"} 4
+audit_http_request_duration_seconds_sum{method="GET",route="/readyz",status="200"} 0.009288916999998035
+audit_http_request_duration_seconds_count{method="GET",route="/readyz",status="200"} 4
+audit_http_requests_total{method="GET",route="/healthz",status="200"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.005"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.01"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.025"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.05"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.1"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.25"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.5"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="1"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="2.5"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="5"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="10"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="+Inf"} 1
+audit_http_request_duration_seconds_sum{method="GET",route="/healthz",status="200"} 0.0005026660000003176
+audit_http_request_duration_seconds_count{method="GET",route="/healthz",status="200"} 1
+audit_http_requests_total{method="GET",route="/v2/audit",status="200"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="0.005"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="0.01"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="0.025"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="0.05"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="0.1"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="0.25"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="0.5"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="1"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="2.5"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="5"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="10"} 1
+audit_http_request_duration_seconds_bucket{method="GET",route="/v2/audit",status="200",le="+Inf"} 1
+audit_http_request_duration_seconds_sum{method="GET",route="/v2/audit",status="200"} 0.0010086249999985738
+audit_http_request_duration_seconds_count{method="GET",route="/v2/audit",status="200"} 1
+
+Salida: 0
+
+Comando: docker logs --since 2m cna-arqui-audit-1
+{"timestamp":"2026-11-17T01:53:32.358Z","level":"info","service":"audit-svc","request_id":null,"message":"http_server_listening"}
+{"timestamp":"2026-11-17T01:53:32.414Z","level":"info","service":"audit-svc","request_id":null,"message":"consumer_ready"}
+{"request_id":"590b0d92-af63-4271-9c40-3004fd5ecf79","method":"GET","route":"/readyz","status":200,"duration_ms":3.426,"timestamp":"2026-11-17T01:53:37.297Z","level":"info","service":"audit-svc","message":"http_request"}
+{"request_id":"776629d8-54db-49df-a79c-e03a573a563d","method":"GET","route":"/readyz","status":200,"duration_ms":2.022,"timestamp":"2026-11-17T01:53:47.396Z","level":"info","service":"audit-svc","message":"http_request"}
+{"request_id":"6fb263af-5db3-411a-b2bb-1c6745148e02","method":"GET","route":"/readyz","status":200,"duration_ms":2.59,"timestamp":"2026-11-17T01:53:57.502Z","level":"info","service":"audit-svc","message":"http_request"}
+{"request_id":"45d90153-ffce-4c0e-96b0-8f585d40101a","method":"GET","route":"/healthz","status":200,"duration_ms":0.503,"timestamp":"2026-11-17T01:53:59.670Z","level":"info","service":"audit-svc","message":"http_request"}
+{"request_id":"aa07a632-ef2e-4b9f-a36e-4da4f86fbb29","method":"GET","route":"/readyz","status":200,"duration_ms":1.251,"timestamp":"2026-11-17T01:53:59.681Z","level":"info","service":"audit-svc","message":"http_request"}
+{"request_id":"prueba-audit-operacion-001","method":"GET","route":"/v2/audit","status":200,"duration_ms":1.009,"timestamp":"2026-11-17T01:53:59.853Z","level":"info","service":"audit-svc","message":"http_request"}
+{"request_id":"51511f42-ead5-4cc3-a5db-9dba94b45422","method":"GET","route":"/metrics","status":200,"duration_ms":1.22,"timestamp":"2026-11-17T01:53:59.964Z","level":"info","service":"audit-svc","message":"http_request"}
+(node:1) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Salida: 0
