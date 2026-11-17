@@ -164,5 +164,32 @@ Las 7 pruebas usan SQLite en memoria, HTTP local real y un generador de reportes
 simulado. Comprueban aceptación 202, descarga pendiente 409, finalización y
 Markdown, validaciones, salud y preparación, métricas y logs, fallo del generador,
 recuperación tras vencer el lease y rechazo de un resultado de un worker que
-perdió su lease. No sustituyen matar un contenedor durante un trabajo real ni
-medir la recuperación en el despliegue. El lease continúa siendo de 120 segundos.
+perdió su lease. La interrupción de un contenedor durante un trabajo real y su recuperación
+se documentan por separado al final de esta página. El lease continúa siendo de 120 segundos.
+
+## Prueba de interrupción durante un trabajo real
+
+Desde la raíz del repositorio, con el entorno aislado funcionando:
+
+```bash
+python3 cna/pruebas/worker-interrumpido.py
+```
+
+Este comando interrumpe temporalmente **solo** `cna-arqui-worker-1`. Desactiva su
+reinicio automático durante la prueba, crea un reporte por HTTP, espera el estado
+`running` y termina el proceso con SIGKILL. Verifica salida 137, persistencia del
+mismo trabajo y descarga 409; después reinicia el worker y espera hasta 165 segundos
+para que venza el lease de 120 segundos y se complete la recuperación.
+
+No adelanta el reloj ni modifica los registros de SQLite. El reporte se genera
+consultando Jeroky real del entorno aislado. En un bloque de limpieza restaura
+`restart: unless-stopped` y arranca el worker aunque una comprobación falle.
+No cerrar la terminal ni matar el script durante la prueba: un cierre forzado
+puede impedir que esa limpieza se ejecute. Requiere Python 3 y Docker disponibles.
+
+La evidencia se escribe en
+[`F7-E3-worker-interrumpido.json`](../../evidencias/F7-E3-worker-interrumpido.json).
+Comprobar `result: passed` antes de considerarla aprobada. La ventana entre
+`running` y la finalización puede ser breve: si no logra interrumpirla a tiempo,
+el script lo informa como fallo, en lugar de presentarlo como una recuperación.
+Este ensayo valida un trabajo; no demuestra rendimiento ni escalado a tres workers.
