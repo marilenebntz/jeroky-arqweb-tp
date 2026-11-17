@@ -1,0 +1,597 @@
+{
+  "scope": "20 eventos sintéticos AMQP más un duplicado; no son ediciones del monolito.",
+  "run_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+  "events": [
+    {
+      "event_id": "1718b9bb-2672-42e4-8646-b8bafbf61f5d",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.401664+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 1
+      }
+    },
+    {
+      "event_id": "a377f7ad-f995-4399-96e1-eec08acd5568",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402124+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 2
+      }
+    },
+    {
+      "event_id": "fe5df46b-390d-49e9-a259-c173b8c631bf",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402131+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 3
+      }
+    },
+    {
+      "event_id": "cc599c00-3c55-462a-b857-74354fca3db6",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402136+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 4
+      }
+    },
+    {
+      "event_id": "e0b8b497-1fc1-4aa5-b3f7-91e561af3bac",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402140+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 5
+      }
+    },
+    {
+      "event_id": "ca61135e-3f6f-44b2-aff1-8c92f79265cc",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402144+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 6
+      }
+    },
+    {
+      "event_id": "1c94b489-5086-47d9-ab58-1cd40ca780e5",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402149+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 7
+      }
+    },
+    {
+      "event_id": "68435e57-34ac-4e5c-81fa-e864dd66a534",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402156+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 8
+      }
+    },
+    {
+      "event_id": "10775cbf-c96f-4c34-bbeb-76d10168e03d",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402160+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 9
+      }
+    },
+    {
+      "event_id": "5118f7b8-6c23-497c-a3f3-018cb02da92a",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402163+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 10
+      }
+    },
+    {
+      "event_id": "64b868a2-427c-43b5-9c50-0ad34cf63c23",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402167+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 11
+      }
+    },
+    {
+      "event_id": "8d99f970-53be-4ddc-95c4-ba44c8acc849",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402170+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 12
+      }
+    },
+    {
+      "event_id": "cb838a45-106d-4651-9832-ddb905518e92",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402173+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 13
+      }
+    },
+    {
+      "event_id": "08aa0259-b741-4efe-ac49-d79a006d716c",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402177+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 14
+      }
+    },
+    {
+      "event_id": "8427d879-5232-4611-940e-fc8409f71c1f",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402180+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 15
+      }
+    },
+    {
+      "event_id": "926f681d-5060-4d6b-aedf-3306355d9aa9",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402183+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 16
+      }
+    },
+    {
+      "event_id": "af1b06dc-3b91-4b9b-853d-1bd9404631db",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402186+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 17
+      }
+    },
+    {
+      "event_id": "8e3d4093-6a6c-4c71-a285-0b50e03c86ff",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402189+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 18
+      }
+    },
+    {
+      "event_id": "d8d8f30a-4c17-4569-bfa3-d91144903bff",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402193+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 19
+      }
+    },
+    {
+      "event_id": "1a5f894d-b227-4457-8da3-391c01334c81",
+      "type": "jeroky.entity.created",
+      "version": 1,
+      "occurred_at": "2026-11-17T13:55:24.402197+00:00",
+      "producer": "prueba-consumidor",
+      "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+      "payload": {
+        "entity_type": "prueba_resiliencia",
+        "entity_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+        "sequence": 20
+      }
+    }
+  ],
+  "samples": [
+    {
+      "time": "2026-11-17T13:55:24.696795+00:00",
+      "action": "Cola antes de detener",
+      "details": {
+        "queue": "jeroky.audit",
+        "messageCount": 0,
+        "consumerCount": 1
+      }
+    },
+    {
+      "time": "2026-11-17T13:55:27.950585+00:00",
+      "action": "Consumidor detenido",
+      "details": {
+        "container": "cna-arqui-audit-1"
+      }
+    },
+    {
+      "time": "2026-11-17T13:55:28.200508+00:00",
+      "action": "21 publicaciones confirmadas por broker",
+      "details": {
+        "confirmed": [
+          "1718b9bb-2672-42e4-8646-b8bafbf61f5d",
+          "a377f7ad-f995-4399-96e1-eec08acd5568",
+          "fe5df46b-390d-49e9-a259-c173b8c631bf",
+          "cc599c00-3c55-462a-b857-74354fca3db6",
+          "e0b8b497-1fc1-4aa5-b3f7-91e561af3bac",
+          "ca61135e-3f6f-44b2-aff1-8c92f79265cc",
+          "1c94b489-5086-47d9-ab58-1cd40ca780e5",
+          "68435e57-34ac-4e5c-81fa-e864dd66a534",
+          "10775cbf-c96f-4c34-bbeb-76d10168e03d",
+          "5118f7b8-6c23-497c-a3f3-018cb02da92a",
+          "64b868a2-427c-43b5-9c50-0ad34cf63c23",
+          "8d99f970-53be-4ddc-95c4-ba44c8acc849",
+          "cb838a45-106d-4651-9832-ddb905518e92",
+          "08aa0259-b741-4efe-ac49-d79a006d716c",
+          "8427d879-5232-4611-940e-fc8409f71c1f",
+          "926f681d-5060-4d6b-aedf-3306355d9aa9",
+          "af1b06dc-3b91-4b9b-853d-1bd9404631db",
+          "8e3d4093-6a6c-4c71-a285-0b50e03c86ff",
+          "d8d8f30a-4c17-4569-bfa3-d91144903bff",
+          "1a5f894d-b227-4457-8da3-391c01334c81",
+          "1718b9bb-2672-42e4-8646-b8bafbf61f5d"
+        ],
+        "queue": {
+          "queue": "jeroky.audit",
+          "messageCount": 21,
+          "consumerCount": 0
+        }
+      }
+    },
+    {
+      "time": "2026-11-17T13:57:28.160663+00:00",
+      "action": "Cola tras dos minutos sin consumidor",
+      "details": {
+        "queue": "jeroky.audit",
+        "messageCount": 21,
+        "consumerCount": 0
+      }
+    },
+    {
+      "time": "2026-11-17T13:57:28.344184+00:00",
+      "action": "Consumidor reiniciado",
+      "details": {
+        "stopped_seconds": 120.39613054100118
+      }
+    },
+    {
+      "time": "2026-11-17T13:57:30.437252+00:00",
+      "action": "Comparación exacta de identificadores: cero pérdida ni duplicados almacenados",
+      "details": {
+        "expected": [
+          "08aa0259-b741-4efe-ac49-d79a006d716c",
+          "10775cbf-c96f-4c34-bbeb-76d10168e03d",
+          "1718b9bb-2672-42e4-8646-b8bafbf61f5d",
+          "1a5f894d-b227-4457-8da3-391c01334c81",
+          "1c94b489-5086-47d9-ab58-1cd40ca780e5",
+          "5118f7b8-6c23-497c-a3f3-018cb02da92a",
+          "64b868a2-427c-43b5-9c50-0ad34cf63c23",
+          "68435e57-34ac-4e5c-81fa-e864dd66a534",
+          "8427d879-5232-4611-940e-fc8409f71c1f",
+          "8d99f970-53be-4ddc-95c4-ba44c8acc849",
+          "8e3d4093-6a6c-4c71-a285-0b50e03c86ff",
+          "926f681d-5060-4d6b-aedf-3306355d9aa9",
+          "a377f7ad-f995-4399-96e1-eec08acd5568",
+          "af1b06dc-3b91-4b9b-853d-1bd9404631db",
+          "ca61135e-3f6f-44b2-aff1-8c92f79265cc",
+          "cb838a45-106d-4651-9832-ddb905518e92",
+          "cc599c00-3c55-462a-b857-74354fca3db6",
+          "d8d8f30a-4c17-4569-bfa3-d91144903bff",
+          "e0b8b497-1fc1-4aa5-b3f7-91e561af3bac",
+          "fe5df46b-390d-49e9-a259-c173b8c631bf"
+        ],
+        "stored": [
+          "08aa0259-b741-4efe-ac49-d79a006d716c",
+          "10775cbf-c96f-4c34-bbeb-76d10168e03d",
+          "1718b9bb-2672-42e4-8646-b8bafbf61f5d",
+          "1a5f894d-b227-4457-8da3-391c01334c81",
+          "1c94b489-5086-47d9-ab58-1cd40ca780e5",
+          "5118f7b8-6c23-497c-a3f3-018cb02da92a",
+          "64b868a2-427c-43b5-9c50-0ad34cf63c23",
+          "68435e57-34ac-4e5c-81fa-e864dd66a534",
+          "8427d879-5232-4611-940e-fc8409f71c1f",
+          "8d99f970-53be-4ddc-95c4-ba44c8acc849",
+          "8e3d4093-6a6c-4c71-a285-0b50e03c86ff",
+          "926f681d-5060-4d6b-aedf-3306355d9aa9",
+          "a377f7ad-f995-4399-96e1-eec08acd5568",
+          "af1b06dc-3b91-4b9b-853d-1bd9404631db",
+          "ca61135e-3f6f-44b2-aff1-8c92f79265cc",
+          "cb838a45-106d-4651-9832-ddb905518e92",
+          "cc599c00-3c55-462a-b857-74354fca3db6",
+          "d8d8f30a-4c17-4569-bfa3-d91144903bff",
+          "e0b8b497-1fc1-4aa5-b3f7-91e561af3bac",
+          "fe5df46b-390d-49e9-a259-c173b8c631bf"
+        ],
+        "total": 20
+      }
+    },
+    {
+      "time": "2026-11-17T13:57:30.652409+00:00",
+      "action": "Logs de procesamiento y duplicado",
+      "details": [
+        {
+          "action": "stored",
+          "event_id": "1718b9bb-2672-42e4-8646-b8bafbf61f5d",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.660Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "a377f7ad-f995-4399-96e1-eec08acd5568",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.663Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "fe5df46b-390d-49e9-a259-c173b8c631bf",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.666Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "cc599c00-3c55-462a-b857-74354fca3db6",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.670Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "e0b8b497-1fc1-4aa5-b3f7-91e561af3bac",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.675Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "ca61135e-3f6f-44b2-aff1-8c92f79265cc",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.677Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "1c94b489-5086-47d9-ab58-1cd40ca780e5",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.679Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "68435e57-34ac-4e5c-81fa-e864dd66a534",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.681Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "10775cbf-c96f-4c34-bbeb-76d10168e03d",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.682Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "5118f7b8-6c23-497c-a3f3-018cb02da92a",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.684Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "64b868a2-427c-43b5-9c50-0ad34cf63c23",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.685Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "8d99f970-53be-4ddc-95c4-ba44c8acc849",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.686Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "cb838a45-106d-4651-9832-ddb905518e92",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.687Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "08aa0259-b741-4efe-ac49-d79a006d716c",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.688Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "8427d879-5232-4611-940e-fc8409f71c1f",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.689Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "926f681d-5060-4d6b-aedf-3306355d9aa9",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.690Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "af1b06dc-3b91-4b9b-853d-1bd9404631db",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.691Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "8e3d4093-6a6c-4c71-a285-0b50e03c86ff",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.693Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "d8d8f30a-4c17-4569-bfa3-d91144903bff",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.694Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "stored",
+          "event_id": "1a5f894d-b227-4457-8da3-391c01334c81",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.695Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        },
+        {
+          "action": "duplicate",
+          "event_id": "1718b9bb-2672-42e4-8646-b8bafbf61f5d",
+          "request_id": "ab3045ed-6a5a-457a-94d7-527bf66b115c",
+          "timestamp": "2026-11-17T13:57:28.696Z",
+          "level": "info",
+          "service": "audit-svc",
+          "message": "event_processed"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T13:57:30.652451+00:00",
+      "action": "Cola final",
+      "details": {
+        "queue": "jeroky.audit",
+        "messageCount": 0,
+        "consumerCount": 1
+      }
+    },
+    {
+      "time": "2026-11-17T13:57:30.709506+00:00",
+      "action": "Auditoría restaurada",
+      "details": {
+        "running": "true"
+      }
+    }
+  ],
+  "result": "passed"
+}

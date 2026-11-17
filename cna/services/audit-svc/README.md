@@ -176,3 +176,36 @@ paginación, consultas parametrizadas, salud sin dependencias, preparación,
 base sin escritura, propagación de request_id y métricas. El estado del broker
 se simula en estas pruebas; no sustituyen las pruebas de entrega y reintento
 con RabbitMQ real.
+
+## Consumidor detenido y publicación persistente
+
+Para repetir la prueba en el entorno aislado, desde la raíz del repositorio:
+
+```bash
+python3 cna/pruebas/consumidor-detenido.py
+```
+
+El script detiene **solo** `cna-arqui-audit-1` durante al menos 120 segundos.
+Desde el bridge publica 20 eventos sintéticos `jeroky.entity.created` y repite
+uno con el mismo event_id: son 21 entregas con confirmación del broker y flag
+persistente. Comprueba que la cola conserve los mensajes sin consumidores.
+Este tipo de evento está enlazado a auditoría; no modifica el índice de búsqueda
+ni los alumnos de Jeroky.
+
+Después arranca auditoría, consulta su API filtrando por un identificador único
+de esta ejecución y compara los 20 event_id publicados contra los almacenados.
+Verifica que cada uno aparezca una sola vez y que el duplicado quede identificado
+en los logs. Los eventos sintéticos quedan en el historial del laboratorio con
+entity_type `prueba_resiliencia`. No se eliminan eventos de auditoría existentes.
+
+El archivo `publicar-audit.cjs` se ejecuta dentro del bridge y usa sus variables
+de entorno, sin imprimir credenciales. Se necesita Python 3, Docker y los servicios
+RabbitMQ, bridge y auditoría funcionando. El bloque de limpieza arranca auditoría
+si la prueba falla; no cerrar forzadamente la terminal mientras se ejecuta.
+
+La evidencia se guarda en
+[F7-E2-consumidor-detenido.json](../../evidencias/F7-E2-consumidor-detenido.json).
+Solo es una prueba aprobada si contiene `result: passed`. Demuestra el recorrido
+publicador de prueba → RabbitMQ → auditoría; **no equivale a las 20 ediciones del
+monolito solicitadas por la guía**, ni prueba la supervivencia a una caída del
+broker. La integración desde Jeroky debe documentarse por separado.
