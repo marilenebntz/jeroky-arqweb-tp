@@ -73,11 +73,13 @@ y límite de solicitudes. El TP todavía no está completo.
 
 ## Pruebas adicionales del gateway
 
+- CA-5 comprobado en tres caídas individuales: search, audit y export devolvieron 503 controlado mientras el frontend final respondió 200, y login/consulta de alumnos siguieron disponibles. [Resultados reales](CA5-degradacion-monolito.json). Servicios restaurados; no equivale a caída de nodo ni a auto-recuperación tras kill.
+
 - HTTPS con TLS 1.3 y verificación del certificado: [resultado](gateway-tls13-resultado.txt).
 - Límite de solicitudes: [resultado HTTP 429](gateway-rate-limit-429.txt).
 - Recuperación de búsqueda a HTTP 200: [resultado](gateway-search-recuperacion-200.txt).
 - Caída de búsqueda: HTTP 503 JSON comprobado. El archivo gateway-search-caida-503.txt está local y todavía no está versionado al actualizar este checklist.
-- Con búsqueda detenida, auditoría respondió 200 y el frontend 307. Falta guardar esa salida y seguir la redirección para comprobar la página final.
+- La prueba histórica observó frontend 307 con búsqueda detenida. La nueva prueba CA-5 siguió la redirección y confirmó página final 200 durante las tres caídas individuales.
 - Autenticación de las APIs nuevas: pendiente. TLS y rate limiting no reemplazan autenticación.
 
 ## Próximos pasos
