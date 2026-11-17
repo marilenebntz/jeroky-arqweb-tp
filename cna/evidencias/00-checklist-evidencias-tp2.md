@@ -10,6 +10,8 @@
 
 ## Estado actual
 
+Revisión de mínimos y prioridades: [CA-1 a CA-7](../docs/06-revision-criterios-obligatorios.md), actualizada el 17 de noviembre de 2026. El checklist de evidencias no sustituye esos criterios de aceptación.
+
 Actualizado el 16 de noviembre de 2026
 
 Ya funcionan auditoría, búsqueda, exportación, RabbitMQ y el puente de eventos.

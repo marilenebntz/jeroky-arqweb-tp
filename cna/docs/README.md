@@ -16,3 +16,5 @@ Describe lo construido y distingue propuestas y pruebas pendientes. La elección
 - [ADR-010 consistencia](adr/ADR-010-consistencia-e-idempotencia.md).
 
 El archivo 00-linea-base-y-brecha-tp2.md conserva el diagnóstico inicial y no representa el estado final. La numeración del ADR del broker se corrigió según la guía. Los documentos de diseño se prepararon retrospectivamente y no prueban que todo se hubiera diseñado antes de implementar.
+
+- [Revisión actual de CA-1 a CA-7 y prioridades](06-revision-criterios-obligatorios.md) — 17 de noviembre de 2026; distingue mínimos comprobados, parciales y pendientes.
