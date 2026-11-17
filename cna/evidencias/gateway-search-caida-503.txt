@@ -1,0 +1,10 @@
+HTTP/1.1 503 Service Temporarily Unavailable
+Server: nginx
+Date: Mon, 16 Nov 2026 20:58:28 GMT
+Content-Type: application/json
+Content-Length: 73
+Connection: keep-alive
+X-Request-ID: prueba-caida-search-002
+X-Content-Type-Options: nosniff
+
+{"error":"Servicio no disponible","request_id":"prueba-caida-search-002"}
