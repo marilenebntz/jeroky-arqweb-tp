@@ -65,7 +65,7 @@ y límite de solicitudes. El TP todavía no está completo.
 - [x] F7-E9 — Dashboard RED en Grafana. Tres servicios con recolección activa y consultas de solicitudes, errores 5xx y latencia p95 verificadas. [Captura](F7-E9-grafana-red.jpg) y [resultados reales](F7-E9-prometheus-grafana.json). Es una demostración local; no acredita pruebas de carga, alertas ni métricas de colas.
 - [ ] F7-E10 — Logs correlacionados por `request_id`. **Parcial**. [X-Request-ID conservado en HTTPS](gateway-tls13-resultado.txt) y registros de Nginx. Los eventos también llevan request_id. Falta correlacionar una misma operación entre gateway, servicios y eventos; los IDs de consultas HTTP y eventos previos no son automáticamente el mismo.
 - [ ] F7-E11 — Traza distribuida en Jaeger.
-- [ ] F7-E12 — Alerta funcionando.
+- [x] F7-E12 — Alerta local funcionando en Prometheus. Se detuvo búsqueda y se observaron los estados inactive, pending y firing; después se restauró el servicio, la alerta volvió a inactive y `/readyz` confirmó SQLite y RabbitMQ. [Estados y tiempos reales](F7-E12-alerta-servicio.json). No se configuraron Alertmanager ni notificaciones externas; pendiente si la guía exige entrega de una notificación.
 - [ ] F7-E13 — Escaneo Trivy y SBOM.
 - [ ] F7-E14 — Rotación del token sin reconstruir imágenes.
 

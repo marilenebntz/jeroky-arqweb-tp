@@ -69,3 +69,34 @@ El dashboard se modifica en el JSON del repositorio; no se edita desde Grafana.
 Referencias de configuración:
 - https://prometheus.io/docs/prometheus/latest/configuration/configuration/
 - https://grafana.com/docs/grafana/latest/administration/provisioning/
+
+## Alerta por servicio no disponible
+
+La regla `ServicioNoDisponible`, en `prometheus/rules/services.yml`, evalúa
+`up{job="services"} == 0` cada 10 segundos. Si la condición se mantiene durante
+20 segundos pasa de `pending` a `firing`. Cuando la recolección vuelve a funcionar,
+regresa a `inactive` en una evaluación posterior. El tiempo total de detección
+incluye la espera del scrape y la evaluación, además de esos 20 segundos.
+
+Ver las reglas y el estado en http://localhost:3190/alerts o consultar
+http://localhost:3190/api/v1/rules?type=alert. No hay Alertmanager ni destinos de
+correo, Slack o notificaciones externas configurados: es una alerta local de
+Prometheus, no una demostración de entrega de notificaciones.
+
+La regla detecta que un target configurado no responde a la recolección de métricas.
+No prueba `/readyz`, el avance del worker, ni que los trabajos terminen. Si se
+elimina un target de la configuración, esta regla no detecta esa ausencia.
+Si Prometheus está caído, tampoco puede evaluar su propia alerta.
+
+Validación de configuración y regla:
+
+```bash
+docker exec cna-arqui-prometheus-1 promtool check config /etc/prometheus/prometheus.yml
+```
+
+La prueba real detuvo únicamente búsqueda en el entorno aislado, observó la alerta
+activa, volvió a arrancarla y verificó tanto la resolución de la alerta como
+`/readyz`. Los estados y tiempos reales se conservan en
+[la evidencia F7-E12](../evidencias/F7-E12-alerta-servicio.json).
+
+Referencia: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/

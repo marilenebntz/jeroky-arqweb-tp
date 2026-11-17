@@ -1,0 +1,11 @@
+groups:
+  - name: cna-services
+    rules:
+      - alert: ServicioNoDisponible
+        expr: up{job="services"} == 0
+        for: 20s
+        labels:
+          severity: critical
+        annotations:
+          summary: 'No se pueden recoger métricas de {{ $labels.service }}'
+          description: 'El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.'

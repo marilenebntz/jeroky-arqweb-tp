@@ -1,0 +1,687 @@
+{
+  "scope": "Alerta evaluada en Prometheus; no se configuraron notificaciones externas.",
+  "samples": [
+    {
+      "time": "2026-11-17T11:58:02.627866+00:00",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000672791,
+          "lastEvaluation": "2026-11-17T11:58:01.995031467Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:05.852599+00:00",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000672791,
+          "lastEvaluation": "2026-11-17T11:58:01.995031467Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:10.858636+00:00",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000672791,
+          "lastEvaluation": "2026-11-17T11:58:01.995031467Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:15.863188+00:00",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000341667,
+          "lastEvaluation": "2026-11-17T11:58:11.99196075Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:20.869082+00:00",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000341667,
+          "lastEvaluation": "2026-11-17T11:58:11.99196075Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:25.877740+00:00",
+      "rules": [
+        {
+          "state": "pending",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001471709,
+          "lastEvaluation": "2026-11-17T11:58:21.991514754Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:30.885570+00:00",
+      "rules": [
+        {
+          "state": "pending",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001471709,
+          "lastEvaluation": "2026-11-17T11:58:21.991514754Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:35.892936+00:00",
+      "rules": [
+        {
+          "state": "pending",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000469,
+          "lastEvaluation": "2026-11-17T11:58:31.987287092Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:40.900100+00:00",
+      "rules": [
+        {
+          "state": "pending",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000469,
+          "lastEvaluation": "2026-11-17T11:58:31.987287092Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:45.908377+00:00",
+      "rules": [
+        {
+          "state": "pending",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000583042,
+          "lastEvaluation": "2026-11-17T11:58:41.98659775Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:50.912790+00:00",
+      "rules": [
+        {
+          "state": "pending",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "pending",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000583042,
+          "lastEvaluation": "2026-11-17T11:58:41.98659775Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:55.920838+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000846791,
+          "lastEvaluation": "2026-11-17T11:58:51.990776004Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:58:56.075468+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000846791,
+          "lastEvaluation": "2026-11-17T11:58:51.990776004Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:59:01.080589+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000846791,
+          "lastEvaluation": "2026-11-17T11:58:51.990776004Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:59:06.084489+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00119725,
+          "lastEvaluation": "2026-11-17T11:59:01.986711176Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:59:11.089633+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.00119725,
+          "lastEvaluation": "2026-11-17T11:59:01.986711176Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:59:16.097591+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000765709,
+          "lastEvaluation": "2026-11-17T11:59:11.989599958Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:59:21.102950+00:00",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "ServicioNoDisponible",
+                "instance": "search:3000",
+                "job": "services",
+                "service": "search-svc",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "El target search:3000 no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+                "summary": "No se pueden recoger métricas de search-svc"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-17T11:58:21.989839862Z",
+              "value": "0e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.000765709,
+          "lastEvaluation": "2026-11-17T11:59:11.989599958Z",
+          "type": "alerting"
+        }
+      ]
+    },
+    {
+      "time": "2026-11-17T11:59:26.107093+00:00",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "ServicioNoDisponible",
+          "query": "up{job=\"services\"} == 0",
+          "duration": 20,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "El target {{ $labels.instance }} no responde al scrape durante al menos 20 segundos. Comprobar el contenedor y su red.",
+            "summary": "No se pueden recoger métricas de {{ $labels.service }}"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000345333,
+          "lastEvaluation": "2026-11-17T11:59:21.988841796Z",
+          "type": "alerting"
+        }
+      ]
+    }
+  ],
+  "readiness_after": {
+    "status": "ready",
+    "database": "ok",
+    "rabbitmq": "connected"
+  }
+}
