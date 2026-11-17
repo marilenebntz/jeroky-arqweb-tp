@@ -1,7 +1,14 @@
 const http = require("node:http");
+const { createObservability, probeDatabase, log } = require("./operational");
 
-function startApi(db) {
+function startApi(db, options = {}) {
+  const observability = createObservability(options.output);
+  const isBrokerReady = options.isBrokerReady || (() => false);
   const server = http.createServer((request, response) => {
+    let pathname;
+    try { pathname = new URL(request.url, "http://localhost").pathname; }
+    catch { pathname = "unmatched"; }
+    const requestId = observability.observe(request, response, pathname);
     const send = (status, body) => {
       response.writeHead(status, {
         "Content-Type": "application/json; charset=utf-8",
@@ -12,6 +19,33 @@ function startApi(db) {
 
     try {
       const url = new URL(request.url, "http://localhost");
+
+      if (url.pathname === "/healthz" && request.method === "GET") {
+        send(200, { status: "alive", service: "search-svc" });
+        return;
+      }
+
+      if (url.pathname === "/readyz" && request.method === "GET") {
+        let database = false;
+        let broker = false;
+        try { probeDatabase(db); database = true; } catch {}
+        try { broker = isBrokerReady() === true; } catch {}
+        send(database && broker ? 200 : 503, {
+          status: database && broker ? "ready" : "not_ready",
+          database: database ? "ok" : "unavailable",
+          rabbitmq: broker ? "connected" : "unavailable",
+        });
+        return;
+      }
+
+      if (url.pathname === "/metrics" && request.method === "GET") {
+        response.writeHead(200, {
+          "Content-Type": "text/plain; version=0.0.4; charset=utf-8",
+          "Cache-Control": "no-store",
+        });
+        response.end(observability.render());
+        return;
+      }
 
       if (url.pathname === "/health" && request.method === "GET") {
         db.prepare("SELECT 1").get();
@@ -104,19 +138,19 @@ function startApi(db) {
         })),
       });
     } catch {
-      console.error("Error al consultar busqueda");
+      log("error", "search_query_failed", { request_id: requestId }, options.output);
       send(500, { error: "No se pudo consultar busqueda" });
     }
   });
 
   server.on("error", () => {
-    console.error("No se pudo iniciar la API de busqueda");
-    process.exit(1);
+    log("error", "http_server_error", {}, options.output);
   });
 
-  server.listen(3000, "0.0.0.0", () => {
-    console.log("API de busqueda escuchando en puerto 3000");
+  server.listen(options.port ?? Number(process.env.PORT || 3000), options.host || "0.0.0.0", () => {
+    log("info", "http_server_listening", {}, options.output);
   });
+  return server;
 }
 
 module.exports = { startApi };

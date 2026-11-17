@@ -1,0 +1,98 @@
+Verificación real de búsqueda: 2026-11-17T01:24:49.901685+00:00
+
+Comando: curl --max-time 10 -sS http://127.0.0.1:3103/healthz
+{"status":"alive","service":"search-svc"}
+Código de salida: 0
+
+Comando: curl --max-time 10 -sS http://127.0.0.1:3103/readyz
+{"status":"ready","database":"ok","rabbitmq":"connected"}
+Código de salida: 0
+
+Comando: docker run --rm --network cna-arqui_default -v /Users/hildaalmeida/dev/jeroky-arqweb-tp/cna/deploy/gateway/certs/localhost.crt:/certs/localhost.crt:ro curlimages/curl:latest --silent --show-error --connect-to localhost:3443:gateway:8443 --cacert /certs/localhost.crt --max-time 15 -i -H X-Request-ID: prueba-search-operacion-001 https://localhost:3443/v2/search?q=Juana&type=student
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 17 Nov 2026 01:24:50 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Request-ID: prueba-search-operacion-001
+Cache-Control: no-store
+X-Request-ID: prueba-search-operacion-001
+X-Content-Type-Options: nosniff
+
+{"page":1,"limit":20,"total":1,"items":[{"entity_type":"student","entity_id":"c3596af9-a05f-4119-a71a-f9f792ca7bb8","payload":{"entity_type":"student","entity_id":"c3596af9-a05f-4119-a71a-f9f792ca7bb8","name":"Juana Lopez","status":"active","observation":"polling"}}]}
+Código de salida: 0
+
+Comando: curl --max-time 10 -sS http://127.0.0.1:3103/metrics
+# HELP search_http_requests_total Completed HTTP requests.
+# TYPE search_http_requests_total counter
+# HELP search_http_request_duration_seconds HTTP response duration in seconds.
+# TYPE search_http_request_duration_seconds histogram
+search_http_requests_total{method="GET",route="/readyz",status="200"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.005"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.01"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.025"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.05"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.1"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.25"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="0.5"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="1"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="2.5"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="5"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="10"} 24
+search_http_request_duration_seconds_bucket{method="GET",route="/readyz",status="200",le="+Inf"} 24
+search_http_request_duration_seconds_sum{method="GET",route="/readyz",status="200"} 0.045781042999960844
+search_http_request_duration_seconds_count{method="GET",route="/readyz",status="200"} 24
+search_http_requests_total{method="GET",route="/healthz",status="200"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.005"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.01"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.025"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.05"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.1"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.25"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="0.5"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="1"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="2.5"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="5"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="10"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/healthz",status="200",le="+Inf"} 1
+search_http_request_duration_seconds_sum{method="GET",route="/healthz",status="200"} 0.0006229999999923165
+search_http_request_duration_seconds_count{method="GET",route="/healthz",status="200"} 1
+search_http_requests_total{method="GET",route="/v2/search",status="200"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="0.005"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="0.01"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="0.025"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="0.05"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="0.1"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="0.25"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="0.5"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="1"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="2.5"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="5"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="10"} 1
+search_http_request_duration_seconds_bucket{method="GET",route="/v2/search",status="200",le="+Inf"} 1
+search_http_request_duration_seconds_sum{method="GET",route="/v2/search",status="200"} 0.0015681670000194572
+search_http_request_duration_seconds_count{method="GET",route="/v2/search",status="200"} 1
+
+Código de salida: 0
+
+Comando: docker logs --since 2m cna-arqui-search-1
+{"request_id":"e2eb3b5f-5a2d-41cb-a3c2-2a6f016013e1","method":"GET","route":"/readyz","status":200,"duration_ms":2.123,"timestamp":"2026-11-17T01:22:52.140Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"58b50bcc-1922-48e2-a31a-1fedc3a48846","method":"GET","route":"/readyz","status":200,"duration_ms":2.09,"timestamp":"2026-11-17T01:23:02.221Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"4e32dfa7-00ed-4293-bb24-1b634bd9c5d3","method":"GET","route":"/readyz","status":200,"duration_ms":2.072,"timestamp":"2026-11-17T01:23:12.313Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"6e602525-f495-468d-b8a2-4c1c02afaa19","method":"GET","route":"/readyz","status":200,"duration_ms":1.113,"timestamp":"2026-11-17T01:23:22.424Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"73b178fe-c28a-48ce-818a-a1b3f40c2b9e","method":"GET","route":"/readyz","status":200,"duration_ms":1.712,"timestamp":"2026-11-17T01:23:32.531Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"b9084434-3a15-4e7c-9835-42248776cebb","method":"GET","route":"/readyz","status":200,"duration_ms":1.269,"timestamp":"2026-11-17T01:23:42.632Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"0d70cd15-ddb8-44af-833c-7d22e7e4ea14","method":"GET","route":"/readyz","status":200,"duration_ms":1.666,"timestamp":"2026-11-17T01:23:52.741Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"aa1fafcb-a341-414d-b0e5-1948ccdeebd9","method":"GET","route":"/readyz","status":200,"duration_ms":1.515,"timestamp":"2026-11-17T01:24:02.830Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"1b21ebb1-b5e4-4439-a7f0-37ac97f057ae","method":"GET","route":"/readyz","status":200,"duration_ms":1.289,"timestamp":"2026-11-17T01:24:12.924Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"8b8af9e3-8c17-4e74-b617-078e2e084981","method":"GET","route":"/readyz","status":200,"duration_ms":1.835,"timestamp":"2026-11-17T01:24:18.907Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"f5cfb8b3-2fee-4bef-b61d-babb673d02af","method":"GET","route":"/readyz","status":200,"duration_ms":1.561,"timestamp":"2026-11-17T01:24:23.028Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"b7e69b05-9833-44c2-9b3e-3eb231e5718c","method":"GET","route":"/readyz","status":200,"duration_ms":1.646,"timestamp":"2026-11-17T01:24:33.112Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"1eeff3fc-361f-44e6-8b39-b08c65fd34fe","method":"GET","route":"/readyz","status":200,"duration_ms":1.321,"timestamp":"2026-11-17T01:24:43.208Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"1bd01f11-4275-4c31-b696-c9804efc6165","method":"GET","route":"/healthz","status":200,"duration_ms":0.623,"timestamp":"2026-11-17T01:24:49.917Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"94209ca2-cf43-4d9d-b084-d84a36aed71a","method":"GET","route":"/readyz","status":200,"duration_ms":1.137,"timestamp":"2026-11-17T01:24:49.928Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"prueba-search-operacion-001","method":"GET","route":"/v2/search","status":200,"duration_ms":1.568,"timestamp":"2026-11-17T01:24:50.092Z","level":"info","service":"search-svc","message":"http_request"}
+{"request_id":"d11b1c35-6fa3-46b7-9ef7-e8626a4eb435","method":"GET","route":"/metrics","status":200,"duration_ms":0.509,"timestamp":"2026-11-17T01:24:50.197Z","level":"info","service":"search-svc","message":"http_request"}
+
+Código de salida: 0

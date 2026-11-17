@@ -2,12 +2,17 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Jeroky - API de busqueda",
-    "version": "0.1.0",
-    "description": "API local de laboratorio. La autenticacion y la integracion con el gateway estan pendientes."
+    "version": "0.2.0",
+    "description": "API del laboratorio aislado con gateway HTTPS. Autenticación pendiente. Salud, preparación y métricas disponibles en la red interna o puerto local de diagnóstico."
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:3003"
+      "url": "https://localhost:3443",
+      "description": "Gateway para /v2/search; endpoints operativos no se enrutan desde el gateway."
+    },
+    {
+      "url": "http://127.0.0.1:3103",
+      "description": "Diagnóstico local del servicio."
     }
   ],
   "paths": {
@@ -190,6 +195,133 @@
                       "type": "string"
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/healthz": {
+      "get": {
+        "operationId": "getSearchLiveness",
+        "summary": "Comprobar que el proceso HTTP está vivo",
+        "responses": {
+          "200": {
+            "description": "Vivo, sin consultar dependencias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "service"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "alive"
+                    },
+                    "service": {
+                      "const": "search-svc"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "operationId": "getSearchReadiness",
+        "summary": "Comprobar tablas, escritura reversible y consumidor conectado",
+        "description": "Estado local AMQP confirmado al iniciar consumidor, invalidado al detectar error o cierre. No es un ping independiente al broker en cada petición ni garantiza detección instantánea de una partición de red.",
+        "responses": {
+          "200": {
+            "description": "Preparado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database",
+                    "rabbitmq"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "ready",
+                        "not_ready"
+                      ]
+                    },
+                    "database": {
+                      "enum": [
+                        "ok",
+                        "unavailable"
+                      ]
+                    },
+                    "rabbitmq": {
+                      "enum": [
+                        "connected",
+                        "unavailable"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Dependencia no preparada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "database",
+                    "rabbitmq"
+                  ],
+                  "properties": {
+                    "status": {
+                      "enum": [
+                        "ready",
+                        "not_ready"
+                      ]
+                    },
+                    "database": {
+                      "enum": [
+                        "ok",
+                        "unavailable"
+                      ]
+                    },
+                    "rabbitmq": {
+                      "enum": [
+                        "connected",
+                        "unavailable"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics": {
+      "get": {
+        "operationId": "getSearchMetrics",
+        "summary": "Contador HTTP e histograma de latencia en formato Prometheus",
+        "responses": {
+          "200": {
+            "description": "Métricas del proceso desde su último arranque",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
