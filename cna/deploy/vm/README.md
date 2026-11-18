@@ -105,3 +105,43 @@ docker compose -p cna-arqui --env-file cna/infra/aislado/.env.local \
 ```
 
 No ejecutar `down -v`, borrar directorios del TP1 ni sustituir su certificado.
+
+## Alternativa sin autenticar GitHub en la VM
+
+Los fuentes backend/frontend son privados: un clon público del TP no concede su
+acceso. Si la Mac ya tiene los fuentes fijados y verificados, puede preparar un
+paquete y transferirlo por SSH. Esto es una precondición alternativa de despliegue;
+no representa una descarga anónima ni elimina la protección de los repositorios.
+No cambiar su visibilidad ni publicar el paquete privado en el repositorio del TP.
+
+En la Mac, desde la raíz:
+
+```bash
+python3 cna/infra/aislado/empaquetar_fuentes.py /tmp/jeroky-fuentes-fijados.tar.gz
+scp /tmp/jeroky-fuentes-fijados.tar.gz arqweb@192.168.0.11:/tmp/
+```
+
+Después de actualizar el repositorio público del TP en la VM:
+
+```bash
+cd ~/jeroky-arqweb-tp2
+python3 cna/infra/aislado/importar_fuentes.py /tmp/jeroky-fuentes-fijados.tar.gz
+bash cna/deploy/vm/levantar-vm.sh
+```
+
+El exportador comprueba los hashes de los archivos contra los manifests locales
+que se generaron al verificar el commit. No exporta .env, historia Git, dependencias,
+certificados o datos. No usa archivos nuevos fuera de esos manifests. Informa el
+SHA256 del paquete para compararlo con `sha256sum` en la VM si fuera necesario.
+
+El importador solo acepta archivos regulares, rechaza rutas fuera del directorio,
+compara fuente/commit con `fuentes.lock.json` y comprueba todos los hashes antes
+de incorporar las copias. Una copia previa distinta provoca un error sin ser
+reemplazada. Después ejecuta el preparador para generar secretos nuevos de la VM,
+o conservar los ya existentes. Con manifests válidos el preparador no necesita
+consultar GitHub para estos fuentes. Docker y npm todavía requieren Internet.
+
+El SHA256 comprueba integridad, no autoría. El paquete debe proceder de la Mac
+confiable y transferirse a la VM propia por SSH. No enviarlo a terceros ni al chat.
+El código privado queda únicamente en las carpetas ignoradas `.runtime` del destino.
+La recuperación de la cuenta GitHub y su segundo factor se gestiona aparte.

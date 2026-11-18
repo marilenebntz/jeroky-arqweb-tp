@@ -40,8 +40,8 @@ estado running mediante Compose. La primera ejecución descarga dependencias y
 puede tardar varios minutos. No borrar volúmenes para volver a arrancar.
 
 Los repositorios originales se consultan por Git y no se modifican. Si no están
-accesibles desde otra computadora, el arranque falla: no hay un respaldo oculto
-con fuentes locales. Para cambiar de versión hay que revisar y actualizar el
+accesibles desde otra computadora, la descarga falla. Como alternativa explícita
+se puede [importar un paquete privado de fuentes verificados desde la Mac](../../deploy/vm/README.md#alternativa-sin-autenticar-github-en-la-vm); ese paquete es una precondición adicional y no se publica en el repositorio. Para cambiar de versión hay que revisar y actualizar el
 lock; una copia `.runtime` incompatible se conserva y provoca un error explícito.
 
 El seed asegura la cuenta administrativa de laboratorio y dos alumnos ficticios;
