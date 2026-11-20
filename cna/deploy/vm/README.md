@@ -15,8 +15,9 @@ y ausencia de conexión a siete puertos de diagnóstico. OpenSSL dentro de la VM
 confirmó TLS 1.3 y verificación de arqui.local.
 
 [Capturas y alcance](../../evidencias/CA4-vm-verificacion.md). No se ejecutó escaneo
-exhaustivo ni prueba IPv6. Falta comprobar funcionalmente el sitio TP1 tras instalar
-arqui, inspeccionar fechas/SAN explícitos y repetir acceso en la red del docente.
+exhaustivo ni prueba IPv6. El sitio TP1 ya respondió HTTPS 200 con su certificado
+verificado; se inspeccionaron SAN y fechas del certificado de Arquitectura. Falta
+repetir acceso en la red del docente.
 
 La VM observada usa Ubuntu 24.04.5 ARM64, 4 GB de RAM, unos 15 GB de disco libre,
 y ya ejecuta Jeroky del TP1. La interfaz puenteada obtuvo 192.168.0.11; esa IP puede

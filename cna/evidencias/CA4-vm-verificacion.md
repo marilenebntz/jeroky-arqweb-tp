@@ -32,12 +32,15 @@ exhaustivo, prueba IPv6 ni comprobación de todos los puertos declarados de Rabb
 
 TLS 1.3 se forzó y verificó desde la VM; la captura de curl en la Mac verifica
 HTTPS y el certificado, pero no muestra por sí sola la versión TLS negociada.
-Falta la inspección explícita de las fechas del certificado y su extensión SAN.
+La [inspección explícita de X.509](CA4-vm-certificado-san-y-tp1-200.png) muestra
+subject e issuer arqui.local, SAN DNS:arqui.local y vigencia del 20/11/2026
+18:07:00 GMT al 18/02/2027 18:07:00 GMT.
 El certificado es autofirmado y su copia pública se eligió como CA de la prueba.
 
-Los contenedores del TP1 figuran en la captura y el instalador conserva su sitio,
-pero todavía falta una consulta HTTPS que pruebe funcionalmente jeroky.local
-tras esta instalación. Las APIs nuevas siguen sin autenticación: TLS y rate limit
+Se comprobó también [jeroky.local del TP1](CA4-vm-certificado-san-y-tp1-200.png)
+desde Ubuntu a 127.0.0.1:443, con su certificado como CA, sin -k y siguiendo
+redirecciones: respuesta final HTTP 200 después de instalar arqui.local. Esto
+prueba la página final, no todas las operaciones de negocio o un login del TP1. Las APIs nuevas siguen sin autenticación: TLS y rate limit
 no reemplazan controles de acceso. No publicar este laboratorio en Internet.
 
 Falta repetir la demostración desde la red donde acceda el docente. El resultado
