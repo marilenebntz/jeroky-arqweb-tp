@@ -7,11 +7,16 @@ usa la base `jeroky_arqui`, los puertos 3100–3104 y sus volúmenes separados.
 
 ## Estado de verificación
 
-Compose combinado y sintaxis del script validados. El sitio pasó `nginx -t` en
-un contenedor Nginx con certificado temporal. **Todavía falta ejecutarlo en la VM**,
-validar compatibilidad con su configuración Nginx completa, recursos reales,
-TLS 1.3 por 443, convivencia con el TP1 y acceso desde otro cliente de la LAN.
-No se considera evidencia de CA-4 ni F6-E2 hasta completar esas verificaciones.
+El despliegue de nueve componentes ya se ejecutó en Ubuntu a partir del paquete
+de fuentes privados verificados. Se instaló arqui.local conservando el archivo
+jeroky del TP1. La configuración efectiva pasó nginx -t. Desde la Mac se observó
+búsqueda HTTPS 443 con certificado verificado y respuesta 200, redirección HTTP 301
+y ausencia de conexión a siete puertos de diagnóstico. OpenSSL dentro de la VM
+confirmó TLS 1.3 y verificación de arqui.local.
+
+[Capturas y alcance](../../evidencias/CA4-vm-verificacion.md). No se ejecutó escaneo
+exhaustivo ni prueba IPv6. Falta comprobar funcionalmente el sitio TP1 tras instalar
+arqui, inspeccionar fechas/SAN explícitos y repetir acceso en la red del docente.
 
 La VM observada usa Ubuntu 24.04.5 ARM64, 4 GB de RAM, unos 15 GB de disco libre,
 y ya ejecuta Jeroky del TP1. La interfaz puenteada obtuvo 192.168.0.11; esa IP puede
